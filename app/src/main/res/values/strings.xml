@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Desynat Driver</string>
+    <string name="map_key">AIzaSyA4L_dBeJDWuqtBT9ZOOUhjigbh6Lxi43s</string>
+    <string name="continue_text">Continue</string>
+    <string name="arabic">Arabic</string>
+    <string name="english">English</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="enter_mobile_number">Enter Mobile Number</string>
+    <string name="enter_email_address">Enter Email Address</string>
+    <string name="password_reset_successfully">Password Reset successfully !</string>
+    <string name="sign_in">Sign in</string>
+</resources>
