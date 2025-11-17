@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.desynatdriver.R
 import com.desynatdriver.ui.auth.response.LoginResponse
+import com.desynatdriver.ui.response.GetProfileResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -71,15 +72,15 @@ class SharedPreference(context: Context) {
         set(value) = preference.set("deviceToken", value)
 
 
-    fun saveUser(user: LoginResponse.Data) {
+    fun saveUser(user: GetProfileResponse.Data) {
         val json = Gson().toJson(user)
         preference.set("userData", json)
     }
 
-    fun getUser(): LoginResponse.Data? {
+    fun getUser(): GetProfileResponse.Data? {
         val json = preference["userData", ""] ?: return null
         return try {
-            Gson().fromJson(json, LoginResponse.Data::class.java)
+            Gson().fromJson(json, GetProfileResponse.Data::class.java)
         } catch (e: Exception) {
             null
         }

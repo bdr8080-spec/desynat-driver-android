@@ -73,18 +73,18 @@ class LoginFragment : BaseFragment() {
                         if (input.isNotEmpty()) {
                             if (input.matches(Regex("^[0-9]+$"))) {
                                 type = 0
-                                ccp.isVisible = true
+                                tvCountryPicker.isVisible = true
                                 ivEmail.setImageResource(R.drawable.ic_mobile)
                                 etEmailMobile.inputType = InputType.TYPE_CLASS_NUMBER
                             } else {
                                 type = 1
-                                ccp.isVisible = false
+                                tvCountryPicker.isVisible = false
                                 ivEmail.setImageResource(R.drawable.ic_email)
                                 etEmailMobile.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                             }
                         } else {
                             type = 1
-                            ccp.isVisible = false
+                            tvCountryPicker.isVisible = false
                             ivEmail.setImageResource(R.drawable.ic_email)
                             etEmailMobile.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                         }
@@ -102,7 +102,7 @@ class LoginFragment : BaseFragment() {
 
         map["email_mobile"] = binding?.etEmailMobile?.text?.trim().toString()
         if (type==0){
-            map["country_code"] = binding?.ccp?.selectedCountryCodeWithPlus?.trim().toString()
+            map["country_code"] = binding?.tvCountryPicker?.text?.trim().toString()
         }
         map["type"] = type
         map["password"] = binding?.etPassword?.text?.trim().toString()
@@ -127,7 +127,6 @@ class LoginFragment : BaseFragment() {
                 response?.let {
                     showToast(response.message)
                     SharedPreference.get(requireActivity()).accessToken = response.data.accessToken
-                    SharedPreference.get(requireActivity()).saveUser(response.data)
                     requireActivity().startActivity(
                         Intent(requireActivity(),
                             HomeActivity::class.java)

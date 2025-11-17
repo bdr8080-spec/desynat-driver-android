@@ -15,12 +15,13 @@ object Constants {
     var DEVICE_TYPE=1
 
     const val UPLOAD = "/api/upload"
-    const val LOGIN = "/api/login"
-    const val OTP_VERIFY = "/api/verify_otp"
-    const val RESEND_OTP = "/api/resend_otp"
-    const val FORGOT_PASSWORD = "/api/forgot_password"
-    const val CREATE_PASSWORD = "/api/create_password"
-    const val DASHBOARD = "/api/user/user-dashboard"
-    const val LOGOUT = "/api/user/logout"
+    const val LOGIN = "/api/deliveryboy/login"
+    const val OTP_VERIFY = "/api/deliveryboy/verify_otp"
+    const val RESEND_OTP = "/api/deliveryboy/resend_otp"
+    const val FORGOT_PASSWORD = "/api/deliveryboy/forgot_password"
+    const val CREATE_PASSWORD = "/api/deliveryboy/create_password"
+    const val DASHBOARD = "/api/deliveryboy/delivery_boy_dashboard"
+    const val LOGOUT = "/api/deliveryboy/logout"
+    const val GET_PROFILE = "/api/deliveryboy/delivery_boy_profile"
 
 }

@@ -61,7 +61,7 @@ class ResetPasswordFragment : BaseFragment() {
             btnDone.setOnClickListener {
                 if (validation()) {
                     val map = HashMap<String,Any>()
-                    map["id"] = userId
+                    map["user_id"] = userId
                     map["password"] = binding?.etPassword?.text.toString().trim()
                     map["confirm_password"] = binding?.etConfirmPassword?.text.toString().trim()
                     viewModel.createPassword(map)

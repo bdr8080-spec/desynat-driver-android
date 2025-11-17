@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
     @SerializedName("data")
-    val data: Data,
+    val `data`: Data,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")
@@ -14,22 +14,30 @@ data class LoginResponse(
     data class Data(
         @SerializedName("accessToken")
         val accessToken: String,
+        @SerializedName("address_line1")
+        val addressLine1: String,
+        @SerializedName("address_line2")
+        val addressLine2: String,
+        @SerializedName("city")
+        val city: String,
         @SerializedName("country_code")
-        var countryCode: String,
+        val countryCode: String,
+        @SerializedName("country_id")
+        val countryId: Int,
         @SerializedName("created_at")
         val createdAt: String,
         @SerializedName("device_token")
         val deviceToken: Any,
         @SerializedName("device_type")
         val deviceType: String,
+        @SerializedName("document_information")
+        val documentInformation: String,
         @SerializedName("email")
-        var email: String,
-        @SerializedName("email_verified_at")
-        val emailVerifiedAt: Any,
-        @SerializedName("full_name")
-        val fullName: String,
-        @SerializedName("profile_image")
-        val profileImage: String?=null,
+        val email: String,
+        @SerializedName("full_name_arabic")
+        val fullNameArabic: String,
+        @SerializedName("full_name_english")
+        val fullNameEnglish: String,
         @SerializedName("id")
         val id: String,
         @SerializedName("let")
@@ -37,12 +45,26 @@ data class LoginResponse(
         @SerializedName("long")
         val long: Any,
         @SerializedName("mobile")
-        var mobile: String,
+        val mobile: String,
         @SerializedName("otp")
         val otp: String,
         @SerializedName("otp_verify")
         val otpVerify: String,
+        @SerializedName("password")
+        val password: String,
+        @SerializedName("profile_pic")
+        val profilePic: String,
+        @SerializedName("state")
+        val state: String,
+        @SerializedName("status")
+        val status: String,
         @SerializedName("updated_at")
-        val updatedAt: String
+        val updatedAt: String,
+        @SerializedName("vehicle_name")
+        val vehicleName: String,
+        @SerializedName("vehicle_reg_no")
+        val vehicleRegNo: String,
+        @SerializedName("zone_id")
+        val zoneId: Int
     )
 }

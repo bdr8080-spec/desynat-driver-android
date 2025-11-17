@@ -35,6 +35,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/ivMenu"/>
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivNotification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/notification_icon"
@@ -349,10 +350,11 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/half_top_rounded"
                     android:backgroundTint="#c4a276"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:paddingBottom="@dimen/_15sdp"
                     app:layout_constraintTop_toBottomOf="@+id/clCompleted">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -381,47 +383,14 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cvNeDeliveries"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvNewDeliveries"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="@dimen/_10sdp"
-                        app:cardBackgroundColor="@color/white"
-                        app:layout_constraintTop_toBottomOf="@+id/tvNewDeliveriesTitle">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvOrderId"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_regular"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:text="Order ID"
-                                android:textSize="@dimen/_12sdp"
-                                android:textColor="#80000000"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"/>
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvOrderIdValue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_regular"
-                                android:text="#342346"
-                                android:textSize="@dimen/_12sdp"
-                                android:textColor="@color/black"
-                                android:layout_marginStart="@dimen/_5sdp"
-                                app:layout_constraintStart_toEndOf="@+id/tvOrderId"
-                                app:layout_constraintTop_toTopOf="@+id/tvOrderId"
-                                app:layout_constraintBottom_toBottomOf="@+id/tvOrderId"/>
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    </androidx.cardview.widget.CardView>
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/item_deliveries"
+                        app:layout_constraintTop_toBottomOf="@+id/tvNewDeliveriesTitle"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvOngoingDeliveriesTitle"
@@ -434,7 +403,7 @@
                         android:textColor="@color/black"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cvNeDeliveries"/>
+                        app:layout_constraintTop_toBottomOf="@+id/rvNewDeliveries"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/viewAllOngoingDeliveries"
@@ -447,20 +416,38 @@
                         android:textColor="@color/black"
                         android:paddingEnd="@dimen/_15sdp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvNewDeliveriesTitle"/>
+                        app:layout_constraintTop_toBottomOf="@+id/rvNewDeliveries"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvOngoingDeliveries"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/item_deliveries"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOngoingDeliveriesTitle"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_60sdp"
+                       app:layout_constraintTop_toBottomOf="@+id/rvOngoingDeliveries"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_20sdp"
-                app:layout_constraintTop_toTopOf="@+id/ivGraph"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivSupportBot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_support_bot"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

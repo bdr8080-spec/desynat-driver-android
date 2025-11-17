@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.desynatdriver.data.repo.MainRepository
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.response.CommonResponse
+import com.desynatdriver.ui.response.GetProfileResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,7 +23,7 @@ class HomeViewModel @Inject constructor(
         repository.progress.value = false
     }
 
-    val dashBoardResult: LiveData<LoginResponse>
+    val dashBoardResult: LiveData<GetProfileResponse>
         get() = repository.dashBoardLiveData
 
     fun getDashBoard() {
@@ -30,6 +31,16 @@ class HomeViewModel @Inject constructor(
             repository.getDashBoard()
         }
     }
+
+    val profileResult: LiveData<GetProfileResponse>
+        get() = repository.profileLiveData
+
+    fun getProfile() {
+        viewModelScope.launch {
+            repository.getProfile()
+        }
+    }
+
     val logoutResult: LiveData<CommonResponse>
         get() = repository.logoutLiveData
 

@@ -362,7 +362,6 @@ object CommonMethod {
     fun clearData(context: Context){
         SharedPreference.get(context).clearUser()
         SharedPreference.get(context).accessToken = ""
-        Constants.Category = "Women"
     }
 
 

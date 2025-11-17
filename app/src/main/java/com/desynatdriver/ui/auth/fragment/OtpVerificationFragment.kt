@@ -99,7 +99,6 @@ class OtpVerificationFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         map["user_id"] = userId
         map["otp"] = binding?.pinView?.text?.trim().toString()
-        map["type"] = type
         viewModel.otpVerification(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true

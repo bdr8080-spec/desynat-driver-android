@@ -9,6 +9,7 @@ import com.desynatdriver.network.ApiServices
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.response.CommonResponse
+import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.toMultipartPart
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
@@ -96,7 +97,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-    val dashBoardLiveData = SingleLiveEvent<LoginResponse>()
+    val dashBoardLiveData = SingleLiveEvent<GetProfileResponse>()
     suspend fun getDashBoard(
     ) {
         handleApiCall(
@@ -104,6 +105,17 @@ class MainRepository @Inject constructor(
                 api.getDashBoard()
             },
             responseLiveData = dashBoardLiveData
+        )
+    }
+
+    val profileLiveData = SingleLiveEvent<GetProfileResponse>()
+    suspend fun getProfile(
+    ) {
+        handleApiCall(
+            api = {
+                api.getProfile()
+            },
+            responseLiveData = profileLiveData
         )
     }
 

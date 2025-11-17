@@ -1,6 +1,7 @@
 package com.desynatdriver.ui.home
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -10,16 +11,23 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.desynatdriver.R
 import com.desynatdriver.adapter.BottomNavAdapter
 import com.desynatdriver.base.BaseActivity
+import com.desynatdriver.data.view_model.HomeViewModel
 import com.desynatdriver.data.view_model.LocationViewModel
 import com.desynatdriver.databinding.ActivityHomeBinding
+import com.desynatdriver.databinding.DrawerLayoutBinding
+import com.desynatdriver.ui.auth.AuthActivity
 import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.Constants
+import com.desynatdriver.utils.ProgressDialogUtils
+import com.desynatdriver.utils.showToast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
@@ -31,6 +39,8 @@ import java.util.Locale
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
     private var binding: ActivityHomeBinding? =null
+    private val viewModel: HomeViewModel by viewModels()
+    var isObserver = false
     private lateinit var controller: NavController
     var bottonNavItemList = ArrayList<BottomNavItem>()
     private var bottomAdapter : BottomNavAdapter? =null
@@ -39,6 +49,9 @@ class HomeActivity : BaseActivity() {
     var longitude = 0.0
     var latitude = 0.0
     var locationGet: Boolean = false
+
+    private lateinit var drawerBinding: DrawerLayoutBinding
+    var isOpenDrawer = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -74,32 +87,136 @@ class HomeActivity : BaseActivity() {
 
         val bottomNavDestinations = setOf(
             R.id.home,
+            R.id.deliveries,
+            R.id.profile,
         )
 
 
         controller.addOnDestinationChangedListener { _, destination, _ ->
 
             if (destination.id in bottomNavDestinations) {
-                binding?.rvBottomNav?.isVisible = true
-                binding?.viewBackground?.isVisible = true
+                when(destination.id){
+                R.id.home -> {
+                    bottomAdapter?.setSelectedItem(0)
+                    binding?.rvBottomNav?.isVisible = true
+                    binding?.viewBackground?.isVisible = true
+                    enableDrawer(true)
+                }
+
+                    R.id.deliveries -> {
+                        bottomAdapter?.setSelectedItem(1)
+                        binding?.rvBottomNav?.isVisible = true
+                        binding?.viewBackground?.isVisible = true
+                        enableDrawer(false)
+                    }
+
+                    R.id.profile -> {
+                        bottomAdapter?.setSelectedItem(2)
+                        binding?.rvBottomNav?.isVisible = true
+                        binding?.viewBackground?.isVisible = true
+                        enableDrawer(false)
+                    }
+
+                else -> {
+                    enableDrawer(false)
+                    binding?.rvBottomNav?.isVisible = false
+                    binding?.viewBackground?.isVisible = false
+                }
+}
             } else {
+                enableDrawer(false)
                 binding?.rvBottomNav?.isVisible = false
                 binding?.viewBackground?.isVisible = false
             }
 
-            when (destination.id) {
-                R.id.home -> {
-                    bottomAdapter?.setSelectedItem(0)
-                }
-            }
         }
 
+        binding?.apply {
+            drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
+            setUpDrawerContent()
+        }
+
+
+    }
+
+
+    fun openDrawer(){
+        isOpenDrawer = true
+        binding?.drawerLayout?.openDrawer(GravityCompat.START)
+    }
+
+
+    private fun setUpDrawerContent() {
+        drawerBinding.apply {
+
+            tvTitle.setOnClickListener {
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            relLogout.setOnClickListener {
+                viewModel.logout()
+                isObserver = true
+                ProgressDialogUtils.getInstance().showProgress(this@HomeActivity, false)
+
+            }
+        }
+    }
+
+    private fun enableDrawer(enable: Boolean) {
+        if (enable) {
+            binding?.drawerLayout?.setDrawerLockMode(androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED)
+            binding?.navigationView?.isVisible = true
+        } else {
+            binding?.drawerLayout?.setDrawerLockMode(androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            binding?.navigationView?.isVisible = false
+        }
+    }
+
+    override fun onBackPressed() {
+        Log.e("ehdf", "onBackPressed: $isOpenDrawer   ${binding?.drawerLayout?.isDrawerOpen(
+            GravityCompat.START)}")
+        if (isOpenDrawer == true&&binding?.drawerLayout?.isDrawerOpen(GravityCompat.START)==false){
+            binding?.drawerLayout?.openDrawer(GravityCompat.START,false)
+            super.onBackPressed()
+        }
+        else if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
+            isOpenDrawer = false
+            binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     override fun initControl() {
     }
 
     override fun observer() {
+
+        viewModel.error.observe(this) { errorMessage ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                errorMessage?.let { showToast(it) }
+                isObserver = false
+            }
+
+        }
+
+        viewModel.logoutResult.observe(this) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                showToast(response.message)
+                response?.let {
+                    Constants.isLogout = true
+                    CommonMethod.clearData(this)
+                    startActivity(
+                        Intent(this,
+                            AuthActivity::class.java)
+                    )
+                    finish()
+                }
+                isObserver = false
+            }
+        }
     }
 
     fun setBottomAdapter(){
@@ -107,6 +224,8 @@ class HomeActivity : BaseActivity() {
             override fun onBottomNavItemClick(position: Int) {
                 when(position) {
                     0 -> controller.navigate(R.id.home)
+                    1 -> controller.navigate(R.id.deliveries)
+                    2 -> controller.navigate(R.id.profile)
                 }
 
             }

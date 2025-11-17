@@ -3,6 +3,7 @@ package com.desynatdriver.network
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.response.CommonResponse
+import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.Constants
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -47,7 +48,12 @@ interface ApiServices {
 
  @GET(Constants.DASHBOARD)
     suspend fun getDashBoard(
-    ): Response<LoginResponse>
+    ): Response<GetProfileResponse>
+
+
+ @GET(Constants.GET_PROFILE)
+    suspend fun getProfile(
+    ): Response<GetProfileResponse>
 
  @GET(Constants.LOGOUT)
     suspend fun logout(

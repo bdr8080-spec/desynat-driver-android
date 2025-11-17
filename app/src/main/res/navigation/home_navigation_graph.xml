@@ -11,4 +11,16 @@
         android:label="Home Fragment"
         tools:layout="@layout/fragment_home"/>
 
+    <fragment
+        android:id="@+id/deliveries"
+        android:name="com.desynatdriver.ui.home.fragment.DeliveriesFragment"
+        android:label="Deliveries Fragment"
+        tools:layout="@layout/fragment_deliveries"/>
+
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.desynatdriver.ui.home.fragment.ProfileFragment"
+        android:label="Profile Fragment"
+        tools:layout="@layout/fragment_profile"/>
+
 </navigation>

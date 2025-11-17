@@ -80,7 +80,7 @@ class ForgotPasswordFragment : BaseFragment() {
                 if (validation()) {
                     val map = HashMap<String, Any>()
                     if (binding?.cbMobile?.isChecked == true) {
-                        map["country_code"] = binding?.ccp?.selectedCountryCodeWithPlus.toString()
+                        map["country_code"] = binding?.tvCountryPicker?.text.toString()
                         map["mobile"] = binding?.etMobile?.text.toString().trim()
                         map["type"] = 0
                     }
@@ -115,7 +115,7 @@ class ForgotPasswordFragment : BaseFragment() {
                 response?.let {
                     val bundle = Bundle().apply {
                         if (binding?.cbMobile?.isChecked == true) {
-                            putString("countryCode", binding?.ccp?.selectedCountryCodeWithPlus)
+                            putString("countryCode", binding?.tvCountryPicker?.text.toString())
                             putString("mobileNumber", binding?.etMobile?.text.toString().trim())
                         }
                         else {
