@@ -1,6 +1,7 @@
 package com.desynatdriver.network
 
 import com.desynatdriver.ui.auth.response.FileUploadResponse
+import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.response.CommonResponse
 import com.desynatdriver.ui.response.GetProfileResponse
@@ -58,5 +59,9 @@ interface ApiServices {
  @GET(Constants.LOGOUT)
     suspend fun logout(
     ): Response<CommonResponse>
+
+    @GET(Constants.GET_COUNTRY)
+    suspend fun getCountry(
+    ): Response<GetCountryResponse>
 
 }

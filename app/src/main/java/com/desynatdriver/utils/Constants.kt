@@ -22,6 +22,7 @@ object Constants {
     const val CREATE_PASSWORD = "/api/deliveryboy/create_password"
     const val DASHBOARD = "/api/deliveryboy/delivery_boy_dashboard"
     const val LOGOUT = "/api/deliveryboy/logout"
+    const val GET_COUNTRY = "/api/admin/get_countries"
     const val GET_PROFILE = "/api/deliveryboy/delivery_boy_profile"
 
 }

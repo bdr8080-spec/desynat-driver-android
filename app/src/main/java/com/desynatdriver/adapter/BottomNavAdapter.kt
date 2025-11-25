@@ -1,7 +1,12 @@
 package com.desynatdriver.adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
+import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -37,17 +42,15 @@ class BottomNavAdapter(var context:Context, var list: ArrayList<BottomNavItem>, 
 
         if (selected==position){
             holder.binding.ivImage.setImageResource(list[position].selectedImage)
-            holder.binding.tvName.setTextColor(context.getColor(R.color.brown))
+         //   holder.binding.tvName.setTextColor(context.getColor(R.color.brown))
+            applyGradientText(holder.binding.tvName)
             holder.binding.tvName.typeface = ResourcesCompat.getFont(context, R.font.poppins_medium)
-            holder.binding.ivImage.isVisible = true
-            holder.binding.tvName.isVisible = true
         }
         else{
             holder.binding.ivImage.setImageResource(list[position].image)
+            holder.binding.tvName.paint.shader = null
             holder.binding.tvName.setTextColor(context.getColor(R.color.black))
             holder.binding.tvName.typeface = ResourcesCompat.getFont(context, R.font.poppins_regular)
-            holder.binding.ivImage.isVisible = true
-            holder.binding.tvName.isVisible = true
         }
 
         holder.itemView.setOnClickListener {
@@ -66,5 +69,39 @@ class BottomNavAdapter(var context:Context, var list: ArrayList<BottomNavItem>, 
         notifyItemChanged(oldPos)
         notifyItemChanged(selected)
     }
+
+    fun applyGradientText(
+        textView: AppCompatTextView,
+        startColor: String = "#DFBF8F",
+        endColor: String = "#6E4527"
+    ) {
+
+        textView.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+            override fun onLayoutChange(
+                v: View?,
+                left: Int, top: Int, right: Int, bottom: Int,
+                oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int
+            ) {
+                textView.removeOnLayoutChangeListener(this)
+
+                val width = textView.paint.measureText(textView.text.toString())
+
+                val shader = LinearGradient(
+                    0f,
+                    0f,
+                    width,
+                    textView.textSize,
+                    intArrayOf(
+                        Color.parseColor(startColor),
+                        Color.parseColor(endColor)
+                    ),
+                    null,
+                    Shader.TileMode.CLAMP
+                )
+                textView.paint.shader = shader
+            }
+        })
+    }
+
 
 }

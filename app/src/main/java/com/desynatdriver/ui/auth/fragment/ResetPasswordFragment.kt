@@ -109,6 +109,10 @@ class ResetPasswordFragment : BaseFragment() {
             showToast("Please enter password")
             return false
         }
+        if (password.length<6) {
+            showToast("Password must be 6 digits long")
+            return false
+        }
         else if (confirmPassword.isEmpty() ) {
             showToast("Please enter confirm password")
             return false

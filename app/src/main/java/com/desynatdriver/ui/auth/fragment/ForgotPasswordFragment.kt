@@ -12,6 +12,7 @@ import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.data.view_model.AuthViewModel
 import com.desynatdriver.databinding.FragmentForgotPasswordBinding
+import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.SharedPreference
@@ -24,6 +25,7 @@ class ForgotPasswordFragment : BaseFragment() {
     private val viewModel: AuthViewModel by viewModels()
     var isObserver = false
     private var type = "mobile"
+    private var countryList = ArrayList<GetCountryResponse.Data>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +43,8 @@ class ForgotPasswordFragment : BaseFragment() {
     }
 
     override fun initView() {
+        countryList.clear()
+        SharedPreference.get(requireActivity()).getCountryList()?.let { countryList.addAll(it) }
         binding?.apply {
             CommonMethod.removeAllTextSpaces(etEmail)
             toolbar.tvToolbar.text = "Forgot Password"
@@ -51,6 +55,12 @@ class ForgotPasswordFragment : BaseFragment() {
         binding?.apply {
             toolbar.tvToolbar.setOnClickListener {
                 findNavController().popBackStack()
+            }
+
+            tvCountryPicker.setOnClickListener {
+                CommonMethod.showCountryPicker(requireActivity(),clMobile,countryList, isDialCode = true){selectedCountry->
+                    tvCountryPicker.text = selectedCountry.dialCode
+                }
             }
 
             cbEmail.setOnCheckedChangeListener { _, isChecked ->

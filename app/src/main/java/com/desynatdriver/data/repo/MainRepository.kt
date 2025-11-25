@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.desynatdriver.network.ApiServices
 import com.desynatdriver.ui.auth.response.FileUploadResponse
+import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.response.CommonResponse
 import com.desynatdriver.ui.response.GetProfileResponse
@@ -129,6 +130,18 @@ class MainRepository @Inject constructor(
             responseLiveData = logoutLiveData
         )
     }
+
+    val countryPlanLiveData = SingleLiveEvent<GetCountryResponse>()
+    suspend fun getCountry(
+    ) {
+        handleApiCall(
+            api = {
+                api.getCountry()
+            },
+            responseLiveData = countryPlanLiveData
+        )
+    }
+
 
 }
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_pink"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.fragment.HomeFragment">
 
@@ -88,6 +89,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_centerVertical="true"
+                    android:textColorHint="@color/black"
                     android:drawableEnd="@drawable/ic_calendar"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/etTo"
@@ -104,6 +106,7 @@
                     android:clickable="true"
                     android:background="@drawable/card_stroke_background"
                     android:focusable="false"
+                    android:textColorHint="@color/black"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_centerVertical="true"
@@ -205,7 +208,7 @@
                             android:fontFamily="@font/poppins_regular"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:text="New Deliveries"
-                            android:textSize="@dimen/_14sdp"
+                            android:textSize="@dimen/_16sdp"
                             android:textColor="@color/black"
                             android:layout_marginStart="@dimen/_15sdp"
                             app:layout_constraintStart_toStartOf="parent"

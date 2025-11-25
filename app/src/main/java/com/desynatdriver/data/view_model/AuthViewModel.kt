@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.desynatdriver.data.repo.MainRepository
 import com.desynatdriver.ui.auth.response.FileUploadResponse
+import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.auth.response.RegisterAccountResponse
 import com.desynatdriver.ui.auth.response.RegisterRequest
@@ -74,14 +75,21 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-
-
     val createPasswordResult: LiveData<LoginResponse>
         get() = repository.createPasswordLiveData
 
     fun createPassword(map: HashMap<String,Any>) {
         viewModelScope.launch {
             repository.createPassword(map)
+        }
+    }
+
+    val getCountryResult: LiveData<GetCountryResponse>
+        get() = repository.countryPlanLiveData
+
+    fun getCountry() {
+        viewModelScope.launch {
+            repository.getCountry()
         }
     }
 

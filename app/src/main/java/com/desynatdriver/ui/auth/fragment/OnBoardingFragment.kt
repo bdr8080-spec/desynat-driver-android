@@ -62,7 +62,7 @@ class OnBoardingFragment : BaseFragment() {
                 binding?.tvSkip?.visibility = View.VISIBLE
             }
             totalPages - 1 -> {
-                binding?.icBackArrow?.visibility = View.INVISIBLE
+                binding?.icBackArrow?.visibility = View.VISIBLE
                 binding?.icForwardArrow?.visibility = View.VISIBLE
                 binding?.tvSkip?.visibility = View.GONE
             }

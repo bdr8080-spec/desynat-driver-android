@@ -21,6 +21,8 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -28,9 +30,12 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.desynatdriver.R
+import com.desynatdriver.adapter.CountryPickerAdapter
 import com.desynatdriver.databinding.AlertDialogLayoutBinding
+import com.desynatdriver.databinding.CustomCountryPickerBinding
 import com.desynatdriver.databinding.SuccessDialogLayoutBinding
 import com.desynatdriver.ui.auth.AuthActivity
+import com.desynatdriver.ui.auth.response.GetCountryResponse
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -356,6 +361,36 @@ object CommonMethod {
 
         dialog.show()
 
+    }
+
+    fun showCountryPicker(
+        context: Context,
+        anchor: View,
+        countryList: ArrayList<GetCountryResponse.Data>,
+        isDialCode:Boolean=false,
+        onCountrySelected: (GetCountryResponse.Data) -> Unit
+    ) {
+        val binding = CustomCountryPickerBinding.inflate(LayoutInflater.from(context))
+
+        val popupWindow = PopupWindow(
+            binding.root,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupWindow.isOutsideTouchable = true
+        popupWindow.elevation = 20f
+        popupWindow.showAsDropDown(anchor)
+
+        binding.rvCountry.adapter = CountryPickerAdapter(context, countryList,isDialCode,
+            object : CountryPickerAdapter.ClickOnItem {
+                override fun onClickItem(position: Int) {
+                    onCountrySelected(countryList[position])
+                    popupWindow.dismiss()
+                }
+            }
+        )
     }
 
 

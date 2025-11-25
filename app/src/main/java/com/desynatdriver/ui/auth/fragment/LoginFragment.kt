@@ -16,6 +16,7 @@ import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.data.view_model.AuthViewModel
 import com.desynatdriver.databinding.FragmentLoginBinding
+import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.ProgressDialogUtils
@@ -29,7 +30,10 @@ class LoginFragment : BaseFragment() {
     private var binding: FragmentLoginBinding? = null
     private val viewModel: AuthViewModel by viewModels()
     var isObserver = false
+    var isCountryObserver = false
     var type = 1
+    private var countryList = ArrayList<GetCountryResponse.Data>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,12 +55,26 @@ class LoginFragment : BaseFragment() {
             CommonMethod.removeAllTextSpaces(etPassword)
             etPassword.togglePasswordVisibility(ivPasswordVisible)
         }
+
+        getCountryApi()
+    }
+
+    private fun getCountryApi(){
+        viewModel.getCountry()
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isCountryObserver = true
     }
 
     override fun initControl() {
         binding?.apply {
             tvForgotPassword.setOnClickListener {
                 findNavController().navigate(R.id.action_loginFragment_to_forgotFragment)
+            }
+
+            tvCountryPicker.setOnClickListener {
+                CommonMethod.showCountryPicker(requireActivity(),clMobile,countryList, isDialCode = true){selectedCountry->
+                    tvCountryPicker.text = selectedCountry.dialCode
+                }
             }
 
             btnLogin.setOnClickListener {
@@ -121,11 +139,22 @@ class LoginFragment : BaseFragment() {
 
         }
 
+        viewModel.getCountryResult.observe(viewLifecycleOwner) { response ->
+            if (isCountryObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                countryList.clear()
+                countryList.addAll(response.data)
+                setCountry()
+
+                isCountryObserver = false
+            }
+        }
+
         viewModel.loginResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-                    showToast(response.message)
+                    showToast("Login Successfully")
                     SharedPreference.get(requireActivity()).accessToken = response.data.accessToken
                     requireActivity().startActivity(
                         Intent(requireActivity(),
@@ -157,7 +186,17 @@ class LoginFragment : BaseFragment() {
             showToast("Please enter password")
             return false
         }
+        if (binding?.etPassword?.text?.trim().toString().length<6) {
+            showToast("Password must be 6 digits long")
+            return false
+        }
         return true
+    }
+
+    private fun setCountry() {
+        if (!countryList.isNullOrEmpty()) {
+            SharedPreference.get(requireActivity()).saveCountryList(countryList)
+        }
     }
 
 }
