@@ -3,6 +3,7 @@ package com.desynatdriver.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.desynatdriver.databinding.ItemCountryBinding
@@ -30,11 +31,12 @@ class CountryPickerAdapter(var context:Context, var countryList: ArrayList<GetCo
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             if (isDialCode){
-                tvCountry.text = "${countryList[position].name} (${countryList[position].dialCode})"
+                tvCountry.text = "${countryList[position].flag}  ${countryList[position].name} (${countryList[position].dialCode})"
             }
             else{
-                tvCountry.text = "${countryList[position].name}"
+                tvCountry.text = "${countryList[position].flag}  ${countryList[position].name}"
             }
+            ivFlag.isVisible = false
             ivFlag.load(countryList[position].flag1)
         }
 
