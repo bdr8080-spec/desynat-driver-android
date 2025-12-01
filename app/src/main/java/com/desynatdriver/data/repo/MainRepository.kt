@@ -9,6 +9,7 @@ import com.desynatdriver.network.ApiServices
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
+import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
 import com.desynatdriver.ui.response.CommonResponse
 import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.toMultipartPart
@@ -139,6 +140,17 @@ class MainRepository @Inject constructor(
                 api.getCountry()
             },
             responseLiveData = countryPlanLiveData
+        )
+    }
+
+    val kuwaitLiveData = SingleLiveEvent<GetKuwaitZoneResponse>()
+    suspend fun getKuwaitZone(
+    ) {
+        handleApiCall(
+            api = {
+                api.getKuwaitZone()
+            },
+            responseLiveData = kuwaitLiveData
         )
     }
 

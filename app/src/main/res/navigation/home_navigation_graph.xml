@@ -21,6 +21,18 @@
         android:id="@+id/profile"
         android:name="com.desynatdriver.ui.home.fragment.ProfileFragment"
         android:label="Profile Fragment"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfile" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfile"
+        android:name="com.desynatdriver.ui.home.fragment.EditProfileFragment"
+        android:label="Edit Profile Fragment"
+        tools:layout="@layout/fragment_edit_profile"/>
 
 </navigation>

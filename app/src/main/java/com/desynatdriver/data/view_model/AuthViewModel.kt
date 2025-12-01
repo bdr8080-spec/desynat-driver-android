@@ -26,17 +26,6 @@ class AuthViewModel @Inject constructor(
         repository.progress.value = false
     }
 
-    val uploadImageResult: LiveData<FileUploadResponse>
-        get() = repository.responseUploadImage
-
-    fun uploadImage(
-        image: File?=null
-    ) {
-        viewModelScope.launch {
-            repository.uploadImage(image)
-        }
-    }
-
  val loginResult: LiveData<LoginResponse>
         get() = repository.loginLiveData
 

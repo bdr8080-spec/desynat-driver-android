@@ -102,4 +102,20 @@
         <item name="android:src">@drawable/ic_arrow_next</item>
     </style>
 
+    <style name="circle_image" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="rounded_corner_10sdp" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="rounded_corner_5sdp" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_5sdp</item>
+    </style>
+
+
 </resources>

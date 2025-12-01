@@ -1,60 +1,193 @@
 package com.desynatdriver.ui.home.fragment
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
+import coil.load
 import com.desynatdriver.R
+import com.desynatdriver.base.BaseFragment
+import com.desynatdriver.databinding.FragmentProfileBinding
+import com.desynatdriver.ui.response.GetProfileResponse
+import com.desynatdriver.utils.SharedPreference
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+@AndroidEntryPoint
+class ProfileFragment : BaseFragment() {
+    private var binding: FragmentProfileBinding?=null
+    var profileInfo : GetProfileResponse.Data?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        binding = FragmentProfileBinding.inflate(layoutInflater,container,false)
+        return binding?.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initControl()
+        observe()
     }
+
+    override fun initView() {
+        profileInfo = SharedPreference.get(requireActivity()).getUser()
+        binding?.apply {
+            ivProfileImage.load(profileInfo?.profilePic) {
+                crossfade(true)
+                placeholder(R.drawable.ic_user)
+                error(R.drawable.ic_user)
+            }
+            tvName.text = profileInfo?.fullNameEnglish
+            tvEmail.text = profileInfo?.email
+            tvAddress.text = "${profileInfo?.addressLine1} ${profileInfo?.addressLine2} ${profileInfo?.city} ${profileInfo?.state}"
+            tvPhone.text = "${profileInfo?.countryCode} ${profileInfo?.mobile}"
+            tvZone.text = profileInfo?.zoneInfo?.nameEnglish
+
+            etVehicleName.setText(profileInfo?.vehicleName)
+            etVehichleRegistrationNumber.setText(profileInfo?.vehicleRegNo)
+
+            if (!profileInfo?.registrationCertificate.isNullOrEmpty()) {
+                if(profileInfo?.registrationCertificate?.get(0)==null){
+                    ivRegistration1.isVisible = false
+                }
+                if(profileInfo?.registrationCertificate?.get(1)==null){
+                    ivRegistration2.isVisible = false
+                }
+
+                loadDocument(ivRegistration1, profileInfo?.registrationCertificate?.get(0)?.documentPath)
+                loadDocument(ivRegistration2, profileInfo?.registrationCertificate?.get(1)?.documentPath)
+
+            }
+            else{
+                tvRegistration.isVisible = false
+                llRegistration.isVisible = false
+            }
+
+            if (!profileInfo?.pollutionPaper.isNullOrEmpty()){
+                loadDocument(ivPollutionPaper, profileInfo?.pollutionPaper?.get(0)?.documentPath)
+            }
+            else{
+                tvPollutionPaper.isVisible = false
+                llPollutionPaper.isVisible = false
+            }
+
+            loadDocument(ivDriving1, profileInfo?.drivingLicense?.get(0)?.documentPath)
+            loadDocument(ivDriving2, profileInfo?.drivingLicense?.get(1)?.documentPath)
+
+            loadDocument(ivVehicle1, profileInfo?.vehicleImage?.get(0)?.documentPath)
+            loadDocument(ivVehicle2, profileInfo?.vehicleImage?.get(1)?.documentPath)
+
+            loadDocument(ivIdentity1, profileInfo?.identityProof?.get(0)?.documentPath)
+            loadDocument(ivIdentity2, profileInfo?.identityProof?.get(1)?.documentPath)
+
+            loadDocument(ivVehicleInsurance, profileInfo?.vehicleInsurance?.get(0)?.documentPath)
+
+        }
+    }
+
+    override fun initControl() {
+        binding?.apply {
+
+            tvEdit.setOnClickListener {
+                findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+            }
+
+            tvProfile.setOnClickListener {
+                tvProfile.setTextColor(requireActivity().getColor(R.color.white))
+                tvVehicleInfo.setTextColor(requireActivity().getColor(R.color.black))
+                tvProfile.setBackgroundResource(R.drawable.selected_left_tab)
+                tvVehicleInfo.background = null
+                clDriverProfile.isVisible = true
+                llVehicleInfo.isVisible = false
+            }
+
+            tvVehicleInfo.setOnClickListener {
+                tvVehicleInfo.setTextColor(requireActivity().getColor(R.color.white))
+                tvProfile.setTextColor(requireActivity().getColor(R.color.black))
+                tvVehicleInfo.setBackgroundResource(R.drawable.selected_right_tab)
+                tvProfile.background = null
+                clDriverProfile.isVisible = false
+                llVehicleInfo.isVisible = true
+            }
+
+            ivVehicle1.setOnClickListener {
+                openPdfInBrowser(requireContext(), profileInfo?.vehicleImage?.get(0)?.documentPath ?: "")
+            }
+
+            ivVehicle2.setOnClickListener {
+                openPdfInBrowser(requireContext(), profileInfo?.vehicleImage?.get(1)?.documentPath ?: "")
+            }
+
+            ivVehicleInsurance.setOnClickListener {
+                openPdfInBrowser(requireContext(), profileInfo?.vehicleInsurance?.get(0)?.documentPath ?: "")
+            }
+
+            ivPollutionPaper.setOnClickListener {
+                openPdfInBrowser(requireContext(), profileInfo?.pollutionPaper?.get(0)?.documentPath ?: "")
+            }
+
+            ivIdentity1.setOnClickListener {
+                openPdfInBrowser(requireContext(), profileInfo?.identityProof?.get(0)?.documentPath ?: "")
+            }
+
+            ivIdentity2.setOnClickListener {
+                openPdfInBrowser(requireContext(), profileInfo?.identityProof?.get(1)?.documentPath ?: "")
+            }
+
+            ivDriving1.setOnClickListener {
+                openPdfInBrowser(requireContext(), profileInfo?.drivingLicense?.get(0)?.documentPath ?: "")
+            }
+
+            ivDriving2.setOnClickListener {
+                openPdfInBrowser(requireContext(), profileInfo?.drivingLicense?.get(1)?.documentPath ?: "")
+            }
+
+
+            ivRegistration1.setOnClickListener {
+                openPdfInBrowser(requireContext(), profileInfo?.registrationCertificate?.get(0)?.documentPath ?: "")
+            }
+
+            ivRegistration2.setOnClickListener {
+                openPdfInBrowser(requireContext(), profileInfo?.registrationCertificate?.get(1)?.documentPath ?: "")
+            }
+
+        }
+    }
+
+    override fun observe() {
+    }
+
+    fun loadDocument(imageView: ImageView, url: String?, placeHolder:Int = R.drawable.ic_placeholder) {
+        if (url.isNullOrEmpty()) {
+            imageView.setImageResource(R.drawable.ic_placeholder)
+            return
+        }
+
+        if (url.endsWith(".pdf", ignoreCase = true)) {
+            imageView.setImageResource(R.drawable.pdf)
+        } else {
+            imageView.load(url) {
+                crossfade(true)
+                placeholder(placeHolder)
+                error(placeHolder)
+            }
+        }
+    }
+
+    fun openPdfInBrowser(context: Context, pdfUrl: String) {
+        if (pdfUrl.isNotEmpty()) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        }
+    }
+
 }

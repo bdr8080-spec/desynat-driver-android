@@ -24,5 +24,6 @@ object Constants {
     const val LOGOUT = "/api/deliveryboy/logout"
     const val GET_COUNTRY = "/api/admin/get_countries"
     const val GET_PROFILE = "/api/deliveryboy/delivery_boy_profile"
+    const val GET_KUWAIT_ZONE = "/api/deliveryboy/get_kuwait_zones"
 
 }

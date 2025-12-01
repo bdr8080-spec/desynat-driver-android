@@ -1,15 +1,557 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.fragment.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Under Development"
-        android:gravity="center"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvToolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:paddingHorizontal="@dimen/_20sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="My Profile"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13sdp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/llProfileTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:background="@drawable/button_stroke"
+        app:layout_constraintTop_toBottomOf="@+id/tvToolbar">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_medium"
+            android:text="My Profile"
+            android:textSize="@dimen/_12sdp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/selected_left_tab"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvVehicleInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Vehicle Info"
+            android:textSize="@dimen/_12sdp"
+            android:gravity="center"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/llProfileTab"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clDriverProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_pink"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivProfileImage"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:src="@drawable/ic_user"
+                        android:scaleType="centerCrop"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:clipToOutline="true"
+                        android:background="@color/light_pink"
+                        app:shapeAppearanceOverlay="@style/circle_image"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="Ahmad Farhan"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/tvEdit"
+                        app:layout_constraintStart_toEndOf="@id/ivProfileImage"
+                        app:layout_constraintTop_toTopOf="@id/ivProfileImage"
+                        app:layout_constraintBottom_toTopOf="@+id/tvEmail"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvEmail"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="farhan713@mail.com"
+                        android:textSize="@dimen/_11sdp"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
+                        app:layout_constraintEnd_toEndOf="@id/tvName"
+                        app:layout_constraintStart_toStartOf="@id/tvName"
+                        app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_stroke"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:paddingHorizontal="@dimen/_15sdp"
+                        android:paddingVertical="@dimen/_4sdp"
+                        android:textColor="@color/brown"
+                        app:layout_constraintTop_toTopOf="@+id/ivProfileImage"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivProfileImage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="Edit"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivMobile"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_mobile"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/clProfile"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tvPhoneTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/phone_number_txt"
+                    app:layout_constraintStart_toEndOf="@+id/ivMobile"
+                    app:layout_constraintTop_toTopOf="@+id/ivMobile"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivMobile"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="AnwerSheikh@gmail.com"
+                    app:layout_constraintStart_toStartOf="@+id/tvPhoneTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/ivMobile"/>
+
+                <View
+                    android:id="@+id/viewPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#33714829"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPhone"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/icAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_address"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="@+id/ivMobile"
+                    app:layout_constraintTop_toBottomOf="@+id/viewPhone"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tvAddressTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/address_txt"
+                    app:layout_constraintStart_toEndOf="@+id/icAddress"
+                    app:layout_constraintTop_toTopOf="@+id/icAddress"
+                    app:layout_constraintBottom_toBottomOf="@+id/icAddress"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="C-94, Sector 63, Kuwait"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tvAddressTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/icAddress"/>
+
+                <View
+                    android:id="@+id/viewAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#33714829"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAddress"/>
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivZone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_pin_loc"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="@+id/ivMobile"
+                    app:layout_constraintTop_toBottomOf="@+id/viewAddress"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tvZoneTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/zone_txt"
+                    app:layout_constraintStart_toEndOf="@+id/ivZone"
+                    app:layout_constraintTop_toTopOf="@+id/ivZone"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivZone"/>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvZone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="Zone - 02"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tvZoneTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/ivZone"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/llVehicleInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="Vehicle Name"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etVehicleName"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    style="@style/edit_text"
+                    android:hint="Enter Vehicle Name"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:inputType="text"
+                    android:editable="false"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:background="@drawable/button_stroke" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Vehicle Registration Number"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etVehichleRegistrationNumber"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    style="@style/edit_text"
+                    android:hint="Enter Vehicle Registration Number"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:inputType="text"
+                    android:editable="false"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:background="@drawable/button_stroke" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Vehicle Images" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:weightSum="2"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivVehicle1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="#33E0DCDC"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:src="@drawable/ic_placeholder"/>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivVehicle2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="#33E0DCDC"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:src="@drawable/ic_placeholder"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Identity proof"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:weightSum="2"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivIdentity1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                        android:scaleType="centerCrop"
+                        android:background="#33E0DCDC"
+                        android:clipToOutline="true"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:src="@drawable/ic_placeholder"/>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivIdentity2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="#33E0DCDC"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:src="@drawable/ic_placeholder"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Driving license"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:weightSum="2"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivDriving1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="#33E0DCDC"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:src="@drawable/ic_placeholder"/>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivDriving2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="#33E0DCDC"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:src="@drawable/ic_placeholder"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Vehicle insurance"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:weightSum="2"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivVehicleInsurance"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="#33E0DCDC"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:src="@drawable/ic_placeholder"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPollutionPaper"
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Pollution paper"/>
+
+                <LinearLayout
+                    android:id="@+id/llPollutionPaper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:weightSum="2"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivPollutionPaper"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="#33E0DCDC"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:src="@drawable/ic_placeholder"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvRegistration"
+                    style="@style/edit_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Registration certificate"/>
+
+                <LinearLayout
+                    android:id="@+id/llRegistration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:weightSum="2"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivRegistration1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="#33E0DCDC"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:src="@drawable/ic_placeholder"/>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivRegistration2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_90sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_horizontal"
+                        app:shapeAppearanceOverlay="@style/rounded_corner_5sdp"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="#33E0DCDC"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:src="@drawable/ic_placeholder"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

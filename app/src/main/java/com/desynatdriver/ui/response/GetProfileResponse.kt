@@ -57,11 +57,11 @@ data class GetProfileResponse(
         @SerializedName("password")
         val password: String,
         @SerializedName("pollution_paper")
-        val pollutionPaper: List<Any>,
+        val pollutionPaper: List<PollutionPaper>,
         @SerializedName("profile_pic")
         val profilePic: String,
         @SerializedName("registration_certificate")
-        val registrationCertificate: List<Any>,
+        val registrationCertificate: List<RegistrationCertificate>,
         @SerializedName("state")
         val state: String,
         @SerializedName("status")
@@ -104,6 +104,44 @@ data class GetProfileResponse(
             val isoCode: String,
             @SerializedName("name")
             val name: String,
+            @SerializedName("updated_at")
+            val updatedAt: String
+        )
+
+        data class PollutionPaper(
+            @SerializedName("created_at")
+            val createdAt: String,
+            @SerializedName("delivery_boy_id")
+            val deliveryBoyId: Int,
+            @SerializedName("document_path")
+            val documentPath: String,
+            @SerializedName("document_type")
+            val documentType: String,
+            @SerializedName("id")
+            val id: Int,
+            @SerializedName("is_front")
+            val isFront: Int,
+            @SerializedName("status")
+            val status: Int,
+            @SerializedName("updated_at")
+            val updatedAt: String
+        )
+
+        data class RegistrationCertificate(
+            @SerializedName("created_at")
+            val createdAt: String,
+            @SerializedName("delivery_boy_id")
+            val deliveryBoyId: Int,
+            @SerializedName("document_path")
+            val documentPath: String,
+            @SerializedName("document_type")
+            val documentType: String,
+            @SerializedName("id")
+            val id: Int,
+            @SerializedName("is_front")
+            val isFront: Int,
+            @SerializedName("status")
+            val status: Int,
             @SerializedName("updated_at")
             val updatedAt: String
         )

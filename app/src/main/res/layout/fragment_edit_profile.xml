@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.fragment.EditProfileFragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_gravity="center_horizontal"
+                app:shapeAppearanceOverlay="@style/circle_image"
+                android:scaleType="centerCrop"
+                android:clipToOutline="true"
+                android:src="@drawable/ic_user"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_stroke"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/brown"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_6sdp"
+               android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="Change Image"/>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="First Name"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etFirstName"
+            android:layout_width="match_parent"
+            style="@style/edit_text"
+            android:hint="Enter First Name"
+            android:inputType="textCapSentences"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:background="@drawable/edit_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:text="Last Name"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etLastName"
+            android:layout_width="match_parent"
+            style="@style/edit_text"
+            android:hint="Enter Last Name"
+            android:inputType="textCapSentences"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/edit_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:text="Mobile Number"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clMobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:background="@drawable/edit_back">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountryPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="+965"
+                android:paddingVertical="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etMobileNumber"
+                app:layout_constraintBottom_toBottomOf="@+id/etMobileNumber"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etMobileNumber"
+                android:layout_width="0dp"
+                style="@style/edit_text"
+                android:hint="Enter Mobile Number"
+                android:inputType="number"
+                android:background="@null"
+                android:maxLength="15"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:paddingHorizontal="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvCountryPicker"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:text="Email Address"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            style="@style/edit_text"
+            android:hint="Enter Email Address"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/edit_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="Address Line 1"/>
+
+        <RelativeLayout
+            android:id="@+id/relAddressLine1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:background="@drawable/edit_back">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etAddressLine1"
+                android:layout_width="match_parent"
+                style="@style/edit_text"
+                android:hint="Enter Address Line 1"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@null"
+                android:layout_toLeftOf="@+id/ivCurrentLoc"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCurrentLoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/ic_current_loc"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="Address Line 2"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etAddressLine2"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            style="@style/edit_text"
+            android:singleLine="true"
+            android:hint="Enter Address Line 2"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:inputType="text"
+            android:background="@drawable/edit_back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_7sdp"
+                android:text="City/District"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/edit_text_title"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:text="State"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etCity"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                style="@style/edit_text"
+                android:hint="Enter City/District"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_7sdp"
+                android:inputType="number"
+                android:background="@drawable/edit_back" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etState"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                style="@style/edit_text"
+                android:hint="Enter State"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:inputType="number"
+                android:background="@drawable/edit_back" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/edit_text_title"
+            android:layout_width="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="Select Zone"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etZone"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            style="@style/edit_text"
+            android:hint="Select Zone"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:inputType="text"
+            android:editable="false"
+            android:focusable="false"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_drop_down"
+            android:background="@drawable/edit_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnEdit"
+            style="@style/button"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:text="Save Changes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword"/>
+
+    </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
