@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
+import android.text.InputFilter
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
@@ -286,6 +287,28 @@ object CommonMethod {
             text,
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
+    }
+
+    fun applyArabicOnlyFilter(editText: EditText) {
+
+        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+
+            // Block English alphabets
+            val englishRegex = Regex("[a-zA-Z]")
+
+            if (source != null && source.contains(englishRegex)) {
+                return@InputFilter ""
+            }
+
+            // Block leading space
+            if (dstart == 0 && source.startsWith(" ")) {
+                return@InputFilter ""
+            }
+
+            return@InputFilter null
+        }
+
+        editText.filters = arrayOf(filter)
     }
 
     fun formatDate(date:String,input:String="dd/MM/yyyy",output:String="yyyy-MM-dd"):String{

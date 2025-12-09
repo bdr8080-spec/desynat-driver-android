@@ -8,12 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.databinding.FragmentProfileBinding
+import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProfileFragment : BaseFragment() {
     private var binding: FragmentProfileBinding?=null
     var profileInfo : GetProfileResponse.Data?=null
+    var selectedTab = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,30 +58,48 @@ class ProfileFragment : BaseFragment() {
             etVehicleName.setText(profileInfo?.vehicleName)
             etVehichleRegistrationNumber.setText(profileInfo?.vehicleRegNo)
 
-            if (!profileInfo?.registrationCertificate.isNullOrEmpty()) {
-                if(profileInfo?.registrationCertificate?.get(0)==null){
-                    ivRegistration1.isVisible = false
-                }
-                if(profileInfo?.registrationCertificate?.get(1)==null){
-                    ivRegistration2.isVisible = false
+            val certificateList = profileInfo?.registrationCertificate
+
+            if (!certificateList.isNullOrEmpty()) {
+
+                if (certificateList.size > 0 && certificateList[0] != null) {
+                    ivRegistration1.isVisible = true
+                    loadDocument(ivRegistration1, certificateList[0].documentPath)
+                } else {
+                    ivRegistration1.isInvisible = true
                 }
 
-                loadDocument(ivRegistration1, profileInfo?.registrationCertificate?.get(0)?.documentPath)
-                loadDocument(ivRegistration2, profileInfo?.registrationCertificate?.get(1)?.documentPath)
+                if (certificateList.size > 1 && certificateList[1] != null) {
+                    ivRegistration2.isVisible = true
+                    loadDocument(ivRegistration2, certificateList[1].documentPath)
+                } else {
+                    ivRegistration2.isInvisible = true
+                }
 
-            }
-            else{
+            } else {
                 tvRegistration.isVisible = false
                 llRegistration.isVisible = false
             }
 
-            if (!profileInfo?.pollutionPaper.isNullOrEmpty()){
-                loadDocument(ivPollutionPaper, profileInfo?.pollutionPaper?.get(0)?.documentPath)
-            }
-            else{
+
+            val pollutionList = profileInfo?.pollutionPaper
+
+            if (!pollutionList.isNullOrEmpty()) {
+
+                val firstItem = pollutionList.getOrNull(0)
+
+                if (firstItem != null && !firstItem.documentPath.isNullOrEmpty()) {
+                    ivPollutionPaper.isVisible = true
+                    loadDocument(ivPollutionPaper, firstItem.documentPath)
+                } else {
+                    ivPollutionPaper.isVisible = false
+                }
+
+            } else {
                 tvPollutionPaper.isVisible = false
                 llPollutionPaper.isVisible = false
             }
+
 
             loadDocument(ivDriving1, profileInfo?.drivingLicense?.get(0)?.documentPath)
             loadDocument(ivDriving2, profileInfo?.drivingLicense?.get(1)?.documentPath)
@@ -90,6 +112,57 @@ class ProfileFragment : BaseFragment() {
 
             loadDocument(ivVehicleInsurance, profileInfo?.vehicleInsurance?.get(0)?.documentPath)
 
+            requireActivity().onBackPressedDispatcher.addCallback(
+                viewLifecycleOwner,
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+
+                        if(llVehicleInfo.isVisible) {
+                                selectedTab = 0
+                                tvToolbar.text = "My Profile"
+                                ivBack.isVisible = false
+                                tvProfile.setTextColor(requireContext().getColor(R.color.white))
+                                tvVehicleInfo.setTextColor(requireContext().getColor(R.color.black))
+                                tvProfile.setBackgroundResource(R.drawable.selected_left_tab)
+                                tvVehicleInfo.background = null
+                                clDriverProfile.isVisible = true
+                                llVehicleInfo.isVisible = false
+
+                            (requireActivity() as HomeActivity).showBottomBar()
+
+                        } else {
+                            isEnabled = false
+                            requireActivity().onBackPressedDispatcher.onBackPressed()
+                        }
+                    }
+                }
+            )
+
+            if (selectedTab==1){
+                tvToolbar.text = "Vehicle Info"
+                (requireActivity() as HomeActivity).hideBottomBar()
+                ivBack.isVisible = true
+                tvVehicleInfo.setTextColor(requireActivity().getColor(R.color.white))
+                tvProfile.setTextColor(requireActivity().getColor(R.color.black))
+                tvVehicleInfo.setBackgroundResource(R.drawable.selected_right_tab)
+                tvProfile.background = null
+                clDriverProfile.isVisible = false
+                llVehicleInfo.isVisible = true
+
+            }
+            else{
+                tvToolbar.text = "My Profile"
+                (requireActivity() as HomeActivity).showBottomBar()
+                ivBack.isVisible = false
+                tvProfile.setTextColor(requireActivity().getColor(R.color.white))
+                tvVehicleInfo.setTextColor(requireActivity().getColor(R.color.black))
+                tvProfile.setBackgroundResource(R.drawable.selected_left_tab)
+                tvVehicleInfo.background = null
+                clDriverProfile.isVisible = true
+                llVehicleInfo.isVisible = false
+            }
+
+
         }
     }
 
@@ -100,7 +173,24 @@ class ProfileFragment : BaseFragment() {
                 findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
             }
 
+            ivBack.setOnClickListener {
+                selectedTab = 0
+                tvToolbar.text = "My Profile"
+                (requireActivity() as HomeActivity).showBottomBar()
+                ivBack.isVisible = false
+                tvProfile.setTextColor(requireActivity().getColor(R.color.white))
+                tvVehicleInfo.setTextColor(requireActivity().getColor(R.color.black))
+                tvProfile.setBackgroundResource(R.drawable.selected_left_tab)
+                tvVehicleInfo.background = null
+                clDriverProfile.isVisible = true
+                llVehicleInfo.isVisible = false
+            }
+
             tvProfile.setOnClickListener {
+                selectedTab = 0
+                tvToolbar.text = "My Profile"
+                (requireActivity() as HomeActivity).showBottomBar()
+                ivBack.isVisible = false
                 tvProfile.setTextColor(requireActivity().getColor(R.color.white))
                 tvVehicleInfo.setTextColor(requireActivity().getColor(R.color.black))
                 tvProfile.setBackgroundResource(R.drawable.selected_left_tab)
@@ -110,12 +200,17 @@ class ProfileFragment : BaseFragment() {
             }
 
             tvVehicleInfo.setOnClickListener {
+                selectedTab = 1
+                tvToolbar.text = "Vehicle Info"
+                (requireActivity() as HomeActivity).hideBottomBar()
+                ivBack.isVisible = true
                 tvVehicleInfo.setTextColor(requireActivity().getColor(R.color.white))
                 tvProfile.setTextColor(requireActivity().getColor(R.color.black))
                 tvVehicleInfo.setBackgroundResource(R.drawable.selected_right_tab)
                 tvProfile.background = null
                 clDriverProfile.isVisible = false
                 llVehicleInfo.isVisible = true
+
             }
 
             ivVehicle1.setOnClickListener {

@@ -23,7 +23,10 @@ object Constants {
     const val DASHBOARD = "/api/deliveryboy/delivery_boy_dashboard"
     const val LOGOUT = "/api/deliveryboy/logout"
     const val GET_COUNTRY = "/api/admin/get_countries"
-    const val GET_PROFILE = "/api/deliveryboy/delivery_boy_profile"
     const val GET_KUWAIT_ZONE = "/api/deliveryboy/get_kuwait_zones"
+
+    const val GET_PROFILE = "/api/deliveryboy/get_profile_details"
+    const val UPDATE_PROFILE = "/api/deliveryboy/update_profile"
+    const val DUTY_ON_OFF = "/api/deliveryboy/duty_on_off"
 
 }

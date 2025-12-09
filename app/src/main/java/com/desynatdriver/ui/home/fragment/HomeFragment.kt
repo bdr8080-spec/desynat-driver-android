@@ -33,7 +33,7 @@ class HomeFragment : BaseFragment() {
     private var ongoingDeliveriesList = ArrayList<String>()
     private var newDeliveriesList = ArrayList<String>()
     private var user: GetProfileResponse.Data?=null
-    private var status = 1
+    private var status = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,8 +98,7 @@ class HomeFragment : BaseFragment() {
 
         binding?.apply {
             tvSwitch.setOnClickListener {
-                status = if (status==0) 1 else 0
-                updateStatus()
+                updateDutyStatus()
             }
 
             etFrom.setOnClickListener {
@@ -132,12 +131,19 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    private fun updateDutyStatus() {
+        val map = HashMap<String,Any>()
+        map["delivery_boy_id"] = user?.id.toString()
+        viewModel.dutyOnOff(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        isObserver = true
+    }
 
     private fun updateStatus(){
         binding?.apply {
             if(status==1){
                 tvSwitch.text = "On Duty"
-                tvSwitch.setTextColor(Color.parseColor("#8B5E3C"))
+                tvSwitch.setTextColor(Color.parseColor("#000000"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds( 0,0,R.drawable.switch_on,0 )
             }
             else{
@@ -166,7 +172,28 @@ class HomeFragment : BaseFragment() {
                 response?.let {
                 user = response.data
                     SharedPreference.get(requireActivity()).saveUser(response.data)
+                    status = response.data.onDuty
+                    updateStatus()
                 }
+                isObserver = false
+            }
+        }
+
+
+        viewModel.dutyOnOffResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                user?.onDuty = response.data.onDuty
+                if (response.data.onDuty==1){
+                    showToast("Duty on successfully")
+                }
+                else{
+                    showToast("Duty off successfully")
+                }
+
+                user?.let { SharedPreference.get(requireActivity()).saveUser(it) }
+                status = response.data.onDuty
+                updateStatus()
                 isObserver = false
             }
         }

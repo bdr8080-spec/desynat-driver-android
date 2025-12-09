@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
             android:text="Confirmed"
-            android:textSize="@dimen/_13sdp"
+            android:textSize="@dimen/_11sdp"
             android:textColor="#17854C"
             android:paddingVertical="@dimen/_5sdp"
             android:paddingHorizontal="@dimen/_15sdp"

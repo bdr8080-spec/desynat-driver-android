@@ -19,6 +19,7 @@ import com.desynatdriver.data.view_model.HomeViewModel
 import com.desynatdriver.databinding.FragmentEditProfileBinding
 import com.desynatdriver.ui.UpdateLocationActivity
 import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
+import com.desynatdriver.ui.home.response.UpdateProfileRequest
 import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.ImagePicker
@@ -34,6 +35,7 @@ class EditProfileFragment : BaseFragment() {
     var profileInfo : GetProfileResponse.Data?=null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isProfileObserver = true
     var lat:Double=0.0
     var lng:Double=0.0
     var address:String=""
@@ -79,8 +81,8 @@ class EditProfileFragment : BaseFragment() {
             toolbar.tvToolbar.text = "Edit"
             setData()
 
-            CommonMethod.removeSpace(etFirstName)
-            CommonMethod.removeSpace(etLastName)
+            CommonMethod.removeSpace(etFullNameEnglish)
+            CommonMethod.applyArabicOnlyFilter(etFullNameArabic)
             CommonMethod.removeAllTextSpaces(etEmail)
             CommonMethod.removeSpace(etAddressLine2)
             CommonMethod.removeSpace(etCity)
@@ -93,6 +95,7 @@ class EditProfileFragment : BaseFragment() {
                 permissionLauncher
             ) { uri ->
                 uri?.let {
+                    ivProfileImage.setImageURI(it)
                     uploadFile(CommonMethod.uriToFile(requireActivity(), it))
                 }
             }
@@ -101,13 +104,14 @@ class EditProfileFragment : BaseFragment() {
 
     private fun setData() {
         binding?.apply {
+            if (imageUrl==""){
             ivProfileImage.load(profileInfo?.profilePic) {
                 crossfade(true)
                 placeholder(R.drawable.ic_user)
                 error(R.drawable.ic_user)
-            }
-            etFirstName.setText(profileInfo?.fullNameEnglish)
-            etLastName.setText(profileInfo?.fullNameArabic)
+            }}
+            etFullNameEnglish.setText(profileInfo?.fullNameEnglish)
+            etFullNameArabic.setText(profileInfo?.fullNameArabic)
             tvCountryPicker.text = profileInfo?.countryCode
             etMobileNumber.setText(profileInfo?.mobile)
             etEmail.setText(profileInfo?.email)
@@ -118,6 +122,8 @@ class EditProfileFragment : BaseFragment() {
             zoneId = profileInfo?.zoneId.toString()
             imageUrl = profileInfo?.profilePic.toString()
             etZone.setText(profileInfo?.zoneInfo?.nameEnglish)
+            lat = profileInfo?.let?:0.0
+            lng = profileInfo?.long?:0.0
         }
     }
 
@@ -141,12 +147,12 @@ class EditProfileFragment : BaseFragment() {
             }
 
             etZone.setOnClickListener {
-                showZoneDropdown(etZone)
+              //  showZoneDropdown(etZone)
             }
 
             btnEdit.setOnClickListener {
                 if (isValid()){
-
+                   editProfile()
                 }
             }
         }
@@ -158,6 +164,28 @@ class EditProfileFragment : BaseFragment() {
         viewModel.uploadImage(image)
         ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
         isImageObserver = true
+    }
+
+    fun editProfile(){
+        val request = UpdateProfileRequest(
+            addressLine1 = binding?.etAddressLine1?.text?.trim().toString(),
+            addressLine2 = binding?.etAddressLine2?.text?.trim().toString(),
+            city = binding?.etCity?.text?.trim().toString(),
+            countryCode = profileInfo?.countryCode.toString(),
+            deliveryBoyId = profileInfo?.id?:0,
+            email = binding?.etEmail?.text?.trim().toString(),
+            fullNameArabic = binding?.etFullNameArabic?.text?.trim().toString(),
+            fullNameEnglish = binding?.etFullNameEnglish?.text?.trim().toString(),
+            let = lat.toString(),
+            long = lng.toString(),
+            mobile = profileInfo?.mobile.toString(),
+            profilePic = imageUrl,
+            zoneId = profileInfo?.zoneId.toString(),
+            state =  binding?.etState?.text?.trim().toString(),
+        )
+        viewModel.editProfile(request)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
+        isObserver = true
     }
 
     override fun observe() {
@@ -188,6 +216,28 @@ class EditProfileFragment : BaseFragment() {
                     imageUrl = response.data.url
                 }
                 isImageObserver = false
+            }
+        }
+
+        viewModel.editProfileResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                getProfile()
+                isObserver = false
+            }
+        }
+
+        viewModel.profileResult.observe(viewLifecycleOwner) { response ->
+            if (isProfileObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                response?.let {
+                    SharedPreference.get(requireActivity()).saveUser(response.data)
+                    CommonMethod.showSuccessDialog(requireContext(),"Profile update successfully"){
+                        findNavController().popBackStack()
+                    }
+                }
+
+
+                isProfileObserver = false
             }
         }
 
@@ -292,13 +342,13 @@ class EditProfileFragment : BaseFragment() {
                 showToast("Please Upload Profile Image")
                 return false
             }
-            if (etFirstName.text.toString().trim().isEmpty()) {
-                showToast("Please Enter First Name")
+            if (etFullNameEnglish.text.toString().trim().isEmpty()) {
+                showToast("Please Enter Full Name in English")
                 return false
             }
 
-            if (etLastName.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Last Name")
+            if (etFullNameArabic.text.toString().trim().isEmpty()) {
+                showToast("Please Enter Full Name in Arabic")
                 return false
             }
 
@@ -350,5 +400,9 @@ class EditProfileFragment : BaseFragment() {
         return true
     }
 
+    private fun getProfile() {
+        viewModel.getProfile()
+        isProfileObserver = true
+    }
 
 }

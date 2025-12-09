@@ -26,12 +26,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp">
+            android:layout_marginHorizontal="@dimen/_10sdp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivProfileImage"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
                 android:layout_gravity="center_horizontal"
                 app:shapeAppearanceOverlay="@style/circle_image"
                 android:scaleType="centerCrop"
@@ -43,8 +43,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_stroke"
-                android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/brown"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:textColor="#9E7853"
                 android:paddingHorizontal="@dimen/_15sdp"
                 android:paddingVertical="@dimen/_6sdp"
                android:layout_alignParentEnd="true"
@@ -58,13 +58,13 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="First Name"/>
+            android:text="Full Name"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etFirstName"
+            android:id="@+id/etFullNameEnglish"
             android:layout_width="match_parent"
             style="@style/edit_text"
-            android:hint="Enter First Name"
+            android:hint="Enter Full Name"
             android:inputType="textCapSentences"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
             android:layout_marginTop="@dimen/_5sdp"
@@ -76,13 +76,13 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="Last Name"/>
+            android:text="Full Name (in Arabic)"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etLastName"
+            android:id="@+id/etFullNameArabic"
             android:layout_width="match_parent"
             style="@style/edit_text"
-            android:hint="Enter Last Name"
+            android:hint="Enter Full Name"
             android:inputType="textCapSentences"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
@@ -118,6 +118,17 @@
                 app:layout_constraintTop_toTopOf="@+id/etMobileNumber"
                 app:layout_constraintBottom_toBottomOf="@+id/etMobileNumber"/>
 
+            <View
+                android:id="@+id/viewMobile"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="#80000000"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginVertical="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/tvCountryPicker"
+                app:layout_constraintTop_toTopOf="@+id/tvCountryPicker"
+                app:layout_constraintBottom_toBottomOf="@+id/tvCountryPicker"/>
+
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etMobileNumber"
                 android:layout_width="0dp"
@@ -126,12 +137,15 @@
                 android:inputType="number"
                 android:background="@null"
                 android:maxLength="15"
+                android:editable="false"
+                android:focusable="false"
+                android:clickable="false"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:paddingHorizontal="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvCountryPicker"/>
+                app:layout_constraintStart_toEndOf="@+id/viewMobile"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -150,6 +164,9 @@
             android:hint="Enter Email Address"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="textEmailAddress"
+            android:editable="false"
+            android:focusable="false"
+            android:clickable="false"
             android:background="@drawable/edit_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -174,6 +191,9 @@
                 android:hint="Enter Address Line 1"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:background="@null"
+                android:editable="false"
+                android:focusable="false"
+                android:clickable="false"
                 android:layout_toLeftOf="@+id/ivCurrentLoc"/>
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -245,7 +265,7 @@
                 android:hint="Enter City/District"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_7sdp"
-                android:inputType="number"
+                android:inputType="text"
                 android:background="@drawable/edit_back" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -256,7 +276,7 @@
                 android:hint="Enter State"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:inputType="number"
+                android:inputType="text"
                 android:background="@drawable/edit_back" />
 
         </LinearLayout>
@@ -266,7 +286,7 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Select Zone"/>
+            android:text="Zone"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etZone"
@@ -278,8 +298,7 @@
             android:inputType="text"
             android:editable="false"
             android:focusable="false"
-            android:clickable="true"
-            android:drawableEnd="@drawable/ic_drop_down"
+            android:clickable="false"
             android:background="@drawable/edit_back" />
 
         <androidx.appcompat.widget.AppCompatTextView

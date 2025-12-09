@@ -3,7 +3,9 @@ package com.desynatdriver.network
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
+import com.desynatdriver.ui.home.response.DutyOnOffResponse
 import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
+import com.desynatdriver.ui.home.response.UpdateProfileRequest
 import com.desynatdriver.ui.response.CommonResponse
 import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.Constants
@@ -67,5 +69,13 @@ interface ApiServices {
 
     @GET(Constants.GET_KUWAIT_ZONE)
     suspend fun getKuwaitZone():Response<GetKuwaitZoneResponse>
+
+    @POST(Constants.UPDATE_PROFILE)
+    suspend fun editProfile(@Body request: UpdateProfileRequest):Response<GetProfileResponse>
+
+    @POST(Constants.DUTY_ON_OFF)
+    suspend fun dutyOnOff(
+        @Body body: HashMap<String, Any>
+    ): Response<DutyOnOffResponse>
 
 }

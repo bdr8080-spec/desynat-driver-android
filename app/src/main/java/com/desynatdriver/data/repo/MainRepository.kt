@@ -9,7 +9,9 @@ import com.desynatdriver.network.ApiServices
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
+import com.desynatdriver.ui.home.response.DutyOnOffResponse
 import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
+import com.desynatdriver.ui.home.response.UpdateProfileRequest
 import com.desynatdriver.ui.response.CommonResponse
 import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.toMultipartPart
@@ -151,6 +153,29 @@ class MainRepository @Inject constructor(
                 api.getKuwaitZone()
             },
             responseLiveData = kuwaitLiveData
+        )
+    }
+
+
+    val editProfileLiveData = SingleLiveEvent<GetProfileResponse>()
+    suspend fun editProfile(request: UpdateProfileRequest
+    ) {
+        handleApiCall(
+            api = {
+                api.editProfile(request)
+            },
+            responseLiveData = editProfileLiveData
+        )
+    }
+
+    val dutyOnOffLiveData = SingleLiveEvent<DutyOnOffResponse>()
+    suspend fun dutyOnOff(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.dutyOnOff(map)
+            },
+            responseLiveData = dutyOnOffLiveData
         )
     }
 

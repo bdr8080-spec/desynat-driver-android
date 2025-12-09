@@ -112,9 +112,9 @@ class HomeActivity : BaseActivity() {
 
                     R.id.profile -> {
                         bottomAdapter?.setSelectedItem(2)
-                        binding?.rvBottomNav?.isVisible = true
-                        binding?.viewBackground?.isVisible = true
-                        enableDrawer(false)
+//                        binding?.rvBottomNav?.isVisible = true
+//                        binding?.viewBackground?.isVisible = true
+//                        enableDrawer(false)
                     }
 
                 else -> {
@@ -313,6 +313,18 @@ class HomeActivity : BaseActivity() {
             Log.e("MapsDebug", "Geocoder failed: ${e.message}")
             Constants.location = "Error fetching address"
         }
+    }
+
+    fun hideBottomBar(){
+        binding?.rvBottomNav?.isVisible = false
+        binding?.viewBackground?.isVisible = false
+        enableDrawer(false)
+    }
+
+    fun showBottomBar(){
+        binding?.rvBottomNav?.isVisible = true
+        binding?.viewBackground?.isVisible = true
+        enableDrawer(false)
     }
 
 }

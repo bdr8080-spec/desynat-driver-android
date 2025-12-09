@@ -7,7 +7,9 @@ import com.desynatdriver.data.repo.MainRepository
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
+import com.desynatdriver.ui.home.response.DutyOnOffResponse
 import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
+import com.desynatdriver.ui.home.response.UpdateProfileRequest
 import com.desynatdriver.ui.response.CommonResponse
 import com.desynatdriver.ui.response.GetProfileResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -71,6 +73,24 @@ class HomeViewModel @Inject constructor(
     fun getKuwaitZone() {
         viewModelScope.launch {
             repository.getKuwaitZone()
+        }
+    }
+
+    val editProfileResult: LiveData<GetProfileResponse>
+        get() = repository.editProfileLiveData
+
+    fun editProfile(request:UpdateProfileRequest) {
+        viewModelScope.launch {
+            repository.editProfile(request)
+        }
+    }
+
+    val dutyOnOffResult: LiveData<DutyOnOffResponse>
+        get() = repository.dutyOnOffLiveData
+
+    fun dutyOnOff(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.dutyOnOff(map)
         }
     }
 

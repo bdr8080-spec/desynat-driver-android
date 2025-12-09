@@ -45,9 +45,9 @@ data class GetProfileResponse(
         @SerializedName("identity_proof")
         val identityProof: List<IdentityProof>,
         @SerializedName("let")
-        val let: Any,
+        val let: Double,
         @SerializedName("long")
-        val long: Any,
+        val long: Double,
         @SerializedName("mobile")
         val mobile: String,
         @SerializedName("otp")
@@ -66,6 +66,8 @@ data class GetProfileResponse(
         val state: String,
         @SerializedName("status")
         val status: String,
+        @SerializedName("on_duty")
+        var onDuty: Int,
         @SerializedName("updated_at")
         val updatedAt: String,
         @SerializedName("vehicle_image")
