@@ -117,5 +117,10 @@
         <item name="cornerSize">@dimen/_5sdp</item>
     </style>
 
+    <style name="rounded_corner_2sdp" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_2sdp</item>
+    </style>
+
 
 </resources>

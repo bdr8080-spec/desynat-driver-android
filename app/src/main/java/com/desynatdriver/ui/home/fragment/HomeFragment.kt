@@ -1,21 +1,17 @@
 package com.desynatdriver.ui.home.fragment
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.desynatdriver.R
 import com.desynatdriver.adapter.NewDeliveriesAdapter
 import com.desynatdriver.adapter.OngoingDeliveriesAdapter
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.data.view_model.HomeViewModel
-import com.desynatdriver.data.view_model.LocationViewModel
 import com.desynatdriver.databinding.FragmentHomeBinding
-import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.ProgressDialogUtils

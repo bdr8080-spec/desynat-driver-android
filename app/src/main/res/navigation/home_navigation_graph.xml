@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/deliveries"
-        android:name="com.desynatdriver.ui.home.fragment.DeliveriesFragment"
+        android:name="com.desynatdriver.ui.home.fragment.deliveries.DeliveriesFragment"
         android:label="Deliveries Fragment"
         tools:layout="@layout/fragment_deliveries"/>
 

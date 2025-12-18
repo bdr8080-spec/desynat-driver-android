@@ -1,15 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.fragment.DeliveriesFragment">
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.fragment.deliveries.DeliveriesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="My Deliveries"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Under Development"
-        android:gravity="center"/>
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvToolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:background="@drawable/search_bg"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:hint="Search"
+                android:paddingStart="12dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="#5B6163"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivFilter"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="1dp"
+                android:background="@drawable/filter_bg"
+                android:padding="16dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_filter"
+                app:layout_constraintTop_toTopOf="@id/etSearch"
+                app:layout_constraintBottom_toBottomOf="@id/etSearch"
+                app:layout_constraintEnd_toEndOf="@id/etSearch" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llTab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@+id/llCategory">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="All(0)"
+                    android:textColor="@color/brown"
+                    android:textSize="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvNew"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <View
+                    android:id="@+id/viewAll"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:background="@color/brown"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAll"
+                    app:layout_constraintStart_toStartOf="@+id/tvAll"
+                    app:layout_constraintEnd_toEndOf="@+id/tvAll"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNew"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="New"
+                    android:textColor="#B3B3B3"
+                    android:textSize="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    app:layout_constraintStart_toEndOf="@+id/tvAll"
+                    app:layout_constraintEnd_toStartOf="@+id/tvOngoing"
+                    app:layout_constraintTop_toTopOf="@+id/tvAll"/>
+
+                <View
+                    android:id="@+id/viewActive"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:background="#B3B3B3"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNew"
+                    app:layout_constraintStart_toStartOf="@+id/tvNew"
+                    app:layout_constraintEnd_toEndOf="@+id/tvNew"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvOngoing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ongoing"
+                    android:textColor="#B3B3B3"
+                    android:textSize="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    app:layout_constraintStart_toEndOf="@+id/tvNew"
+                    app:layout_constraintTop_toTopOf="@+id/tvAll"
+                    app:layout_constraintEnd_toStartOf="@+id/tvCompleted"/>
+
+                <View
+                    android:id="@+id/viewOngoing"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:background="#B3B3B3"
+                    app:layout_constraintTop_toBottomOf="@+id/tvOngoing"
+                    app:layout_constraintStart_toStartOf="@+id/tvOngoing"
+                    app:layout_constraintEnd_toEndOf="@+id/tvOngoing"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCompleted"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Completed"
+                    android:textColor="#B3B3B3"
+                    android:textSize="@dimen/_10sdp"
+                    android:gravity="end"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    app:layout_constraintStart_toEndOf="@+id/tvOngoing"
+                    app:layout_constraintTop_toTopOf="@+id/tvAll"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <View
+                    android:id="@+id/viewCompleted"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:background="#B3B3B3"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCompleted"
+                    app:layout_constraintStart_toStartOf="@+id/tvCompleted"
+                    app:layout_constraintEnd_toEndOf="@+id/tvCompleted"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMyDeliveries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginTop="@dimen/_15sdp"
+                tools:listitem="@layout/item_my_deliveries"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
