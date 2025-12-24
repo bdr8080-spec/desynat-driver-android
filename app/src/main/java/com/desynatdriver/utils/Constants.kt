@@ -29,4 +29,13 @@ object Constants {
     const val UPDATE_PROFILE = "/api/deliveryboy/update_profile"
     const val DUTY_ON_OFF = "/api/deliveryboy/duty_on_off"
 
+    const val GET_ALL_ORDER = "/api/deliveryboy/get_all_orders"
+    const val GET_NEW_ORDER = "/api/deliveryboy/get_new_orders"
+    const val GET_ONGOING_ORDER = "/api/deliveryboy/get_ongoing_orders"
+    const val ORDER_DETAIL = "/api/deliveryboy/order_details"
+    const val UPDATE_DELIVERY_STATUS = "/api/deliveryboy/update_delivery_status"
+    const val PICK_ORDER = "/api/deliveryboy/pick_order"
+    const val GET_COMPLETED_ORDER = "/api/deliveryboy/get_completed_orders"
+    const val GET_REASON = "/api/deliveryboy/get_reasons"
+
 }

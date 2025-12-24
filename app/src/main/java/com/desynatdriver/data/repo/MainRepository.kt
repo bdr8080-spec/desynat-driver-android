@@ -9,6 +9,9 @@ import com.desynatdriver.network.ApiServices
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
+import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
+import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
+import com.desynatdriver.ui.home.fragment.deliveries.response.GetReasonResponse
 import com.desynatdriver.ui.home.response.DutyOnOffResponse
 import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
 import com.desynatdriver.ui.home.response.UpdateProfileRequest
@@ -156,7 +159,6 @@ class MainRepository @Inject constructor(
         )
     }
 
-
     val editProfileLiveData = SingleLiveEvent<GetProfileResponse>()
     suspend fun editProfile(request: UpdateProfileRequest
     ) {
@@ -176,6 +178,93 @@ class MainRepository @Inject constructor(
                 api.dutyOnOff(map)
             },
             responseLiveData = dutyOnOffLiveData
+        )
+    }
+
+    val allOrderLiveData = SingleLiveEvent<GetAllOrderResponse>()
+    suspend fun getAllOrder(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getAllOrder(map)
+            },
+            responseLiveData = allOrderLiveData
+        )
+    }
+
+    val newOrderLiveData = SingleLiveEvent<GetAllOrderResponse>()
+    suspend fun getNewOrder(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getNewOrder(map)
+            },
+            responseLiveData = newOrderLiveData
+        )
+    }
+
+    val ongoingOrderLiveData = SingleLiveEvent<GetAllOrderResponse>()
+    suspend fun getOngoingOrder(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getOngoingOrder(map)
+            },
+            responseLiveData = ongoingOrderLiveData
+        )
+    }
+
+    val completedOrderLiveData = SingleLiveEvent<GetAllOrderResponse>()
+    suspend fun getCompletedOrder(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getCompletedOrder(map)
+            },
+            responseLiveData = completedOrderLiveData
+        )
+    }
+    val orderDetailLiveData = SingleLiveEvent<DeliveryDetailResponse>()
+    suspend fun orderDetail(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.orderDetail(map)
+            },
+            responseLiveData = orderDetailLiveData
+        )
+    }
+
+    val pickOrderLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun pickOrder(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.pickOrder(map)
+            },
+            responseLiveData = pickOrderLiveData
+        )
+    }
+
+    val updateDeliveryStatusLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun updateDeliveryStatus(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.updateDeliveryStatus(map)
+            },
+            responseLiveData = updateDeliveryStatusLiveData
+        )
+    }
+
+    val getReasonLiveData = SingleLiveEvent<GetReasonResponse>()
+    suspend fun getReason(type:Int
+    ) {
+        handleApiCall(
+            api = {
+                api.getReason(type)
+            },
+            responseLiveData = getReasonLiveData
         )
     }
 

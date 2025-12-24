@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.fragment.deliveries.NewOrderFragment">
+
+   <fragment
+       android:id="@+id/mapFragment"
+       android:name="com.google.android.gms.maps.SupportMapFragment"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_marginBottom="-50dp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintBottom_toTopOf="@+id/clCard"/>
+
+   <androidx.appcompat.widget.AppCompatImageView
+       android:id="@+id/ivBack"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+      android:src="@drawable/ic_map_back"
+       android:paddingHorizontal="@dimen/_15sdp"
+       android:paddingVertical="@dimen/_20sdp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/clCard"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginHorizontal="@dimen/_15sdp"
+       android:layout_marginBottom="@dimen/_20sdp"
+       android:background="@drawable/card_stroke_background"
+       android:backgroundTint="@color/white"
+       android:padding="@dimen/_10sdp"
+       android:paddingBottom="@dimen/_10sdp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       tools:layout_editor_absoluteX="19dp">
+
+      <com.google.android.material.imageview.ShapeableImageView
+          android:id="@+id/ivImage"
+          android:layout_width="@dimen/_40sdp"
+          android:layout_height="@dimen/_40sdp"
+          android:clipToOutline="true"
+          android:scaleType="centerCrop"
+          android:src="@drawable/ic_user"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:shapeAppearanceOverlay="@style/circle_image" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tvName"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_10sdp"
+          android:layout_marginEnd="@dimen/_5sdp"
+          android:fontFamily="@font/poppins_semi_bold"
+          android:text="Atif Aslam"
+          android:textColor="@color/black"
+          android:textSize="@dimen/_13sdp"
+          app:layout_constraintEnd_toStartOf="@+id/ivCall"
+          app:layout_constraintStart_toEndOf="@+id/ivImage"
+          app:layout_constraintTop_toTopOf="@+id/ivImage" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tvRating"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_4sdp"
+          android:fontFamily="@font/poppins_medium"
+          android:text="4.0"
+          android:textColor="#1A1C1E"
+          android:textSize="@dimen/_10sdp"
+          app:layout_constraintStart_toStartOf="@+id/tvName"
+          app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+      <androidx.appcompat.widget.AppCompatRatingBar
+          style="@style/Widget.AppCompat.RatingBar.Small"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_2sdp"
+          android:numStars="5"
+          android:progressTint="#FFCE1B"
+          android:rating="4"
+          app:layout_constraintBottom_toBottomOf="@+id/tvRating"
+          app:layout_constraintStart_toEndOf="@+id/tvRating"
+          app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ivCall"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_call"
+          app:layout_constraintBottom_toBottomOf="@+id/ivImage"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/ivImage"
+          app:tint="#17854C" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/viewPackageDetail"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:background="@drawable/button_stroke"
+          android:fontFamily="@font/poppins_regular"
+          android:paddingVertical="@dimen/_6sdp"
+          android:text="View Package details"
+          android:textAlignment="center"
+          android:textColor="@color/brown"
+          app:layout_constraintTop_toBottomOf="@+id/ivImage" />
+
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/clPickUp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:background="@drawable/card_stroke_background"
+          android:padding="@dimen/_10sdp"
+          app:layout_constraintTop_toBottomOf="@+id/viewPackageDetail">
+
+         <androidx.appcompat.widget.AppCompatImageView
+             android:id="@+id/ivPickup"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/ic_pickup"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+
+         <androidx.appcompat.widget.AppCompatTextView
+             android:id="@+id/tvPickupFrom"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="@dimen/_10sdp"
+             android:fontFamily="@font/poppins_medium"
+             android:text="Pick up from"
+             android:textAlignment="center"
+             android:textColor="@color/black"
+             android:textSize="@dimen/_11sdp"
+             app:layout_constraintBottom_toBottomOf="@+id/ivPickup"
+             app:layout_constraintStart_toEndOf="@+id/ivPickup"
+             app:layout_constraintTop_toTopOf="@+id/ivPickup" />
+
+         <androidx.appcompat.widget.AppCompatTextView
+             android:id="@+id/tvPickupAddress"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:fontFamily="@font/poppins_regular"
+             android:text="4th Floor, A/129, Sun Apartment, Sector 63, Kuwait"
+             android:textColor="#80000000"
+             android:textSize="@dimen/_10sdp"
+             app:layout_constraintEnd_toStartOf="@id/ivPickupNavigate"
+             app:layout_constraintStart_toStartOf="@+id/tvPickupFrom"
+             app:layout_constraintTop_toBottomOf="@+id/tvPickupFrom" />
+
+         <androidx.appcompat.widget.AppCompatImageView
+             android:id="@+id/ivPickupNavigate"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="@dimen/_10sdp"
+             android:src="@drawable/ic_navigate"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/clDrop"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:background="@drawable/card_stroke_background"
+          android:padding="@dimen/_10sdp"
+          app:layout_constraintTop_toBottomOf="@+id/clPickUp">
+
+         <androidx.appcompat.widget.AppCompatImageView
+             android:id="@+id/ivDrop"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/ic_drop"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+
+         <androidx.appcompat.widget.AppCompatTextView
+             android:id="@+id/tvDrop"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="@dimen/_10sdp"
+             android:fontFamily="@font/poppins_medium"
+             android:text="Drop location"
+             android:textAlignment="center"
+             android:textColor="@color/black"
+             android:textSize="@dimen/_11sdp"
+             app:layout_constraintBottom_toBottomOf="@+id/ivDrop"
+             app:layout_constraintStart_toEndOf="@+id/ivDrop"
+             app:layout_constraintTop_toTopOf="@+id/ivDrop" />
+
+         <androidx.appcompat.widget.AppCompatTextView
+             android:id="@+id/tvDropAddress"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:fontFamily="@font/poppins_regular"
+             android:text="4th Floor, A/129, Sun Apartment, Sector 63, Kuwait"
+             android:textColor="#80000000"
+             android:textSize="@dimen/_10sdp"
+             app:layout_constraintEnd_toStartOf="@+id/ivDropNavigate"
+             app:layout_constraintStart_toStartOf="@+id/tvDrop"
+             app:layout_constraintTop_toBottomOf="@+id/tvDrop" />
+
+         <androidx.appcompat.widget.AppCompatImageView
+             android:id="@+id/ivDropNavigate"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="@dimen/_10sdp"
+             android:src="@drawable/ic_navigate"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/btnPickedOrder"
+          style="@style/button"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:padding="@dimen/_8sdp"
+          android:text="Picked Order"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/clDrop" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tvOngoingDeliveries"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:layout_marginEnd="@dimen/_5sdp"
+          android:fontFamily="@font/poppins_bold"
+          android:text="Ongoing Deliveries"
+          android:textColor="@color/black"
+          android:textSize="@dimen/_11sdp"
+          android:visibility="gone"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/btnPickedOrder" />
+
+      <TextView
+          android:id="@+id/tvStatus"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_5sdp"
+          android:layout_marginEnd="@dimen/_8sdp"
+          android:background="@drawable/grey_stroke"
+          android:drawableEnd="@drawable/brown_drop_down"
+          android:fontFamily="@font/poppins_regular"
+          android:gravity="center"
+          android:paddingVertical="@dimen/_8sdp"
+          android:paddingEnd="@dimen/_10sdp"
+          android:text="Picked"
+          android:textColor="@color/black"
+          android:textSize="@dimen/_12sdp"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/tvUpdateStatus"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tvOngoingDeliveries" />
+
+      <TextView
+          android:id="@+id/tvUpdateStatus"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_7sdp"
+          android:background="@drawable/ic_update_status_btn"
+          android:fontFamily="@font/poppins_medium"
+          android:gravity="center"
+          android:paddingVertical="@dimen/_8sdp"
+          android:text="Update Status"
+          android:textColor="#808080"
+          android:textSize="@dimen/_12sdp"
+          android:visibility="gone"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.5"
+          app:layout_constraintStart_toEndOf="@+id/tvStatus"
+          app:layout_constraintTop_toTopOf="@+id/tvStatus" />
+
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,9 +6,13 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.desynatdriver.R
 import com.desynatdriver.databinding.ItemMyDeliveriesBinding
+import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
+import com.desynatdriver.utils.CommonMethod
 
-class MyDeliveriesAdapter(var context:Context, var list: ArrayList<String>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<MyDeliveriesAdapter.ViewHolder>() {
+class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderResponse.Data.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<MyDeliveriesAdapter.ViewHolder>() {
 
     interface ClickOnItem{
         fun onClickItem(position: Int,type:Int) //1-call
@@ -29,16 +33,25 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<String>, var 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        var deliveryData = list[position]
         holder.binding.apply {
-            var status = ""
-            when(status){
+          //  ivImage.load(deliveryData?.orderDetails?.get(0)?.productDetails?.)
+            ivImage.load(deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                crossfade(true)
+                placeholder(R.drawable.ic_user)
+                error(R.drawable.ic_user)
+            }
+            tvName.text = deliveryData?.deliveryDetails?.name
+            tvOrderId.text = "#${deliveryData?.id}"
+            tvDistance.text = "${CommonMethod.formatPrice(deliveryData?.distance?:0.0)} Km"
+            tvAmount.text = "${CommonMethod.formatPrice(deliveryData?.totalAmount?:0.0) } KD"
+            when(deliveryData.deliveryStatus){
                 "1"->{
                     tvStatus.text = "Confirmed"
                     tvStatus.setTextColor(Color.parseColor("#17854C"))
                     tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
                 }
-                "2"->{
+                "7"->{
                     tvStatus.text = "Picked"
                     tvStatus.setTextColor(Color.parseColor("#2A74B8"))
                     tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
@@ -48,16 +61,21 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<String>, var 
                     tvStatus.setTextColor(Color.parseColor("#17854C"))
                     tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
                 }
-                "4"->{
+                "8"->{
                     tvStatus.text = "Not Delivered"
                     tvStatus.setTextColor(Color.parseColor("#EB2525"))
                     tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
+                }
+                else ->{
+                    tvStatus.text = "Confirmed"
+                    tvStatus.setTextColor(Color.parseColor("#17854C"))
+                    tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
                 }
             }
 
         }
         holder.itemView.setOnClickListener{
-
+            clickOnItem.onClickItem(position,2)
         }
 
     }

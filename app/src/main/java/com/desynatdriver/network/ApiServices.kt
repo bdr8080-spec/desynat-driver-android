@@ -3,6 +3,10 @@ package com.desynatdriver.network
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
+import com.desynatdriver.ui.home.fragment.deliveries.DeliveryDetailFragment
+import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
+import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
+import com.desynatdriver.ui.home.fragment.deliveries.response.GetReasonResponse
 import com.desynatdriver.ui.home.response.DutyOnOffResponse
 import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
 import com.desynatdriver.ui.home.response.UpdateProfileRequest
@@ -16,6 +20,8 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface ApiServices {
 
@@ -77,5 +83,30 @@ interface ApiServices {
     suspend fun dutyOnOff(
         @Body body: HashMap<String, Any>
     ): Response<DutyOnOffResponse>
+
+    @GET(Constants.GET_ALL_ORDER)
+    suspend fun getAllOrder(@QueryMap map: HashMap<String,Any>):Response<GetAllOrderResponse>
+
+    @GET(Constants.GET_NEW_ORDER)
+    suspend fun getNewOrder(@QueryMap map: HashMap<String,Any>):Response<GetAllOrderResponse>
+
+    @GET(Constants.GET_ONGOING_ORDER)
+    suspend fun getOngoingOrder(@QueryMap map: HashMap<String,Any>):Response<GetAllOrderResponse>
+
+    @GET(Constants.GET_COMPLETED_ORDER)
+    suspend fun getCompletedOrder(@QueryMap map: HashMap<String,Any>):Response<GetAllOrderResponse>
+
+    @GET(Constants.ORDER_DETAIL)
+    suspend fun orderDetail(@QueryMap map: HashMap<String, Any>):Response<DeliveryDetailResponse>
+
+    @POST(Constants.PICK_ORDER)
+    suspend fun pickOrder(@Body body: HashMap<String, Any>):Response<CommonResponse>
+
+    @POST(Constants.UPDATE_DELIVERY_STATUS)
+    suspend fun updateDeliveryStatus(@Body body: HashMap<String, Any>):Response<CommonResponse>
+
+    @GET(Constants.GET_REASON)
+    suspend fun getReason(@Query("type") type:Int):Response<GetReasonResponse>
+
 
 }

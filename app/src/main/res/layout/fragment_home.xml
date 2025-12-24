@@ -219,7 +219,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semi_bold"
-                            android:text="120"
+                            android:text="0"
                             android:textColor="@color/black"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:textSize="@dimen/_18sdp"
@@ -275,7 +275,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semi_bold"
-                            android:text="120"
+                            android:text="0"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_18sdp"
                             app:layout_constraintStart_toStartOf="@+id/tvOngoing"
@@ -331,7 +331,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semi_bold"
-                            android:text="120"
+                            android:text="0"
                             android:textColor="@color/black"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:textSize="@dimen/_18sdp"
@@ -385,14 +385,34 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
 
+                    <RelativeLayout
+                        android:id="@+id/relNewDeliveries"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/tvNewDeliveriesTitle">
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvNewDeliveries"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         android:orientation="horizontal"
-                        tools:listitem="@layout/item_deliveries"
-                        app:layout_constraintTop_toBottomOf="@+id/tvNewDeliveriesTitle"/>
+                        tools:listitem="@layout/item_deliveries"/>
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/tvNoNewDeliveriesFound"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No new deliveries found"
+                        android:paddingVertical="@dimen/_30sdp"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/poppins_regular"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                    </RelativeLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvOngoingDeliveriesTitle"
@@ -405,7 +425,7 @@
                         android:textColor="@color/black"
                         android:layout_marginStart="@dimen/_15sdp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rvNewDeliveries"/>
+                        app:layout_constraintTop_toBottomOf="@+id/relNewDeliveries"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/viewAllOngoingDeliveries"
@@ -418,7 +438,16 @@
                         android:textColor="@color/black"
                         android:paddingEnd="@dimen/_15sdp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rvNewDeliveries"/>
+                        app:layout_constraintTop_toBottomOf="@+id/relNewDeliveries"/>
+
+                    <RelativeLayout
+                        android:id="@+id/relOngoingDeliveries"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        app:layout_constraintTop_toBottomOf="@+id/tvOngoingDeliveriesTitle">
+
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvOngoingDeliveries"
@@ -426,13 +455,27 @@
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         android:orientation="horizontal"
-                        tools:listitem="@layout/item_deliveries"
-                        app:layout_constraintTop_toBottomOf="@+id/tvOngoingDeliveriesTitle"/>
+                        tools:listitem="@layout/item_deliveries"/>
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/tvNoOngoingDeliveriesFound"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No ongoing deliveries found"
+                        android:paddingVertical="@dimen/_30sdp"
+                        android:textColor="@color/black"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/poppins_regular"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                    </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_60sdp"
-                       app:layout_constraintTop_toBottomOf="@+id/rvOngoingDeliveries"/>
+                       app:layout_constraintTop_toBottomOf="@+id/relOngoingDeliveries"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
