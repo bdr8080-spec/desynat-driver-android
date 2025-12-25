@@ -55,6 +55,7 @@ class DeliveriesFragment : BaseFragment() {
     }
 
     override fun initView() {
+        type = arguments?.getInt("DELIVERY_TYPE", 1) ?: 1
         binding?.apply {
             deliveryList.clear()
             myDeliveriesAdapter = MyDeliveriesAdapter(requireActivity(),deliveryList,object :MyDeliveriesAdapter.ClickOnItem{
@@ -65,15 +66,16 @@ class DeliveriesFragment : BaseFragment() {
                         }
                         2 -> {
 
-                            if (deliveryList[position].deliveryStatus!="3") {
+                            if (deliveryList[position].deliveryStatus=="3"||deliveryList[position].deliveryStatus=="8") {
                                 val bundle = Bundle().apply {
                                     putString("deliveryData", Gson().toJson(deliveryList[position]))
                                 }
 
                                 findNavController().navigate(
-                                    R.id.action_deliveriesFragment_to_newOrderFragment,
+                                    R.id.action_deliveriesFragment_to_deliveryDetailFragment,
                                     bundle
                                 )
+
                             }
                             else{
                                 val bundle = Bundle().apply {
@@ -81,7 +83,7 @@ class DeliveriesFragment : BaseFragment() {
                                 }
 
                                 findNavController().navigate(
-                                    R.id.action_deliveriesFragment_to_deliveryDetailFragment,
+                                    R.id.action_deliveriesFragment_to_newOrderFragment,
                                     bundle
                                 )
                             }
@@ -333,13 +335,6 @@ class DeliveriesFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         search?.let { map["search"] = it }
         viewModel.getCompletedOrder(map)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
-        isObserver = true
-    }
-
-
-    private fun getReason() {
-        viewModel.getReason(1)////1-exchange,2-return,3-cancel
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }

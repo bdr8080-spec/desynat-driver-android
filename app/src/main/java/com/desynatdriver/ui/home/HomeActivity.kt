@@ -222,12 +222,16 @@ class HomeActivity : BaseActivity() {
     fun setBottomAdapter(){
         bottomAdapter = BottomNavAdapter(this,bottonNavItemList, object :BottomNavAdapter.BottomNavItemClick{
             override fun onBottomNavItemClick(position: Int) {
-                when(position) {
-                    0 -> controller.navigate(R.id.home)
-                    1 -> controller.navigate(R.id.deliveries)
-                    2 -> controller.navigate(R.id.profile)
-                }
+                when (position) {
+                    0 -> if (controller.currentDestination?.id != R.id.home)
+                        controller.navigate(R.id.home)
 
+                    1 -> if (controller.currentDestination?.id != R.id.deliveries)
+                        controller.navigate(R.id.deliveries)
+
+                    2 -> if (controller.currentDestination?.id != R.id.profile)
+                        controller.navigate(R.id.profile)
+                }
             }
 
 
@@ -326,6 +330,16 @@ class HomeActivity : BaseActivity() {
         binding?.viewBackground?.isVisible = true
         enableDrawer(false)
     }
+
+    fun openDeliveriesTab(bundle: Bundle? = null) {
+            bottomAdapter?.setSelectedItem(1)
+
+            if (bundle != null) {
+                controller.navigate(R.id.deliveries, bundle)
+            } else {
+                controller.navigate(R.id.deliveries)
+            }
+        }
 
 }
 

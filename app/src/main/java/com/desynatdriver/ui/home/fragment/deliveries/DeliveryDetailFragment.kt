@@ -108,8 +108,9 @@ class DeliveryDetailFragment : BaseFragment() {
                 "8"->{
                     tvStatus.text = "Not Delivered"
                     tvStatus.setTextColor(Color.parseColor("#EB2525"))
-                    tvReason.isVisible = false
-                    tvReasonForNotDelivered.isVisible = false
+                    tvReason.isVisible = true
+                    tvReasonForNotDelivered.isVisible = true
+                    tvReasonForNotDelivered.text = deliveryData?.notDeliveredReason
                 }
                 else->{
                     tvStatus.text = "Confirmed"

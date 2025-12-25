@@ -65,7 +65,7 @@ data class GetAllOrderResponse(
             @SerializedName("id")
             val id: Int,
             @SerializedName("not_delivered_reason")
-            val notDeliveredReason: Any,
+            val notDeliveredReason: String,
             @SerializedName("order_details")
             val orderDetails: List<OrderDetail>,
             @SerializedName("order_id")

@@ -66,7 +66,7 @@ class HomeFragment : BaseFragment() {
                     when(type){
                         1->{
                             val intent = Intent(Intent.ACTION_DIAL).apply {
-                                data = Uri.parse("tel:${newDeliveriesList[position]?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
+                                data = Uri.parse("tel:${newDeliveriesList[position]?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.countryCode+newDeliveriesList[position]?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
                             }
                             startActivity(intent)
 
@@ -105,7 +105,7 @@ class HomeFragment : BaseFragment() {
                     when(type){
                         1->{
                             val intent = Intent(Intent.ACTION_DIAL).apply {
-                                data = Uri.parse("tel:${newDeliveriesList[position]?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
+                                data = Uri.parse("tel:${newDeliveriesList[position]?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.countryCode+newDeliveriesList[position]?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
                             }
                             startActivity(intent)
 
@@ -168,11 +168,17 @@ class HomeFragment : BaseFragment() {
             }
 
             viewAllNewDeliveries.setOnClickListener {
-
+                val bundle = Bundle().apply {
+                    putInt("DELIVERY_TYPE", 2) // 2 = NEW
+                }
+                (requireActivity() as? HomeActivity)?.openDeliveriesTab(bundle)
             }
 
             viewAllOngoingDeliveries.setOnClickListener {
-
+                val bundle = Bundle().apply {
+                    putInt("DELIVERY_TYPE", 3) // 3 = ONGOING
+                }
+                (requireActivity() as? HomeActivity)?.openDeliveriesTab(bundle)
             }
 
             ivMenu.setOnClickListener {
@@ -286,7 +292,7 @@ class HomeFragment : BaseFragment() {
                     ongoingDeliveriesList.clear()
                     ongoingDeliveriesList.addAll(response.data.data)
                     ongoingDeliveriesAdapter?.notifyDataSetChanged()
-                    if(newDeliveriesList.size!=0){
+                    if(ongoingDeliveriesList.size!=0){
                         binding?.viewAllOngoingDeliveries?.isVisible = true
                         binding?.tvNoOngoingDeliveriesFound?.isVisible = false
                         binding?.tvOngoingDeliveries?.text = ongoingDeliveriesList.size.toString()

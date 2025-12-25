@@ -35,13 +35,13 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderRe
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var deliveryData = list[position]
         holder.binding.apply {
-          //  ivImage.load(deliveryData?.orderDetails?.get(0)?.productDetails?.)
+            tvDate.text = CommonMethod.customizeChangeDateFormat(deliveryData?.createdAt.toString(), outputFormat = "dd MMM yyyy, hh:mm a")
             ivImage.load(deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeImage){
                 crossfade(true)
                 placeholder(R.drawable.ic_user)
                 error(R.drawable.ic_user)
             }
-            tvName.text = deliveryData?.deliveryDetails?.name
+            tvName.text = deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeName
             tvOrderId.text = "#${deliveryData?.id}"
             tvDistance.text = "${CommonMethod.formatPrice(deliveryData?.distance?:0.0)} Km"
             tvAmount.text = "${CommonMethod.formatPrice(deliveryData?.totalAmount?:0.0) } KD"
