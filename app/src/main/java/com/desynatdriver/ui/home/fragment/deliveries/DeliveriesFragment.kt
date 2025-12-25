@@ -1,12 +1,16 @@
 package com.desynatdriver.ui.home.fragment.deliveries
 
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +19,9 @@ import com.desynatdriver.R
 import com.desynatdriver.adapter.MyDeliveriesAdapter
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.data.view_model.HomeViewModel
+import com.desynatdriver.databinding.DeliveryFilterDialogBinding
 import com.desynatdriver.databinding.FragmentDeliveriesBinding
+import com.desynatdriver.databinding.UpdateDeliveryStatusDialogBinding
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.SharedPreference
@@ -32,7 +38,7 @@ class DeliveriesFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
     private var type:Int=1 //1-all,2-new,3-ongoing,4-completed
-
+    private var deliveryFilter:String?=null
     private var deliveryList = ArrayList<GetAllOrderResponse.Data.Data>()
     private var myDeliveriesAdapter: MyDeliveriesAdapter?=null
 
@@ -97,6 +103,7 @@ class DeliveriesFragment : BaseFragment() {
             when(type){
                 1->{
                     type = 1
+                    ivFilter.isVisible = true
                     getAllOrder()
                     tvAll.setTextColor(requireActivity().getColor(R.color.brown))
                     tvNew.setTextColor(Color.parseColor("#B3B3B3"))
@@ -109,6 +116,7 @@ class DeliveriesFragment : BaseFragment() {
                 }
                 2->{
                     type = 2
+                    ivFilter.isVisible = false
                     getNewOrder()
                     tvNew.setTextColor(requireActivity().getColor(R.color.brown))
                     tvAll.setTextColor(Color.parseColor("#B3B3B3"))
@@ -121,6 +129,7 @@ class DeliveriesFragment : BaseFragment() {
                 }
                 3->{
                     type = 3
+                    ivFilter.isVisible = false
                     getOngoingOrder()
                     tvOngoing.setTextColor(requireActivity().getColor(R.color.brown))
                     tvNew.setTextColor(Color.parseColor("#B3B3B3"))
@@ -133,6 +142,7 @@ class DeliveriesFragment : BaseFragment() {
                 }
                 4->{
                     type = 4
+                    ivFilter.isVisible = false
                     getCompletedOrder()
                     tvNew.setTextColor(Color.parseColor("#B3B3B3"))
                     tvAll.setTextColor(Color.parseColor("#B3B3B3"))
@@ -186,6 +196,7 @@ class DeliveriesFragment : BaseFragment() {
         binding?.apply {
             tvAll.setOnClickListener {
                 type = 1
+                ivFilter.isVisible = true
                 getAllOrder()
                 tvAll.setTextColor(requireActivity().getColor(R.color.brown))
                 tvNew.setTextColor(Color.parseColor("#B3B3B3"))
@@ -199,6 +210,7 @@ class DeliveriesFragment : BaseFragment() {
 
             tvNew.setOnClickListener {
                 type = 2
+                ivFilter.isVisible = false
                 getNewOrder()
                 tvNew.setTextColor(requireActivity().getColor(R.color.brown))
                 tvAll.setTextColor(Color.parseColor("#B3B3B3"))
@@ -212,6 +224,7 @@ class DeliveriesFragment : BaseFragment() {
 
             tvOngoing.setOnClickListener {
                 type = 3
+                ivFilter.isVisible = false
                 getOngoingOrder()
                 tvOngoing.setTextColor(requireActivity().getColor(R.color.brown))
                 tvNew.setTextColor(Color.parseColor("#B3B3B3"))
@@ -225,6 +238,7 @@ class DeliveriesFragment : BaseFragment() {
 
             tvCompleted.setOnClickListener {
                 type = 4
+                ivFilter.isVisible = false
                 getCompletedOrder()
                 tvNew.setTextColor(Color.parseColor("#B3B3B3"))
                 tvAll.setTextColor(Color.parseColor("#B3B3B3"))
@@ -234,6 +248,10 @@ class DeliveriesFragment : BaseFragment() {
                 viewNew.setBackgroundColor(Color.parseColor("#B3B3B3"))
                 viewAll.setBackgroundColor(Color.parseColor("#B3B3B3"))
                 viewOngoing.setBackgroundColor(Color.parseColor("#B3B3B3"))
+            }
+
+            ivFilter.setOnClickListener {
+                filterDialog()
             }
         }
 
@@ -310,6 +328,7 @@ class DeliveriesFragment : BaseFragment() {
     private fun getAllOrder(search:String?=null) {
         val map = HashMap<String,Any>()
         search?.let { map["search"] = it }
+        deliveryFilter?.let { map["filter"] = it }
         viewModel.getAllOrder(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
@@ -342,5 +361,73 @@ class DeliveriesFragment : BaseFragment() {
     fun checkData(){
         binding?.tvNoDataFound?.isVisible = deliveryList.isEmpty()
     }
+
+    private fun filterDialog() {
+        var filter = ""
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = DeliveryFilterDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog.setContentView(it) }
+
+        val window: Window = dialog.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.BOTTOM
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            if (deliveryFilter!=null) {
+                when (deliveryFilter) {
+                    "7" -> dialogBinding.rbPicked.isChecked = true
+                    "6" -> dialogBinding.rbConfirmed.isChecked = true
+                    "3" -> dialogBinding.rbDelivered.isChecked = true
+                    "8" -> dialogBinding.rbNotDelivered.isChecked = true
+                }
+            }
+
+            ivBack.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            tvApply.setOnClickListener {
+                if (filter!=""){
+                    deliveryFilter = filter
+                    getAllOrder()
+                    dialog?.dismiss()
+                }
+                else{
+                    showToast("Please select delivery status")
+                }
+
+            }
+
+            tvClear.setOnClickListener {
+                deliveryFilter = null
+                filter = ""
+                getAllOrder()
+                dialog?.dismiss()
+            }
+
+            radioGroup.setOnCheckedChangeListener { _, checkedId ->
+                filter = when (checkedId) {
+                    R.id.rbPicked -> "7"
+                    R.id.rbConfirmed -> "6"
+                    R.id.rbDelivered -> "3"
+                    R.id.rbNotDelivered -> "8"
+                    else -> ""
+                }
+            }
+
+        }
+
+        dialog.show()
+    }
+
 
 }

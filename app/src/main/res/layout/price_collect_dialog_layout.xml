@@ -41,10 +41,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:text="Collected"
-            android:padding="@dimen/_6sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword"/>
+            android:padding="@dimen/_6sdp"/>
 
     </LinearLayout>
 
