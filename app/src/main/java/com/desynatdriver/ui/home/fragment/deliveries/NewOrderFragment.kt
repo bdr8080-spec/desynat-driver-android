@@ -348,6 +348,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
                 Color.parseColor(it)) }
             tvQuantityValue.text = "Size: ${deliveryDetailData?.quantity}"
+            tvStore.text = deliveryDetailData?.productDetails?.productNameEn
         }
 
         dialog.show()
