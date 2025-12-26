@@ -36,15 +36,15 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderRe
         var deliveryData = list[position]
         holder.binding.apply {
             tvDate.text = CommonMethod.customizeChangeDateFormat(deliveryData?.createdAt.toString(), outputFormat = "dd MMM yyyy, hh:mm a")
-            ivImage.load(deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+            ivImage.load(deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
                 crossfade(true)
                 placeholder(R.drawable.ic_user)
                 error(R.drawable.ic_user)
             }
-            tvName.text = deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeName
+            tvName.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeName
             tvOrderId.text = "#${deliveryData?.id}"
             tvDistance.text = "${CommonMethod.formatPrice(deliveryData?.distance?:0.0)} Km"
-            tvAmount.text = "${CommonMethod.formatPrice(deliveryData?.totalAmount?:0.0) } KD"
+            tvAmount.text = "${CommonMethod.formatPrice(deliveryData?.amount?:0.0) } KD"
             when(deliveryData.deliveryStatus){
                 "1"->{
                     tvStatus.text = "Confirmed"

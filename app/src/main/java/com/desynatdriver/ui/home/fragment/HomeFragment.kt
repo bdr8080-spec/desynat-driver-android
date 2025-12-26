@@ -66,7 +66,7 @@ class HomeFragment : BaseFragment() {
                     when(type){
                         1->{
                             val intent = Intent(Intent.ACTION_DIAL).apply {
-                                data = Uri.parse("tel:${newDeliveriesList[position]?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.countryCode+newDeliveriesList[position]?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
+                                data = Uri.parse("tel:${newDeliveriesList[position]?.productDetails?.sellerDetails?.storeInfo?.countryCode+newDeliveriesList[position]?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
                             }
                             startActivity(intent)
 
@@ -105,7 +105,7 @@ class HomeFragment : BaseFragment() {
                     when(type){
                         1->{
                             val intent = Intent(Intent.ACTION_DIAL).apply {
-                                data = Uri.parse("tel:${newDeliveriesList[position]?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.countryCode+newDeliveriesList[position]?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
+                                data = Uri.parse("tel:${newDeliveriesList[position]?.productDetails?.sellerDetails?.storeInfo?.countryCode+newDeliveriesList[position]?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
                             }
                             startActivity(intent)
 

@@ -59,10 +59,10 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
     private var selectedDeliveryStatus: String = ""
     var deliveryData: GetAllOrderResponse.Data.Data?=null
     var deliveryDetailData: DeliveryDetailResponse.Data?=null
-    var storeLat = 30.7333
-    var storeLng = 76.7794
-    var dropLat = 28.6139
-    var dropLng = 77.2090
+    var storeLat = 0.0
+    var storeLng = 0.0
+    var dropLat = 0.0
+    var dropLng = 0.0
     private var cancelDialog: Dialog?=null
     private var reasonList = ArrayList<GetReasonResponse.Data>()
     private var reasonAdapter: ReasonAdapter? = null
@@ -113,25 +113,33 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun setData(){
 
-       /* if (deliveryData?.deliveryDetails?.latitude!=0.0){
-            dropLat = deliveryData?.deliveryDetails?.latitude?:0.0
+        if (deliveryData?.order?.deliveryDetails?.latitude!=0.0){
+            dropLat = deliveryData?.order?.deliveryDetails?.latitude?:0.0
         }
-        if (deliveryData?.deliveryDetails?.longitude!=0.0){
-            dropLng = deliveryData?.deliveryDetails?.longitude?:0.0
-        }*/
+        if (deliveryData?.order?.deliveryDetails?.longitude!=0.0){
+            dropLng = deliveryData?.order?.deliveryDetails?.longitude?:0.0
+        }
+
+        if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+            storeLat = deliveryData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+        }
+        if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+            storeLng = deliveryData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+        }
+
         if (storeLat != 0.0 && dropLat != 0.0) {
             isLocationReady = true
             tryDrawRoute()
         }
         binding?.apply {
-            ivImage.load(deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+            ivImage.load(deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
                 crossfade(true)
                 placeholder(R.drawable.ic_user)
                 error(R.drawable.ic_user)
             }
-            tvName.text = deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeName
-            tvPickupAddress.text = deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-            tvDropAddress.text = deliveryData?.deliveryDetails?.address
+            tvName.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeName
+            tvPickupAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+            tvDropAddress.text = deliveryData?.order?.deliveryDetails?.address
 
            when(deliveryData?.deliveryStatus){
                "7"->{
@@ -171,7 +179,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
             ivCall.setOnClickListener {
                 val intent = Intent(Intent.ACTION_DIAL).apply {
-                    data = Uri.parse("tel:${deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.countryCode+deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
+                    data = Uri.parse("tel:${deliveryData?.productDetails?.sellerDetails?.storeInfo?.countryCode+deliveryData?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
                 }
                 startActivity(intent)
             }
@@ -262,7 +270,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                     when(selectedDeliveryStatus){
                       "3" ->{
                           CommonMethod.showSuccessDialog(requireActivity(),"Order Delivered successfully"){
-                              if (deliveryData?.paymentMethod=="3"){
+                              if (deliveryData?.order?.paymentMethod=="3"){
                                   collectAmountDialog()
                               }
                               else{
@@ -318,7 +326,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 dialog.dismiss()
             }
 
-            ivOrder.load(deliveryDetailData?.orderDetails?.get(0)?.variationDetails?.variantImage?.get(0)){
+            ivOrder.load(deliveryDetailData?.variationDetails?.variantImage?.get(0)){
                 crossfade(true)
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
@@ -332,14 +340,14 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             }
             tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
 
-            tvCustomerName.text = deliveryDetailData?.deliveryDetails?.name
+            tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
             tvOrderIdValue.text = "#${deliveryDetailData?.id}"
-            tvDeliveryLocation.text = deliveryDetailData?.deliveryDetails?.address
-            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.totalAmount?:0.0) } KD"
-            tvSize.text = "Size: ${deliveryDetailData?.orderDetails?.get(0)?.variationDetails?.size?.name}"
-            deliveryDetailData?.orderDetails?.get(0)?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
+            tvDeliveryLocation.text = deliveryDetailData?.order?.deliveryDetails?.address
+            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.amount?:0.0) } KD"
+            tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
+            deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
                 Color.parseColor(it)) }
-            tvQuantityValue.text = "Size: ${deliveryDetailData?.orderDetails?.get(0)?.quantity}"
+            tvQuantityValue.text = "Size: ${deliveryDetailData?.quantity}"
         }
 
         dialog.show()
@@ -461,11 +469,11 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 override fun onClickItem(position: Int) {
                     if (position==reasonList.size-1){
                         etReason.isVisible = true
-                        reason = reasonList[position].reasonEnglish.toString()
+                        reason = ""
                     }
                     else{
                         etReason.isVisible = false
-                        reason = ""
+                        reason = reasonList[position].reasonEnglish.toString()
                     }
 
                 }
@@ -604,6 +612,21 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
         drawRoute(origin, destination)
     }
 
+    private fun bitmapDescriptorFromVector(resId: Int): BitmapDescriptor {
+        val drawable = requireContext().getDrawable(resId)!!
+        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+
+        val bitmap = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+
+        val canvas = Canvas(bitmap)
+        drawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
     private fun collectAmountDialog() {
         val dialog = Dialog(requireActivity(), R.style.CustomDialog)
         val dialogBinding = PriceCollectDialogLayoutBinding.inflate(LayoutInflater.from(context))
@@ -623,7 +646,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
         dialogBinding.apply {
 
-            tvPrice.text = "${CommonMethod.formatPrice(deliveryData?.totalAmount?:0.0)} KD"
+            tvPrice.text = "${CommonMethod.formatPrice(deliveryData?.amount?:0.0)} KD"
 
             btnCollected.setOnClickListener {
                 findNavController().popBackStack()
@@ -634,22 +657,5 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
         dialog.show()
     }
-
-    private fun bitmapDescriptorFromVector(resId: Int): BitmapDescriptor {
-        val drawable = requireContext().getDrawable(resId)!!
-        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-
-        val bitmap = Bitmap.createBitmap(
-            drawable.intrinsicWidth,
-            drawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-
-        val canvas = Canvas(bitmap)
-        drawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
-
-
 
 }

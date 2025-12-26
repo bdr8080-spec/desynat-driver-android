@@ -35,8 +35,8 @@ class NewDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderR
         holder.binding.apply {
 
             tvOrderIdValue.text = "#${deliveryData?.id}"
-            tvName.text = deliveryData?.deliveryDetails?.name
-            tvStore.text = deliveryData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeName
+            tvName.text = deliveryData?.order?.deliveryDetails?.name
+            tvStore.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeName
 
             when(deliveryData.deliveryStatus){
                 "1"->{

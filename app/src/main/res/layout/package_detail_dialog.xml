@@ -274,6 +274,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
         android:id="@+id/tvDeliveryInstruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -286,6 +287,7 @@
         app:layout_constraintTop_toBottomOf="@+id/clOrderDetail"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
         android:id="@+id/tvDeliveryInstructionValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

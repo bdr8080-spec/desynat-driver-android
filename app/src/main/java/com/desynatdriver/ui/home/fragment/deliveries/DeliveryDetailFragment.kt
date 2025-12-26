@@ -60,7 +60,7 @@ class DeliveryDetailFragment : BaseFragment() {
     private fun setData() {
         binding?.apply {
 
-            ivImage.load(deliveryDetailData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+            ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
                 crossfade(true)
                 placeholder(R.drawable.ic_user)
                 error(R.drawable.ic_user)
@@ -69,26 +69,26 @@ class DeliveryDetailFragment : BaseFragment() {
             tvDeliveryIdValue.text = "#${deliveryDetailData?.id}"
             tvOrderIdValue.text = "#${deliveryDetailData?.id}"
             tvTotalDistanceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.distance?:0.0)} Km"
-            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.totalAmount?:0.0) } KD"
+            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.amount?:0.0) } KD"
             tvPaymentStatus.text = if (deliveryDetailData?.paymentStatus=="1"){
                 "Paid"
             }
             else{
                 "Pending"
             }
-            tvName.text = deliveryDetailData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeName
-            tvSize.text = "Size: ${deliveryDetailData?.orderDetails?.get(0)?.variationDetails?.size?.name}"
-            deliveryDetailData?.orderDetails?.get(0)?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(Color.parseColor(it)) }
-            tvQuantityValue.text = "Size: ${deliveryDetailData?.orderDetails?.get(0)?.quantity}"
-            ivOrder.load(deliveryDetailData?.orderDetails?.get(0)?.variationDetails?.variantImage?.get(0)){
+            tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+            tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
+            deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(Color.parseColor(it)) }
+            tvQuantityValue.text = "Size: ${deliveryDetailData?.quantity}"
+            ivOrder.load(deliveryDetailData?.variationDetails?.variantImage?.get(0)){
                 crossfade(true)
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
-            tvStore.text = deliveryDetailData?.orderDetails?.get(0)?.productDetails?.productNameEn
-            tvPickupAddress.text = deliveryDetailData?.orderDetails?.get(0)?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-            tvCustomerName.text = deliveryDetailData?.deliveryDetails?.address
-            tvDropAddress.text = deliveryDetailData?.deliveryDetails?.address
+            tvStore.text = deliveryDetailData?.productDetails?.productNameEn
+            tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+            tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.address
+            tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
             tvDeliveryOnValue.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             when(deliveryDetailData?.deliveryStatus){
