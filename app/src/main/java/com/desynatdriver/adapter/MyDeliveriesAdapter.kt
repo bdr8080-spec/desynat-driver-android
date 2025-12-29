@@ -44,7 +44,7 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderRe
             tvName.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeName
             tvOrderId.text = "#${deliveryData?.id}"
             tvDistance.text = "${CommonMethod.formatPrice(deliveryData?.distance?:0.0)} Km"
-            tvAmount.text = "${CommonMethod.formatPrice(deliveryData?.amount?:0.0) } KD"
+            tvAmount.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0) } KD"
             when(deliveryData.deliveryStatus){
                 "1"->{
                     tvStatus.text = "Confirmed"

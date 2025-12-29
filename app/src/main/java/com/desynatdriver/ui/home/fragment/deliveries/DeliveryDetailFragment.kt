@@ -69,7 +69,7 @@ class DeliveryDetailFragment : BaseFragment() {
             tvDeliveryIdValue.text = "#${deliveryDetailData?.id}"
             tvOrderIdValue.text = "#${deliveryDetailData?.id}"
             tvTotalDistanceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.distance?:0.0)} Km"
-            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.amount?:0.0) } KD"
+            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } KD"
             tvPaymentStatus.text = if (deliveryDetailData?.paymentStatus=="1"){
                 "Paid"
             }

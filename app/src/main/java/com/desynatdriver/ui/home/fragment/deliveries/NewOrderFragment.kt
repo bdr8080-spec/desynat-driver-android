@@ -343,7 +343,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
             tvOrderIdValue.text = "#${deliveryDetailData?.id}"
             tvDeliveryLocation.text = deliveryDetailData?.order?.deliveryDetails?.address
-            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.amount?:0.0) } KD"
+            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } KD"
             tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
                 Color.parseColor(it)) }
@@ -647,7 +647,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
         dialogBinding.apply {
 
-            tvPrice.text = "${CommonMethod.formatPrice(deliveryData?.amount?:0.0)} KD"
+            tvPrice.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0)} KD"
 
             btnCollected.setOnClickListener {
                 findNavController().popBackStack()

@@ -113,15 +113,15 @@ data class DeliveryDetailResponse(
             @SerializedName("promocode_status")
             val promocodeStatus: String,
             @SerializedName("promocode_value")
-            val promocodeValue: Any,
+            val promocodeValue: Double,
             @SerializedName("shipping_fees")
-            val shippingFees: String,
+            val shippingFees: Double,
             @SerializedName("tax")
-            val tax: String,
+            val tax: Double,
             @SerializedName("total_amount")
-            val totalAmount: String,
+            val totalAmount: Double,
             @SerializedName("total_mrp")
-            val totalMrp: String,
+            val totalMrp: Double,
             @SerializedName("transaction_id")
             val transactionId: Any,
             @SerializedName("updated_at")
