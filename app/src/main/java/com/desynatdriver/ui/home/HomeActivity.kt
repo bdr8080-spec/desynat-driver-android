@@ -135,16 +135,12 @@ class HomeActivity : BaseActivity() {
             drawerBinding = DrawerLayoutBinding.bind(navigationView.getHeaderView(0))
             setUpDrawerContent()
         }
-
-
     }
-
 
     fun openDrawer(){
         isOpenDrawer = true
         binding?.drawerLayout?.openDrawer(GravityCompat.START)
     }
-
 
     private fun setUpDrawerContent() {
         drawerBinding.apply {

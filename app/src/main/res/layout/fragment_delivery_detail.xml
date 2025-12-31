@@ -183,7 +183,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="4.0"
+                    android:text="0"
                     android:textSize="@dimen/_10sdp"
                     android:textColor="#1A1C1E"
                     android:layout_marginTop="@dimen/_4sdp"
@@ -191,13 +191,14 @@
                     app:layout_constraintStart_toStartOf="@+id/tvName"/>
 
                 <androidx.appcompat.widget.AppCompatRatingBar
+                    android:id="@+id/rbStore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_2sdp"
                     app:layout_constraintStart_toEndOf="@+id/tvRating"
                     app:layout_constraintTop_toBottomOf="@+id/tvName"                    app:layout_constraintBottom_toBottomOf="@+id/tvRating"
                     android:numStars="5"
-                    android:rating="4"
+                    android:rating="0"
                     android:progressTint="#FFCE1B"
                     style="@style/Widget.AppCompat.RatingBar.Small"/>
 
@@ -459,7 +460,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="Quantity"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_11sdp"
                     android:textColor="#66635E"
                     android:layout_marginBottom="@dimen/_15sdp"
                     app:layout_constraintStart_toStartOf="@+id/tvStore"
@@ -471,11 +472,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="02"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_11sdp"
                     android:textColor="@color/black"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:drawableStart="@drawable/ic_grey_dot"
-                    android:drawablePadding="@dimen/_5sdp"
                     app:layout_constraintStart_toEndOf="@+id/tvQuantity"
                     app:layout_constraintBottom_toBottomOf="@+id/tvQuantity"
                     app:layout_constraintTop_toTopOf="@+id/tvQuantity"/>

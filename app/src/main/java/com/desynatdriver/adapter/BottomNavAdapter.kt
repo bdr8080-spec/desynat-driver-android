@@ -42,7 +42,7 @@ class BottomNavAdapter(var context:Context, var list: ArrayList<BottomNavItem>, 
 
         if (selected==position){
             holder.binding.ivImage.setImageResource(list[position].selectedImage)
-         //   holder.binding.tvName.setTextColor(context.getColor(R.color.brown))
+            holder.binding.tvName.paint.shader = null
             applyGradientText(holder.binding.tvName)
             holder.binding.tvName.typeface = ResourcesCompat.getFont(context, R.font.poppins_medium)
         }
@@ -55,10 +55,8 @@ class BottomNavAdapter(var context:Context, var list: ArrayList<BottomNavItem>, 
 
         holder.itemView.setOnClickListener {
             bottomNavItemClick.onBottomNavItemClick(position)
-            val previousSelected = selected
             selected = position
-            notifyItemChanged(previousSelected)
-            notifyItemChanged(selected)
+            notifyDataSetChanged()
         }
 
     }

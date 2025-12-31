@@ -118,7 +118,7 @@ class HomeFragment : BaseFragment() {
                                 }
 
                                 findNavController().navigate(
-                                    R.id.action_deliveriesFragment_to_newOrderFragment,
+                                    R.id.action_homeFragment_to_newOrderFragment,
                                     bundle
                                 )
                             }
@@ -128,7 +128,7 @@ class HomeFragment : BaseFragment() {
                                 }
 
                                 findNavController().navigate(
-                                    R.id.action_deliveriesFragment_to_deliveryDetailFragment,
+                                    R.id.action_homeFragment_to_deliveryDetailFragment,
                                     bundle
                                 )
                             }

@@ -132,20 +132,34 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             tryDrawRoute()
         }
         binding?.apply {
-            ivImage.load(deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
-                crossfade(true)
-                placeholder(R.drawable.ic_user)
-                error(R.drawable.ic_user)
+            if (deliveryDetailData?.userRatingReviewProvide!=null) {
+                tvRating.text = deliveryDetailData?.userRatingReviewProvide?.storeRating.toString()
+                rbStore.rating = deliveryDetailData?.userRatingReviewProvide?.storeRating ?: 0f
             }
-            tvName.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeName
             tvPickupAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
             tvDropAddress.text = deliveryData?.order?.deliveryDetails?.address
 
            when(deliveryData?.deliveryStatus){
                "7"->{
                    setDataAfterPickUp()
+                   ivImage.load(deliveryData?.order?.userDetails?.profileImage){
+                       crossfade(true)
+                       placeholder(R.drawable.ic_user)
+                       error(R.drawable.ic_user)
+                   }
+                   rbStore.isVisible = false
+                   tvRating.isVisible = false
+                   tvName.text = deliveryData?.order?.deliveryDetails?.name
                }
                else->{
+                   ivImage.load(deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                       crossfade(true)
+                       placeholder(R.drawable.ic_user)
+                       error(R.drawable.ic_user)
+                   }
+                   rbStore.isVisible = true
+                   tvRating.isVisible = true
+                   tvName.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeName
                    tvOngoingDeliveries.isVisible = false
                    tvStatus.isVisible = false
                    tvUpdateStatus.isVisible = false
@@ -178,10 +192,19 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             }
 
             ivCall.setOnClickListener {
-                val intent = Intent(Intent.ACTION_DIAL).apply {
-                    data = Uri.parse("tel:${deliveryData?.productDetails?.sellerDetails?.storeInfo?.countryCode+deliveryData?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
+                if (deliveryData?.deliveryStatus=="7"){
+                    val intent = Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:${deliveryData?.order?.deliveryDetails?.countryCode+deliveryData?.order?.deliveryDetails?.mobile}")
+                    }
+                    startActivity(intent)
                 }
-                startActivity(intent)
+                else{
+                    val intent = Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:${deliveryData?.productDetails?.sellerDetails?.storeInfo?.countryCode+deliveryData?.productDetails?.sellerDetails?.storeInfo?.storePhone}")
+                    }
+                    startActivity(intent)
+                }
+
             }
 
             tvStatus.setOnClickListener {
@@ -269,15 +292,15 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
                     when(selectedDeliveryStatus){
                       "3" ->{
-                          CommonMethod.showSuccessDialog(requireActivity(),"Order Delivered successfully"){
-                              if (deliveryData?.order?.paymentMethod=="3"){
-                                  collectAmountDialog()
-                              }
-                              else{
+                          if (deliveryData?.order?.paymentMethod=="3"){
+                              collectAmountDialog()
+                          }
+                          else{
+                              CommonMethod.showSuccessDialog(requireActivity(),"Order Delivered successfully"){
                                   findNavController().popBackStack()
                               }
-
                           }
+
                       }
                         "8"->{
                             cancelDialog?.dismiss()
@@ -336,7 +359,12 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 "Paid"
             }
             else{
-                "Pending"
+                if (deliveryDetailData?.order?.paymentMethod=="3"){
+                    "COD"
+                }
+                else {
+                    "Pending"
+                }
             }
             tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
 
@@ -347,7 +375,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
                 Color.parseColor(it)) }
-            tvQuantityValue.text = "Size: ${deliveryDetailData?.quantity}"
+            tvQuantityValue.text = "${deliveryDetailData?.quantity}"
             tvStore.text = deliveryDetailData?.productDetails?.productNameEn
         }
 
@@ -423,6 +451,9 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
         val map = HashMap<String,Any>()
         map["id"] = deliveryData?.id.toString()
         map["delivery_status"] = selectedDeliveryStatus////3-delivered 7-picked 8-not delivered
+        if (selectedDeliveryStatus=="3"&&deliveryData?.order?.paymentMethod=="3"){
+            map["collect_amount"] = "1"
+        }
         if (reason!=null){
             map["reason"] = reason
         }
@@ -482,7 +513,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             })
             rvReason.adapter = reasonAdapter
 
-            getReason(3)
+            getReason(4)
 
             tvToolbar.setOnClickListener {
                 cancelDialog?.dismiss()
@@ -512,16 +543,21 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     private fun openGoogleMap(lat: Double, lng: Double) {
-        val uri = Uri.parse("google.navigation:q=$lat,$lng")
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.setPackage("com.google.android.apps.maps")
+        val gmmIntentUri =
+            Uri.parse("google.navigation:q=$lat,$lng")
 
-        if (intent.resolveActivity(requireActivity().packageManager) != null) {
-            startActivity(intent)
-        } else {
-            Toast.makeText(requireContext(), "Google Maps not installed", Toast.LENGTH_SHORT).show()
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+
+        try {
+            startActivity(mapIntent)
+        } catch (e: Exception) {
+            val browserUri =
+                Uri.parse("https://www.google.com/maps/dir/?api=1&destination=$lat,$lng")
+            startActivity(Intent(Intent.ACTION_VIEW, browserUri))
         }
     }
+
 
     private fun drawRoute(origin: LatLng, destination: LatLng) {
 
@@ -567,8 +603,9 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                     .title("Drop Location")
                     .icon(bitmapDescriptorFromVector(R.drawable.ic_drop_pin))
             )
-
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 7f))
+            googleMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(origin, 12f), 1500, null)
+            //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 12f))
         }
     }
 
@@ -650,7 +687,10 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             tvPrice.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0)} KD"
 
             btnCollected.setOnClickListener {
-                findNavController().popBackStack()
+                CommonMethod.showSuccessDialog(requireActivity(),"Order Delivered successfully"){
+                    findNavController().popBackStack()
+                }
+
                 dialog.dismiss()
             }
 

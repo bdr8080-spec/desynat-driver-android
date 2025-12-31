@@ -74,20 +74,30 @@ class DeliveryDetailFragment : BaseFragment() {
                 "Paid"
             }
             else{
-                "Pending"
+                if (deliveryDetailData?.order?.paymentMethod=="3"){
+                    "COD"
+                }
+                else{
+                    "Pending"
+                }
+
             }
             tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
             tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(Color.parseColor(it)) }
-            tvQuantityValue.text = "Size: ${deliveryDetailData?.quantity}"
+            tvQuantityValue.text = "${deliveryDetailData?.quantity}"
             ivOrder.load(deliveryDetailData?.variationDetails?.variantImage?.get(0)){
                 crossfade(true)
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
             tvStore.text = deliveryDetailData?.productDetails?.productNameEn
+            if (deliveryDetailData?.userRatingReviewProvide!=null) {
+                tvRating.text = deliveryDetailData?.userRatingReviewProvide?.storeRating.toString()
+                rbStore.rating = deliveryDetailData?.userRatingReviewProvide?.storeRating ?: 0f
+            }
             tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-            tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.address
+            tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
             tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
             tvDeliveryOnValue.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
