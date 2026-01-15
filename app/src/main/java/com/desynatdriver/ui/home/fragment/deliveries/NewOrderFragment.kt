@@ -2,6 +2,7 @@ package com.desynatdriver.ui.home.fragment.deliveries
 
 import android.app.Dialog
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -24,6 +25,7 @@ import com.desynatdriver.adapter.ReasonAdapter
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.data.view_model.HomeViewModel
 import com.desynatdriver.databinding.CancelDeliveryDialogBinding
+import com.desynatdriver.databinding.ExchangeReturnProductDialogBinding
 import com.desynatdriver.databinding.FragmentNewOrderBinding
 import com.desynatdriver.databinding.PackageDetailDialogBinding
 import com.desynatdriver.databinding.PriceCollectDialogLayoutBinding
@@ -107,40 +109,77 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             deliveryData = Gson().fromJson(itemJson, GetAllOrderResponse.Data.Data::class.java)
             setData()
         }
+        getOrderDetail()
         binding?.apply {
         }
     }
 
     private fun setData(){
-
-        if (deliveryData?.order?.deliveryDetails?.latitude!=0.0){
-            dropLat = deliveryData?.order?.deliveryDetails?.latitude?:0.0
-        }
-        if (deliveryData?.order?.deliveryDetails?.longitude!=0.0){
-            dropLng = deliveryData?.order?.deliveryDetails?.longitude?:0.0
-        }
-
-        if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
-            storeLat = deliveryData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
-        }
-        if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
-            storeLng = deliveryData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
-        }
-
-        if (storeLat != 0.0 && dropLat != 0.0) {
-            isLocationReady = true
-            tryDrawRoute()
-        }
         binding?.apply {
+
+            if(deliveryData?.returnType=="1"||deliveryData?.returnType=="2"){
+                tvDropAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                tvPickupAddress.text = deliveryData?.order?.deliveryDetails?.address
+                if (deliveryData?.order?.deliveryDetails?.latitude!=0.0){
+                    storeLat = deliveryData?.order?.deliveryDetails?.latitude?:0.0
+                }
+                if (deliveryData?.order?.deliveryDetails?.longitude!=0.0){
+                    storeLng = deliveryData?.order?.deliveryDetails?.longitude?:0.0
+                }
+
+                if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+                    dropLat = deliveryData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+                }
+                if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+                    dropLng = deliveryData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+                }
+
+            }
+
+            else{
+                tvPickupAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                tvDropAddress.text = deliveryData?.order?.deliveryDetails?.address
+                if (deliveryData?.order?.deliveryDetails?.latitude!=0.0){
+                    dropLat = deliveryData?.order?.deliveryDetails?.latitude?:0.0
+                }
+                if (deliveryData?.order?.deliveryDetails?.longitude!=0.0){
+                    dropLng = deliveryData?.order?.deliveryDetails?.longitude?:0.0
+                }
+
+                if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+                    storeLat = deliveryData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+                }
+                if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+                    storeLng = deliveryData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+                }
+
+            }
+
+            if (storeLat != 0.0 && dropLat != 0.0) {
+                isLocationReady = true
+                tryDrawRoute()
+            }
             if (deliveryDetailData?.userRatingReviewProvide!=null) {
                 tvRating.text = deliveryDetailData?.userRatingReviewProvide?.storeRating.toString()
                 rbStore.rating = deliveryDetailData?.userRatingReviewProvide?.storeRating ?: 0f
             }
-            tvPickupAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-            tvDropAddress.text = deliveryData?.order?.deliveryDetails?.address
+
+            if (deliveryData?.returnType=="1"){
+                viewPackageDetail.text = "View Return details"
+            }
+            else if (deliveryData?.returnType=="2"){
+                viewPackageDetail.text = "View  Exchange Package details"
+            }
+            else{
+                viewPackageDetail.text = "View Package details"
+            }
 
            when(deliveryData?.deliveryStatus){
+               "0"->{
+
+               }
                "7"->{
+
                    setDataAfterPickUp()
                    ivImage.load(deliveryData?.order?.userDetails?.profileImage){
                        crossfade(true)
@@ -150,7 +189,9 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                    rbStore.isVisible = false
                    tvRating.isVisible = false
                    tvName.text = deliveryData?.order?.deliveryDetails?.name
+
                }
+
                else->{
                    ivImage.load(deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
                        crossfade(true)
@@ -243,7 +284,6 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
         }
 
-
         viewModel.getReasonResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
@@ -279,7 +319,6 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
                     deliveryDetailData = response.data
-                    viewPackageDetail()
                 }
                 isObserver = false
             }
@@ -292,16 +331,30 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
                     when(selectedDeliveryStatus){
                       "3" ->{
-                          if (deliveryData?.order?.paymentMethod=="3"){
+                          if (deliveryData?.order?.paymentMethod=="3"&&deliveryData?.paymentStatus!="1"){
                               collectAmountDialog()
                           }
                           else{
-                              CommonMethod.showSuccessDialog(requireActivity(),"Order Delivered successfully"){
-                                  findNavController().popBackStack()
+
+                              if (deliveryData?.returnType=="1"||deliveryData?.returnType=="2"){
+                                  productCollectedDialog()
+                              }
+                              else{
+                                  CommonMethod.showSuccessDialog(requireActivity(),"Order Delivered successfully"){
+                                      findNavController().popBackStack()
+                                  }
                               }
                           }
 
                       }
+                        "5"->{
+                            cancelDialog?.dismiss()
+                            productCollectedDialog()
+                        }
+                        "9"->{
+                            cancelDialog?.dismiss()
+                            productCollectedDialog()
+                        }
                         "8"->{
                             cancelDialog?.dismiss()
                             CommonMethod.showSuccessDialog(requireActivity(),"Order Status Updated as Not Delivered"){
@@ -354,6 +407,13 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
+            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } KD"
+            tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
+            deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
+                Color.parseColor(it)) }
+            tvQuantityValue.text = "${deliveryDetailData?.quantity}"
+            tvStore.text = deliveryDetailData?.productDetails?.productNameEn
+
 
             tvPaymentStatus.text = if (deliveryDetailData?.paymentStatus=="1"){
                 "Paid"
@@ -370,13 +430,29 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
             tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
             tvOrderIdValue.text = "#${deliveryDetailData?.id}"
-            tvDeliveryLocation.text = deliveryDetailData?.order?.deliveryDetails?.address
-            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } KD"
-            tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
-            deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
-                Color.parseColor(it)) }
-            tvQuantityValue.text = "${deliveryDetailData?.quantity}"
-            tvStore.text = deliveryDetailData?.productDetails?.productNameEn
+
+            if(deliveryData?.returnType=="1"){
+                tvDeliveryLocation.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+
+                tvReturn.isVisible = true
+                clUploadedImage.isVisible = true
+                ivReturnImage.load(deliveryDetailData?.returnImage?.get(0)){
+                    crossfade(true)
+                    placeholder(R.drawable.ic_placeholder)
+                    error(R.drawable.ic_placeholder)
+                }
+            }
+            else if(deliveryData?.returnType=="2"){
+                tvDeliveryLocation.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+
+                tvExchange.isVisible = true
+                clExchangeSize.isVisible = true
+                tvExchangeSizeValue.text = deliveryDetailData?.exchangeNewSizeData?.name
+            }
+            else{
+                tvDeliveryLocation.text = deliveryDetailData?.order?.deliveryDetails?.address
+            }
+
         }
 
         dialog.show()
@@ -400,6 +476,13 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
         window.attributes = params
 
         dialogBinding.apply {
+
+            if(deliveryData?.returnType=="1"||deliveryData?.returnType=="2"){
+                rbNotDelivered.isVisible = false
+            }
+            else{
+                rbNotDelivered.isVisible = true
+            }
 
             ivBack.setOnClickListener {
                 dialog.dismiss()
@@ -451,7 +534,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
         val map = HashMap<String,Any>()
         map["id"] = deliveryData?.id.toString()
         map["delivery_status"] = selectedDeliveryStatus////3-delivered 7-picked 8-not delivered
-        if (selectedDeliveryStatus=="3"&&deliveryData?.order?.paymentMethod=="3"){
+        if (selectedDeliveryStatus=="3"&&deliveryData?.order?.paymentMethod=="3"&&deliveryData?.paymentStatus!="1"){
             map["collect_amount"] = "1"
         }
         if (reason!=null){
@@ -687,7 +770,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             tvPrice.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0)} KD"
 
             btnCollected.setOnClickListener {
-                CommonMethod.showSuccessDialog(requireActivity(),"Order Delivered successfully"){
+                CommonMethod.showSuccessDialog(requireActivity(),"Order Delivered Successfully"){
                     findNavController().popBackStack()
                 }
 
@@ -698,5 +781,48 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
         dialog.show()
     }
+
+    private fun productCollectedDialog() {
+        val dialog = Dialog(requireActivity(), R.style.CustomDialog)
+        val dialogBinding = ExchangeReturnProductDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog.setContentView(it) }
+
+        val window: Window = dialog.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.CENTER
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            ivOrder.load(deliveryDetailData?.variationDetails?.variantImage?.get(0)){
+                crossfade(true)
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_placeholder)
+            }
+            tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
+            deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
+                Color.parseColor(it)) }
+            tvQuantityValue.text = "${deliveryDetailData?.quantity}"
+            tvStore.text = deliveryDetailData?.productDetails?.productNameEn
+            btnCollected.setOnClickListener {
+                CommonMethod.showSuccessDialog(requireActivity(),"Previous Order Collected Successfully"){
+                    findNavController().popBackStack()
+                }
+
+                dialog.dismiss()
+            }
+
+        }
+
+        dialog.show()
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.desynatdriver.ui.home.fragment.deliveries
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -60,11 +61,6 @@ class DeliveryDetailFragment : BaseFragment() {
     private fun setData() {
         binding?.apply {
 
-            ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
-                crossfade(true)
-                placeholder(R.drawable.ic_user)
-                error(R.drawable.ic_user)
-            }
 
             tvDeliveryIdValue.text = "#${deliveryDetailData?.id}"
             tvOrderIdValue.text = "#${deliveryDetailData?.id}"
@@ -82,7 +78,7 @@ class DeliveryDetailFragment : BaseFragment() {
                 }
 
             }
-            tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+
             tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(Color.parseColor(it)) }
             tvQuantityValue.text = "${deliveryDetailData?.quantity}"
@@ -94,37 +90,161 @@ class DeliveryDetailFragment : BaseFragment() {
             tvStore.text = deliveryDetailData?.productDetails?.productNameEn
             if (deliveryDetailData?.userRatingReviewProvide!=null) {
                 tvRating.text = deliveryDetailData?.userRatingReviewProvide?.storeRating.toString()
+
+                if (deliveryData?.returnType=="1"||deliveryData?.returnType=="2"){
+                    rbStore.isVisible = false
+                    tvRating.isVisible = false
+                }
+                else{
+                    rbStore.isVisible = true
+                    tvRating.isVisible = true
+                }
                 rbStore.rating = deliveryDetailData?.userRatingReviewProvide?.storeRating ?: 0f
             }
-            tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-            tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
-            tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
-            tvDeliveryOnValue.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+
+            tvDeliveryOnValue.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.updatedAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
             when(deliveryDetailData?.deliveryStatus){
-                "1"->{
-                    tvStatus.text = "Confirmed"
-                    tvStatus.setTextColor(Color.parseColor("#17854C"))
+                "0"->{
+                    when (deliveryData?.returnType) {
+                        "1" -> {
+                            tvDropAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                            tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                            tvName.text = deliveryDetailData?.order?.userDetails?.fullName
+                            tvCustomerName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                            tvCustomer.text = "Store Name"
+                            tvPrice.isVisible = false
+                            tvPriceValue.isVisible = false
+                            tvPaymentStatus.isVisible = false
+                            ivImage.load(deliveryDetailData?.order?.userDetails?.profileImage){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_user)
+                                error(R.drawable.ic_user)
+                            }
+                            tvStatus.text = "Delivered"
+                            tvStatus.setTextColor(Color.parseColor("#17854C"))
+                        }
+
+                        "2" -> {
+                            tvDropAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                            tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                            tvName.text = deliveryDetailData?.order?.userDetails?.fullName
+                            tvCustomerName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                            tvCustomer.text = "Store Name"
+                            tvPrice.isVisible = false
+                            tvPriceValue.isVisible = false
+                            tvPaymentStatus.isVisible = false
+                            ivImage.load(deliveryDetailData?.order?.userDetails?.profileImage){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_user)
+                                error(R.drawable.ic_user)
+                            }
+                            tvStatus.text = "Delivered"
+                            tvStatus.setTextColor(Color.parseColor("#17854C"))
+                        }
+
+                        else -> {
+                            tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                            tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                            tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
+
+                            tvStatus.text = "Delivered"
+                            tvStatus.setTextColor(Color.parseColor("#17854C"))
+                            tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                            ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_user)
+                                error(R.drawable.ic_user)
+                            }
+
+                        }
+                    }
                 }
-                "7"->{
-                    tvStatus.text = "Picked"
-                    tvStatus.setTextColor(Color.parseColor("#2A74B8"))
-                }
+
                 "3"->{
-                    tvStatus.text = "Delivered"
-                    tvStatus.setTextColor(Color.parseColor("#17854C"))
+                    when (deliveryData?.returnType) {
+                        "1" -> {
+                            tvDropAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                            tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                            tvName.text = deliveryDetailData?.order?.userDetails?.fullName
+                            tvCustomerName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                            tvCustomer.text = "Store Name"
+                            tvPrice.isVisible = false
+                            tvPriceValue.isVisible = false
+                            tvPaymentStatus.isVisible = false
+                            ivImage.load(deliveryDetailData?.order?.userDetails?.profileImage){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_user)
+                                error(R.drawable.ic_user)
+                            }
+                            tvStatus.text = "Delivered"
+                            tvStatus.setTextColor(Color.parseColor("#17854C"))
+                        }
+
+                        "2" -> {
+                            tvDropAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                            tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                            tvName.text = deliveryDetailData?.order?.userDetails?.fullName
+                            tvCustomerName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                            tvCustomer.text = "Store Name"
+                            tvPrice.isVisible = false
+                            tvPriceValue.isVisible = false
+                            tvPaymentStatus.isVisible = false
+                            ivImage.load(deliveryDetailData?.order?.userDetails?.profileImage){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_user)
+                                error(R.drawable.ic_user)
+                            }
+                            tvStatus.text = "Delivered"
+                            tvStatus.setTextColor(Color.parseColor("#17854C"))
+                        }
+
+                        else -> {
+                            tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                            tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                            tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
+                            tvStatus.text = "Delivered"
+                            tvStatus.setTextColor(Color.parseColor("#17854C"))
+                            tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                            ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                                crossfade(true)
+                                placeholder(R.drawable.ic_user)
+                                error(R.drawable.ic_user)
+                            }
+
+                        }
+                    }
                 }
 
                 "8"->{
+                    tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                    tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                    tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
+                    tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                    ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                        crossfade(true)
+                        placeholder(R.drawable.ic_user)
+                        error(R.drawable.ic_user)
+                    }
                     tvStatus.text = "Not Delivered"
                     tvStatus.setTextColor(Color.parseColor("#EB2525"))
                     tvReason.isVisible = true
                     tvReasonForNotDelivered.isVisible = true
                     tvReasonForNotDelivered.text = deliveryData?.notDeliveredReason
+
                 }
                 else->{
                     tvStatus.text = "Confirmed"
                     tvStatus.setTextColor(Color.parseColor("#17854C"))
+                    tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                    tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                    tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
+                    tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                    ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                        crossfade(true)
+                        placeholder(R.drawable.ic_user)
+                        error(R.drawable.ic_user)
+                    }
                 }
             }
         }

@@ -46,6 +46,18 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderRe
             tvDistance.text = "${CommonMethod.formatPrice(deliveryData?.distance?:0.0)} Km"
             tvAmount.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0) } KD"
             when(deliveryData.deliveryStatus){
+                "0"->{
+                    if(deliveryData?.returnType=="1"){
+                    tvStatus.text = "Return Req."
+                    tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
+                    tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
+                }
+                else if(deliveryData?.returnType=="2"){
+                    tvStatus.text = "Exchange Req."
+                    tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
+                    tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
+                }
+                }
                 "1"->{
                     tvStatus.text = "Confirmed"
                     tvStatus.setTextColor(Color.parseColor("#17854C"))
@@ -59,11 +71,23 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderRe
                 "3"->{
                     tvStatus.text = "Delivered"
                     tvStatus.setTextColor(Color.parseColor("#17854C"))
-                    tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
+                    tvStatus.backgroundTintList =
+                        ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
                 }
                 "8"->{
                     tvStatus.text = "Not Delivered"
                     tvStatus.setTextColor(Color.parseColor("#EB2525"))
+                    tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
+                }
+
+                "5"->{
+                    tvStatus.text = "Return Req."
+                    tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
+                    tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
+                }
+                "9"->{
+                    tvStatus.text = "Exchange Req."
+                    tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
                     tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
                 }
                 else ->{

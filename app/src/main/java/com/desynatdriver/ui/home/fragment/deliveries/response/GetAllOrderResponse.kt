@@ -83,7 +83,7 @@ data class GetAllOrderResponse(
             @SerializedName("r_e_approve")
             val rEApprove: String,
             @SerializedName("return_image")
-            val returnImage: String,
+            val returnImage: ArrayList<String>,
             @SerializedName("return_reason")
             val returnReason: String,
             @SerializedName("return_type")

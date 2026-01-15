@@ -38,6 +38,18 @@ class OngoingDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOr
             tvStore.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeName
 
             when(deliveryData.deliveryStatus){
+                "0"->{
+                    if(deliveryData?.returnType=="1"){
+                        tvStatus.text = "Return Req."
+                        tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
+                        tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
+                    }
+                    else if(deliveryData?.returnType=="2"){
+                        tvStatus.text = "Exchange Req."
+                        tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
+                        tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
+                    }
+                }
                 "1"->{
                     tvStatus.text = "Confirmed"
                     tvStatus.setTextColor(Color.parseColor("#17854C"))

@@ -29,7 +29,9 @@ data class DeliveryDetailResponse(
         @SerializedName("distance")
         val distance: Double,
         @SerializedName("exchange_new_size")
-        val exchangeNewSize: Any,
+        val exchangeNewSize: String,
+        @SerializedName("exchange_new_size_data")
+        val exchangeNewSizeData: ExchangeNewSizeData,
         @SerializedName("exchange_old_size")
         val exchangeOldSize: Any,
         @SerializedName("exchange_reason")
@@ -55,7 +57,7 @@ data class DeliveryDetailResponse(
         @SerializedName("r_e_approve")
         val rEApprove: String,
         @SerializedName("return_image")
-        val returnImage: Any,
+        val returnImage: ArrayList<String>,
         @SerializedName("return_reason")
         val returnReason: Any,
         @SerializedName("return_type")
@@ -73,6 +75,16 @@ data class DeliveryDetailResponse(
         @SerializedName("variation_details")
         val variationDetails: VariationDetails
     ) {
+        data class ExchangeNewSizeData(
+            @SerializedName("created_at")
+            val createdAt: String,
+            @SerializedName("id")
+            val id: Int,
+            @SerializedName("name")
+            val name: String,
+            @SerializedName("updated_at")
+            val updatedAt: String
+        )
         data class UserRatingReviewProvide(
             @SerializedName("created_at")
             val createdAt: String,

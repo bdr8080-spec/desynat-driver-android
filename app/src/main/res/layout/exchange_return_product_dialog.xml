@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/_15sdp"
+    android:paddingBottom="@dimen/_15sdp"
+    android:layout_marginHorizontal="@dimen/_30sdp"
+    android:background="@drawable/card_stroke_background"
+    android:backgroundTint="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clOrderDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_stroke_background"
+        android:backgroundTint="#FFF7EA"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivOrder"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:src="@drawable/ic_placeholder"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"
+            app:shapeAppearanceOverlay="@style/rounded_corner_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Nike Abaya"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivOrder"
+            app:layout_constraintTop_toTopOf="@+id/ivOrder"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Size: M"
+            android:textSize="@dimen/_9sdp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="@+id/tvStore"
+            app:layout_constraintTop_toBottomOf="@+id/tvStore"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Color:"
+            android:textSize="@dimen/_9sdp"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:drawableStart="@drawable/ic_grey_dot"
+            android:drawablePadding="@dimen/_5sdp"
+            app:layout_constraintStart_toEndOf="@+id/tvSize"
+            app:layout_constraintBottom_toBottomOf="@+id/tvSize"
+            app:layout_constraintTop_toTopOf="@+id/tvSize"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivColor"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:src="#98ADFF"
+            android:layout_marginStart="@dimen/_5sdp"
+            app:shapeAppearanceOverlay="@style/rounded_corner_2sdp"
+            app:layout_constraintStart_toEndOf="@+id/tvColor"
+            app:layout_constraintTop_toTopOf="@+id/tvColor"
+            app:layout_constraintBottom_toBottomOf="@id/tvColor"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Quantity"
+            android:textSize="@dimen/_9sdp"
+            android:textColor="#66635E"
+            android:layout_marginBottom="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="@+id/tvStore"
+            app:layout_constraintTop_toBottomOf="@+id/tvSize"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQuantityValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="02"
+            android:textSize="@dimen/_9sdp"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@+id/tvQuantity"
+            app:layout_constraintBottom_toBottomOf="@+id/tvQuantity"
+            app:layout_constraintTop_toTopOf="@+id/tvQuantity"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnCollected"
+        style="@style/button"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:text="Previous Order Collected"
+        android:padding="@dimen/_6sdp"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clOrderDetail"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
