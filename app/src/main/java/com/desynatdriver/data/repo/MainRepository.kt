@@ -257,6 +257,17 @@ class MainRepository @Inject constructor(
         )
     }
 
+    val returnOrderLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun returnOrder(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.returnOrder(map)
+            },
+            responseLiveData = returnOrderLiveData
+        )
+    }
+
     val getReasonLiveData = SingleLiveEvent<GetReasonResponse>()
     suspend fun getReason(type:Int
     ) {

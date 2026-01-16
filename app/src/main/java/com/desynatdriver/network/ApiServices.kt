@@ -105,6 +105,9 @@ interface ApiServices {
     @POST(Constants.UPDATE_DELIVERY_STATUS)
     suspend fun updateDeliveryStatus(@Body body: HashMap<String, Any>):Response<CommonResponse>
 
+    @POST(Constants.RETURN_ORDER_TO_STORE)
+    suspend fun returnOrder(@Body body: HashMap<String, Any>):Response<CommonResponse>
+
     @GET(Constants.GET_REASON)
     suspend fun getReason(@Query("type") type:Int):Response<GetReasonResponse>
 

@@ -170,5 +170,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val returnOrderResult: LiveData<CommonResponse>
+        get() = repository.returnOrderLiveData
+
+    fun returnOrder(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.returnOrder(map)
+        }
+    }
+
 
 }

@@ -52,9 +52,32 @@ class NewDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderR
                     }
                 }
                 "1"->{
+                    if (deliveryData?.rEApprove=="1"&&deliveryData?.returnType=="1"){
+                        tvStatus.text = "Return Req."
+                        tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
+                        tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
+                    }
+                    else if (deliveryData?.rEApprove=="1"&&deliveryData?.returnType=="2"){
+                        tvStatus.text = "Exchange Req."
+                        tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
+                        tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
+                    }
+                    else{
+                        tvStatus.text = "Confirmed"
+                        tvStatus.setTextColor(Color.parseColor("#17854C"))
+                        tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
+                    }
+
+                }
+                "2.1"->{
                     tvStatus.text = "Confirmed"
                     tvStatus.setTextColor(Color.parseColor("#17854C"))
                     tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
+                }
+                "2.2"->{
+                    tvStatus.text = "Exchange Req."
+                    tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
+                    tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
                 }
                 "7"->{
                     tvStatus.text = "Picked"

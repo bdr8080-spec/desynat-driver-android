@@ -37,5 +37,6 @@ object Constants {
     const val PICK_ORDER = "/api/deliveryboy/pick_order"
     const val GET_COMPLETED_ORDER = "/api/deliveryboy/get_completed_orders"
     const val GET_REASON = "/api/deliveryboy/get_reasons"
+    const val RETURN_ORDER_TO_STORE = "/api/deliveryboy/return-order-to-store-in-exchange"
 
 }
