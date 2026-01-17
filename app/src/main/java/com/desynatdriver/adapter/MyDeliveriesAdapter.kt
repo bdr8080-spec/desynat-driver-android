@@ -64,7 +64,7 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderRe
                         tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
                         tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
                     }
-                   else if (deliveryData?.rEApprove=="1"&&deliveryData?.returnType=="2"){
+                   else if (deliveryData?.pOrderdetailsId!="0"&&deliveryData?.reType!="0"){
                         tvStatus.text = "Exchange Req."
                         tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
                         tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
@@ -92,6 +92,7 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderRe
                     tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
                 }
                 "3"->{
+
                     tvStatus.text = "Delivered"
                     tvStatus.setTextColor(Color.parseColor("#17854C"))
                     tvStatus.backgroundTintList =

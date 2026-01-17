@@ -46,6 +46,10 @@ data class GetAllOrderResponse(
             val assignDate: String,
             @SerializedName("assign_status")
             val assignStatus: String,
+            @SerializedName("p_orderdetails_id")
+            val pOrderdetailsId: String,
+            @SerializedName("r_e_type")
+            val reType: String,
             @SerializedName("cancel_reason")
             val cancelReason: Any,
             @SerializedName("created_at")

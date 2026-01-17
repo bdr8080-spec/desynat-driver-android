@@ -56,7 +56,7 @@ class OngoingDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOr
                         tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
                         tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
                     }
-                    else if (deliveryData?.rEApprove=="1"&&deliveryData?.returnType=="2"){
+                    else if (deliveryData?.pOrderdetailsId!="0"&&deliveryData?.reType!="0"){
                         tvStatus.text = "Exchange Req."
                         tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
                         tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
