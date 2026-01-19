@@ -160,7 +160,6 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
             when(deliveryDetailData?.deliveryStatus){
                 "7"->{
-
                     setDataAfterPickUp()
                     ivImage.load(deliveryDetailData?.order?.userDetails?.profileImage){
                         crossfade(true)
@@ -179,8 +178,14 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                         placeholder(R.drawable.ic_user)
                         error(R.drawable.ic_user)
                     }
-                    rbStore.isVisible = true
-                    tvRating.isVisible = true
+                    if (deliveryDetailData?.userRatingReviewProvide!=null) {
+                        rbStore.isVisible = true
+                        tvRating.isVisible = true
+                    }
+                    else{
+                        rbStore.isVisible = false
+                        tvRating.isVisible = false
+                    }
                     tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
                     tvOngoingDeliveries.isVisible = false
                     tvStatus.isVisible = false
@@ -215,10 +220,49 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                     dropLng = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
                 }
 
-                setDataAfterPickUp()
+                ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                    crossfade(true)
+                    placeholder(R.drawable.ic_user)
+                    error(R.drawable.ic_user)
+                }
+                if (deliveryDetailData?.userRatingReviewProvide!=null) {
+                    rbStore.isVisible = true
+                    tvRating.isVisible = true
+                }
+                else{
+                    rbStore.isVisible = false
+                    tvRating.isVisible = false
+                }
+                tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+
+                tvOngoingDeliveries.isVisible = false
+                tvStatus.isVisible = true
+                tvUpdateStatus.isVisible = true
+                btnPickedOrder.isVisible = false
+                clPickUp.isVisible = false
             }
             else if(deliveryDetailData?.deliveryStatus=="7"){
-                setDataAfterPickUp()
+                tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                if (deliveryDetailData?.order?.deliveryDetails?.latitude!=0.0){
+                    dropLat = deliveryDetailData?.order?.deliveryDetails?.latitude?:0.0
+                }
+                if (deliveryDetailData?.order?.deliveryDetails?.longitude!=0.0){
+                    dropLng = deliveryDetailData?.order?.deliveryDetails?.longitude?:0.0
+                }
+
+                if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+                    storeLat = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+                }
+                if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+                    storeLng = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+                }
+
+                tvOngoingDeliveries.isVisible = false
+                tvStatus.isVisible = true
+                tvUpdateStatus.isVisible = true
+                btnPickedOrder.isVisible = false
+                clPickUp.isVisible = false
                 ivImage.load(deliveryDetailData?.order?.userDetails?.profileImage){
                     crossfade(true)
                     placeholder(R.drawable.ic_user)
@@ -227,6 +271,12 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 rbStore.isVisible = false
                 tvRating.isVisible = false
                 tvName.text = deliveryDetailData?.order?.deliveryDetails?.name
+
+                tvOngoingDeliveries.isVisible = false
+                tvStatus.isVisible = true
+                tvUpdateStatus.isVisible = true
+                btnPickedOrder.isVisible = false
+                clPickUp.isVisible = false
             }
             else{
                 tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
@@ -250,8 +300,14 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                     placeholder(R.drawable.ic_user)
                     error(R.drawable.ic_user)
                 }
-                rbStore.isVisible = true
-                tvRating.isVisible = true
+                if (deliveryDetailData?.userRatingReviewProvide!=null) {
+                    rbStore.isVisible = true
+                    tvRating.isVisible = true
+                }
+                else{
+                    rbStore.isVisible = false
+                    tvRating.isVisible = false
+                }
                 tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
                 tvOngoingDeliveries.isVisible = false
                 tvStatus.isVisible = false
@@ -312,7 +368,11 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                     if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
                         dropLng = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
                     }
-                    setDataAfterPickUp()
+                    tvOngoingDeliveries.isVisible = false
+                    tvStatus.isVisible = true
+                    tvUpdateStatus.isVisible = true
+                    btnPickedOrder.isVisible = false
+                    clPickUp.isVisible = false
                     ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
                         crossfade(true)
                         placeholder(R.drawable.ic_user)
@@ -427,7 +487,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                     }
                    else if (selectedDeliveryStatus=="3"){
                         if (deliveryData?.returnType=="1"){
-                            returnOrderToStore()
+                            returnOrderToStore(false)
                             updateDeliveryStatus()
                         }
                         else if (deliveryData?.pOrderdetailsId!="0"&&deliveryData?.reType!="0"&&deliveryData?.returnType!="1"){
@@ -562,9 +622,18 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             if (isReturnObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-                    CommonMethod.showSuccessDialog(requireActivity(),response.message){
-                        findNavController().popBackStack()
-                    }
+
+                     if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"&&deliveryDetailData?.returnType!="1"){
+                         CommonMethod.showSuccessDialog(requireActivity(),"Exchange Complete Successfully "){
+                             findNavController().popBackStack()
+                         }
+                     }
+                    else{
+                         CommonMethod.showSuccessDialog(requireActivity(),response.message){
+                             findNavController().popBackStack()
+                         }
+                     }
+
 
                 }
                 isReturnObserver = false
@@ -635,6 +704,9 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             tvOrderIdValue.text = "#${deliveryDetailData?.id}"
 
             if(deliveryData?.returnType=="1"){
+                tvPriceValue.isVisible = false
+                tvPrice.isVisible = false
+                tvPaymentStatus.isVisible = false
                 tvDeliveryLocation.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
 
 
@@ -655,10 +727,13 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             }
             else if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"){
                 tvDeliveryLocation.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-
+                tvPriceValue.isVisible = false
+                tvPrice.isVisible = false
+                tvPaymentStatus.isVisible = false
                 tvExchange.isVisible = true
                 clExchangeSize.isVisible = true
                 tvExchangeSizeValue.text = deliveryDetailData?.exchangeNewSizeData?.name
+
             }
             else if(deliveryDetailData?.returnType=="2"){
                 tvDeliveryLocation.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
@@ -702,6 +777,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             else if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"){
                 if (deliveryDetailData?.deliveryStatus=="3"){
                  rbDelivered.text = "Drop at Store"
+                    rbPicked.isVisible = false
                 }
 
                 rbNotDelivered.isVisible = false
@@ -1052,7 +1128,12 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             tvQuantityValue.text = "${deliveryDetailData?.quantity}"
             tvStore.text = deliveryDetailData?.productDetails?.productNameEn
             btnCollected.setOnClickListener {
+                CommonMethod.showSuccessDialog(
+                    requireActivity(),
+                    "Order Delivered successfully"
+                ) {
 
+                }
 
 binding?.apply {
     tvDropAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
@@ -1082,11 +1163,14 @@ binding?.apply {
         dialog.show()
     }
 
-    private fun returnOrderToStore() {
+    private fun returnOrderToStore(isLoading:Boolean = true) {
         val map = HashMap<String,Any>()
         map["id"] = deliveryData?.id.toString()
         map["delivery_status"] = "1"
         viewModel.returnOrder(map)
+        if (isLoading){
+            ProgressDialogUtils.getInstance().showProgress(requireActivity())
+        }
         isReturnObserver = true
     }
 
