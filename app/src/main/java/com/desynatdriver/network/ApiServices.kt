@@ -100,10 +100,10 @@ interface ApiServices {
     suspend fun orderDetail(@QueryMap map: HashMap<String, Any>):Response<DeliveryDetailResponse>
 
     @POST(Constants.PICK_ORDER)
-    suspend fun pickOrder(@Body body: HashMap<String, Any>):Response<CommonResponse>
+    suspend fun pickOrder(@Body body: HashMap<String, Any>):Response<DeliveryDetailResponse>
 
     @POST(Constants.UPDATE_DELIVERY_STATUS)
-    suspend fun updateDeliveryStatus(@Body body: HashMap<String, Any>):Response<CommonResponse>
+    suspend fun updateDeliveryStatus(@Body body: HashMap<String, Any>):Response<DeliveryDetailResponse>
 
     @POST(Constants.RETURN_ORDER_TO_STORE)
     suspend fun returnOrder(@Body body: HashMap<String, Any>):Response<CommonResponse>

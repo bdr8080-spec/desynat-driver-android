@@ -2,7 +2,6 @@ package com.desynatdriver.ui.home.fragment.deliveries
 
 import android.app.Dialog
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -14,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -109,7 +107,6 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
         val itemJson = arguments?.getString("deliveryData")
         if (!itemJson.isNullOrEmpty()) {
             deliveryData = Gson().fromJson(itemJson, GetAllOrderResponse.Data.Data::class.java)
-            setData()
         }
         getOrderDetail()
         binding?.apply {
@@ -119,97 +116,14 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
     private fun setData(){
         binding?.apply {
 
-            if(deliveryData?.returnType=="1"||deliveryData?.returnType=="2"){
-                when(deliveryData?.deliveryStatus){
-                    "1" ->{
-                        tvDropAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-                        tvPickupAddress.text = deliveryData?.order?.deliveryDetails?.address
-                        if (deliveryData?.order?.deliveryDetails?.latitude!=0.0){
-                            storeLat = deliveryData?.order?.deliveryDetails?.latitude?:0.0
-                        }
-                        if (deliveryData?.order?.deliveryDetails?.longitude!=0.0){
-                            storeLng = deliveryData?.order?.deliveryDetails?.longitude?:0.0
-                        }
-
-                        if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
-                            dropLat = deliveryData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
-                        }
-                        if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
-                            dropLng = deliveryData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
-                        }
-                    }
-                    "2.2" ->{
-                        tvPickupAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-                        tvDropAddress.text = deliveryData?.order?.deliveryDetails?.address
-                        if (deliveryData?.order?.deliveryDetails?.latitude!=0.0){
-                            dropLat = deliveryData?.order?.deliveryDetails?.latitude?:0.0
-                        }
-                        if (deliveryData?.order?.deliveryDetails?.longitude!=0.0){
-                            dropLng = deliveryData?.order?.deliveryDetails?.longitude?:0.0
-                        }
-
-                        if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
-                            storeLat = deliveryData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
-                        }
-                        if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
-                            storeLng = deliveryData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
-                        }
-                    }
-                    else ->{
-                        tvDropAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-                        tvPickupAddress.text = deliveryData?.order?.deliveryDetails?.address
-                        if (deliveryData?.order?.deliveryDetails?.latitude!=0.0){
-                            storeLat = deliveryData?.order?.deliveryDetails?.latitude?:0.0
-                        }
-                        if (deliveryData?.order?.deliveryDetails?.longitude!=0.0){
-                            storeLng = deliveryData?.order?.deliveryDetails?.longitude?:0.0
-                        }
-
-                        if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
-                            dropLat = deliveryData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
-                        }
-                        if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
-                            dropLng = deliveryData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
-                        }
-                    }
-                }
-
+            if(deliveryDetailData?.returnType=="1"){
+              returnFlow()
             }
-            else if (deliveryData?.pOrderdetailsId!="0"&&deliveryData?.reType!="0"){
-                tvPickupAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-                tvDropAddress.text = deliveryData?.order?.deliveryDetails?.address
-                if (deliveryData?.order?.deliveryDetails?.latitude!=0.0){
-                    dropLat = deliveryData?.order?.deliveryDetails?.latitude?:0.0
-                }
-                if (deliveryData?.order?.deliveryDetails?.longitude!=0.0){
-                    dropLng = deliveryData?.order?.deliveryDetails?.longitude?:0.0
-                }
-
-                if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
-                    storeLat = deliveryData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
-                }
-                if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
-                    storeLng = deliveryData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
-                }
+            else if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"){
+               exchangeFlow()
             }
-
             else{
-                tvPickupAddress.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
-                tvDropAddress.text = deliveryData?.order?.deliveryDetails?.address
-                if (deliveryData?.order?.deliveryDetails?.latitude!=0.0){
-                    dropLat = deliveryData?.order?.deliveryDetails?.latitude?:0.0
-                }
-                if (deliveryData?.order?.deliveryDetails?.longitude!=0.0){
-                    dropLng = deliveryData?.order?.deliveryDetails?.longitude?:0.0
-                }
-
-                if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
-                    storeLat = deliveryData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
-                }
-                if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
-                    storeLng = deliveryData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
-                }
-
+                normalFlow()
             }
 
             if (storeLat != 0.0 && dropLat != 0.0) {
@@ -221,54 +135,248 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 rbStore.rating = deliveryDetailData?.userRatingReviewProvide?.storeRating ?: 0f
             }
 
-            if (deliveryData?.returnType=="1"){
-                viewPackageDetail.text = "View Return details"
+        }
+    }
+
+    private fun normalFlow(){
+        binding?.apply {
+            viewPackageDetail.text = "View Package details"
+            tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+            tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+            if (deliveryDetailData?.order?.deliveryDetails?.latitude!=0.0){
+                dropLat = deliveryDetailData?.order?.deliveryDetails?.latitude?:0.0
             }
-            else if (deliveryData?.pOrderdetailsId!="0"&&deliveryData?.reType!="0"){
-                viewPackageDetail.text = "View  Exchange Package details"
+            if (deliveryDetailData?.order?.deliveryDetails?.longitude!=0.0){
+                dropLng = deliveryDetailData?.order?.deliveryDetails?.longitude?:0.0
             }
-            else if (deliveryData?.returnType=="2"){
-                viewPackageDetail.text = "View  Exchange Package details"
+
+            if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+                storeLat = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+            }
+            if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+                storeLng = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+            }
+
+
+            when(deliveryDetailData?.deliveryStatus){
+                "7"->{
+
+                    setDataAfterPickUp()
+                    ivImage.load(deliveryDetailData?.order?.userDetails?.profileImage){
+                        crossfade(true)
+                        placeholder(R.drawable.ic_user)
+                        error(R.drawable.ic_user)
+                    }
+                    rbStore.isVisible = false
+                    tvRating.isVisible = false
+                    tvName.text = deliveryDetailData?.order?.deliveryDetails?.name
+
+                }
+
+                else->{
+                    ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                        crossfade(true)
+                        placeholder(R.drawable.ic_user)
+                        error(R.drawable.ic_user)
+                    }
+                    rbStore.isVisible = true
+                    tvRating.isVisible = true
+                    tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                    tvOngoingDeliveries.isVisible = false
+                    tvStatus.isVisible = false
+                    tvUpdateStatus.isVisible = false
+                    btnPickedOrder.isVisible = true
+                    clPickUp.isVisible = true
+                }
+
+            }
+        }
+    }
+
+    private fun exchangeFlow(){
+        binding?.apply {
+            viewPackageDetail.text = "View  Exchange Package details"
+            itemCollected = deliveryDetailData?.returntostore=="0"&&deliveryDetailData?.deliveryStatus=="3"
+
+            if (deliveryDetailData?.returntostore=="0"&&deliveryDetailData?.deliveryStatus=="3"){
+                tvDropAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                if (deliveryDetailData?.order?.deliveryDetails?.latitude!=0.0){
+                    storeLat = deliveryDetailData?.order?.deliveryDetails?.latitude?:0.0
+                }
+                if (deliveryDetailData?.order?.deliveryDetails?.longitude!=0.0){
+                    storeLng = deliveryDetailData?.order?.deliveryDetails?.longitude?:0.0
+                }
+
+                if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+                    dropLat = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+                }
+                if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+                    dropLng = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+                }
+
+                setDataAfterPickUp()
+            }
+            else if(deliveryDetailData?.deliveryStatus=="7"){
+                setDataAfterPickUp()
+                ivImage.load(deliveryDetailData?.order?.userDetails?.profileImage){
+                    crossfade(true)
+                    placeholder(R.drawable.ic_user)
+                    error(R.drawable.ic_user)
+                }
+                rbStore.isVisible = false
+                tvRating.isVisible = false
+                tvName.text = deliveryDetailData?.order?.deliveryDetails?.name
             }
             else{
-                viewPackageDetail.text = "View Package details"
+                tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                if (deliveryDetailData?.order?.deliveryDetails?.latitude!=0.0){
+                    dropLat = deliveryDetailData?.order?.deliveryDetails?.latitude?:0.0
+                }
+                if (deliveryDetailData?.order?.deliveryDetails?.longitude!=0.0){
+                    dropLng = deliveryDetailData?.order?.deliveryDetails?.longitude?:0.0
+                }
+
+                if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+                    storeLat = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+                }
+                if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+                    storeLng = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+                }
+
+                ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                    crossfade(true)
+                    placeholder(R.drawable.ic_user)
+                    error(R.drawable.ic_user)
+                }
+                rbStore.isVisible = true
+                tvRating.isVisible = true
+                tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                tvOngoingDeliveries.isVisible = false
+                tvStatus.isVisible = false
+                tvUpdateStatus.isVisible = false
+                btnPickedOrder.isVisible = true
+                clPickUp.isVisible = true
             }
+        }
+    }
 
-           when(deliveryData?.deliveryStatus){
-               "0"->{
+    private fun returnFlow(){
+        binding?.apply {
+            viewPackageDetail.text = "View Return details"
+            when(deliveryDetailData?.deliveryStatus){
+                "1" ->{
+                    tvDropAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                    tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                    if (deliveryDetailData?.order?.deliveryDetails?.latitude!=0.0){
+                        storeLat = deliveryDetailData?.order?.deliveryDetails?.latitude?:0.0
+                    }
+                    if (deliveryDetailData?.order?.deliveryDetails?.longitude!=0.0){
+                        storeLng = deliveryDetailData?.order?.deliveryDetails?.longitude?:0.0
+                    }
 
-               }
-               "7"->{
+                    if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+                        dropLat = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+                    }
+                    if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+                        dropLng = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+                    }
+                    ivImage.load(deliveryDetailData?.order?.userDetails?.profileImage){
+                        crossfade(true)
+                        placeholder(R.drawable.ic_user)
+                        error(R.drawable.ic_user)
+                    }
+                    rbStore.isVisible = false
+                    tvRating.isVisible = false
+                    tvName.text = deliveryDetailData?.order?.deliveryDetails?.name
+                    tvOngoingDeliveries.isVisible = false
+                    tvStatus.isVisible = false
+                    tvUpdateStatus.isVisible = false
+                    btnPickedOrder.isVisible = true
+                    clPickUp.isVisible = true
+                }
+                "7" ->{
+                    tvDropAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                    tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                    if (deliveryDetailData?.order?.deliveryDetails?.latitude!=0.0){
+                        storeLat = deliveryDetailData?.order?.deliveryDetails?.latitude?:0.0
+                    }
+                    if (deliveryDetailData?.order?.deliveryDetails?.longitude!=0.0){
+                        storeLng = deliveryDetailData?.order?.deliveryDetails?.longitude?:0.0
+                    }
 
-                   setDataAfterPickUp()
-                   ivImage.load(deliveryData?.order?.userDetails?.profileImage){
-                       crossfade(true)
-                       placeholder(R.drawable.ic_user)
-                       error(R.drawable.ic_user)
-                   }
-                   rbStore.isVisible = false
-                   tvRating.isVisible = false
-                   tvName.text = deliveryData?.order?.deliveryDetails?.name
+                    if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+                        dropLat = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+                    }
+                    if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+                        dropLng = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+                    }
+                    setDataAfterPickUp()
+                    ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                        crossfade(true)
+                        placeholder(R.drawable.ic_user)
+                        error(R.drawable.ic_user)
+                    }
+                    if (deliveryDetailData?.userRatingReviewProvide!=null) {
+                        rbStore.isVisible = true
+                        tvRating.isVisible = true
+                    }
+                    else {
+                        rbStore.isVisible = false
+                        tvRating.isVisible = false
+                    }
+                    tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                }
+                "2.2" ->{
+                    tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                    tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                    if (deliveryDetailData?.order?.deliveryDetails?.latitude!=0.0){
+                        dropLat = deliveryDetailData?.order?.deliveryDetails?.latitude?:0.0
+                    }
+                    if (deliveryDetailData?.order?.deliveryDetails?.longitude!=0.0){
+                        dropLng = deliveryDetailData?.order?.deliveryDetails?.longitude?:0.0
+                    }
 
-               }
+                    if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+                        storeLat = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+                    }
+                    if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+                        storeLng = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+                    }
+                }
+                else ->{
+                    tvDropAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+                    tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
+                    if (deliveryDetailData?.order?.deliveryDetails?.latitude!=0.0){
+                        storeLat = deliveryDetailData?.order?.deliveryDetails?.latitude?:0.0
+                    }
+                    if (deliveryDetailData?.order?.deliveryDetails?.longitude!=0.0){
+                        storeLng = deliveryDetailData?.order?.deliveryDetails?.longitude?:0.0
+                    }
 
-               else->{
-                   ivImage.load(deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
-                       crossfade(true)
-                       placeholder(R.drawable.ic_user)
-                       error(R.drawable.ic_user)
-                   }
-                   rbStore.isVisible = true
-                   tvRating.isVisible = true
-                   tvName.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeName
-                   tvOngoingDeliveries.isVisible = false
-                   tvStatus.isVisible = false
-                   tvUpdateStatus.isVisible = false
-                   btnPickedOrder.isVisible = true
-                   clPickUp.isVisible = true
-               }
+                    if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let!=0.0){
+                        dropLat = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.let?:0.0
+                    }
+                    if (deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long !=0.0){
+                        dropLng = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.long?:0.0
+                    }
 
-           }
+                    ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
+                        crossfade(true)
+                        placeholder(R.drawable.ic_user)
+                        error(R.drawable.ic_user)
+                    }
+                    rbStore.isVisible = true
+                    tvRating.isVisible = true
+                    tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
+                    tvOngoingDeliveries.isVisible = false
+                    tvStatus.isVisible = false
+                    tvUpdateStatus.isVisible = false
+                    btnPickedOrder.isVisible = true
+                    clPickUp.isVisible = true
+                }
+            }
         }
     }
 
@@ -384,9 +492,10 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
         viewModel.pickOrderResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
+                deliveryDetailData?.deliveryStatus = response.data.deliveryStatus
                 response?.let {
                         CommonMethod.showSuccessDialog(requireActivity(),"Order Picked successfully"){
-                            setDataAfterPickUp()
+                            setData()
                         }
 
                 }
@@ -399,6 +508,8 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
                     deliveryDetailData = response.data
+                    itemCollected = deliveryDetailData?.returntostore=="0"&&deliveryDetailData?.deliveryStatus=="3"
+                    setData()
                 }
                 isObserver = false
             }
@@ -408,13 +519,15 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-
+                    deliveryDetailData?.deliveryStatus = response.data.deliveryStatus
+                    deliveryDetailData?.returntostore = response.data.returntostore
                     when(selectedDeliveryStatus){
                       "3" ->{
                           if (deliveryData?.returnType=="1"){
 
                           }
-                          if (deliveryData?.pOrderdetailsId!="0"&&deliveryData?.reType!="0"&&deliveryData?.returnType!="1"){
+                         else if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"&&deliveryDetailData?.returnType!="1"){
+                              itemCollected = deliveryDetailData?.returntostore=="0"&&deliveryDetailData?.deliveryStatus=="3"
                               productCollectedDialog()
                           }
                           else {
@@ -540,15 +653,15 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 }
 
             }
-            else if (deliveryData?.pOrderdetailsId!="0"&&deliveryData?.reType!="0"){
-                tvDeliveryLocation.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+            else if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"){
+                tvDeliveryLocation.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
 
                 tvExchange.isVisible = true
                 clExchangeSize.isVisible = true
                 tvExchangeSizeValue.text = deliveryDetailData?.exchangeNewSizeData?.name
             }
-            else if(deliveryData?.returnType=="2"){
-                tvDeliveryLocation.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
+            else if(deliveryDetailData?.returnType=="2"){
+                tvDeliveryLocation.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
 
                 tvExchange.isVisible = true
                 clExchangeSize.isVisible = true
@@ -582,13 +695,19 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
         dialogBinding.apply {
 
-            if(deliveryData?.returnType=="1"||deliveryData?.returnType=="2"){
+            if(deliveryDetailData?.returnType=="1"||deliveryDetailData?.returnType=="2"){
                 rbNotDelivered.isVisible = false
+                rbDelivered.text = "Drop at Store"
             }
-            if (deliveryData?.pOrderdetailsId!="0"&&deliveryData?.reType!="0"){
+            else if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"){
+                if (deliveryDetailData?.deliveryStatus=="3"){
+                 rbDelivered.text = "Drop at Store"
+                }
+
                 rbNotDelivered.isVisible = false
             }
             else{
+                rbDelivered.text = "Delivered"
                 rbNotDelivered.isVisible = true
             }
 
@@ -606,7 +725,20 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                         dialog.dismiss()
                     }
                     R.id.rbDelivered ->{
-                        binding?.tvStatus?.text = "Delivered"
+                        if(deliveryDetailData?.returnType=="1"||deliveryDetailData?.returnType=="2"){
+                            binding?.tvStatus?.text = "Drop at Store"
+                        }
+                        if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"){
+                            if (deliveryDetailData?.deliveryStatus=="3"){
+                                binding?.tvStatus?.text = "Drop at Store"
+                            }
+                            else{
+                                binding?.tvStatus?.text = "Delivered"
+                            }
+                        }
+                        else{
+                            binding?.tvStatus?.text = "Delivered"
+                        }
                         selectedDeliveryStatus = "3"
                         binding?.tvUpdateStatus?.setBackgroundResource(R.drawable.btn_gradient)
                         binding?.tvUpdateStatus?.setTextColor(requireActivity().getColor(R.color.white))
@@ -938,7 +1070,6 @@ binding?.apply {
     if (deliveryData?.productDetails?.sellerDetails?.storeInfo?.long != 0.0) {
         dropLng = deliveryData?.productDetails?.sellerDetails?.storeInfo?.long ?: 0.0
     }
-    tvStatus.text = "Picked"
     binding?.tvUpdateStatus?.setBackgroundResource(R.drawable.ic_update_status_btn)
     binding?.tvUpdateStatus?.setTextColor(Color.parseColor("#808080"))
     selectedDeliveryStatus = ""
@@ -946,9 +1077,7 @@ binding?.apply {
 }
                 dialog.dismiss()
 }
-
             }
-
 
         dialog.show()
     }

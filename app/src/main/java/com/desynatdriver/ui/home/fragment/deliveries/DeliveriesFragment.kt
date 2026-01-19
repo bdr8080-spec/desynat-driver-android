@@ -71,8 +71,18 @@ class DeliveriesFragment : BaseFragment() {
 
                         }
                         2 -> {
+                            if (deliveryList[position]?.pOrderdetailsId!="0"&&deliveryList[position]?.returntostore=="0"){
+                                val bundle = Bundle().apply {
+                                    putString("deliveryData", Gson().toJson(deliveryList[position]))
+                                }
 
-                            if (deliveryList[position].deliveryStatus=="3"||deliveryList[position].deliveryStatus=="8") {
+                                findNavController().navigate(
+                                    R.id.action_deliveriesFragment_to_newOrderFragment,
+                                    bundle
+                                )
+                            }
+
+                            else if (deliveryList[position].deliveryStatus=="3"||deliveryList[position].deliveryStatus=="8") {
                                 val bundle = Bundle().apply {
                                     putString("deliveryData", Gson().toJson(deliveryList[position]))
                                 }

@@ -85,10 +85,18 @@ class OngoingDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOr
                     tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
                 }
                 "3"->{
-                    tvStatus.text = "Delivered"
-                    tvStatus.setTextColor(Color.parseColor("#17854C"))
-                    tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
-                }
+                    if (deliveryData?.pOrderdetailsId!="0"&&deliveryData?.returntostore=="0"){
+                        tvStatus.text = "Ongoing"
+                        tvStatus.setTextColor(Color.parseColor("#FF5F1B"))
+                        tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFEAEA"))
+                    }
+                    else{
+                        tvStatus.text = "Delivered"
+                        tvStatus.setTextColor(Color.parseColor("#17854C"))
+                        tvStatus.backgroundTintList =
+                            ColorStateList.valueOf(Color.parseColor("#EBFFF5"))
+                    }
+                     }
                 "8"->{
                     tvStatus.text = "Not Delivered"
                     tvStatus.setTextColor(Color.parseColor("#EB2525"))

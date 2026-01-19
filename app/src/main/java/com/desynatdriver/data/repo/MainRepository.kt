@@ -235,7 +235,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-    val pickOrderLiveData = SingleLiveEvent<CommonResponse>()
+    val pickOrderLiveData = SingleLiveEvent<DeliveryDetailResponse>()
     suspend fun pickOrder(map:HashMap<String,Any>
     ) {
         handleApiCall(
@@ -246,7 +246,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-    val updateDeliveryStatusLiveData = SingleLiveEvent<CommonResponse>()
+    val updateDeliveryStatusLiveData = SingleLiveEvent<DeliveryDetailResponse>()
     suspend fun updateDeliveryStatus(map:HashMap<String,Any>
     ) {
         handleApiCall(

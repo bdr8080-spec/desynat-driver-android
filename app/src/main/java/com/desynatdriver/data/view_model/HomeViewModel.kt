@@ -152,7 +152,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val pickOrderResult: LiveData<CommonResponse>
+    val pickOrderResult: LiveData<DeliveryDetailResponse>
         get() = repository.pickOrderLiveData
 
     fun pickOrder(map:HashMap<String,Any>) {
@@ -161,7 +161,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val updateDeliveryStatusResult: LiveData<CommonResponse>
+    val updateDeliveryStatusResult: LiveData<DeliveryDetailResponse>
         get() = repository.updateDeliveryStatusLiveData
 
     fun updateDeliveryStatus(map:HashMap<String,Any>) {

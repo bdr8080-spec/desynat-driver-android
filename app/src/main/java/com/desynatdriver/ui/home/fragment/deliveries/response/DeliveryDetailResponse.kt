@@ -25,7 +25,9 @@ data class DeliveryDetailResponse(
         @SerializedName("delivery_boy_id")
         val deliveryBoyId: String,
         @SerializedName("delivery_status")
-        val deliveryStatus: String,
+        var deliveryStatus: String,
+        @SerializedName("returntostore")
+        var returntostore: String,
         @SerializedName("distance")
         val distance: Double,
         @SerializedName("exchange_new_size")
@@ -56,6 +58,10 @@ data class DeliveryDetailResponse(
         val quantity: Int,
         @SerializedName("r_e_approve")
         val rEApprove: String,
+        @SerializedName("r_e_type")
+        val reType: String,
+        @SerializedName("p_orderdetails_id")
+        val pOrderdetailsId: String,
         @SerializedName("return_image")
         val returnImage: ArrayList<String>,
         @SerializedName("return_reason")
@@ -228,9 +234,9 @@ data class DeliveryDetailResponse(
                 @SerializedName("landmark")
                 val landmark: Any,
                 @SerializedName("latitude")
-                val latitude: String,
+                val latitude: Double,
                 @SerializedName("longitude")
-                val longitude: String,
+                val longitude: Double,
                 @SerializedName("mobile")
                 val mobile: String,
                 @SerializedName("name")
@@ -418,9 +424,9 @@ data class DeliveryDetailResponse(
                     @SerializedName("id")
                     val id: Int,
                     @SerializedName("let")
-                    val let: String,
+                    val let: Double,
                     @SerializedName("long")
-                    val long: String,
+                    val long: Double,
                     @SerializedName("seller_id")
                     val sellerId: Int,
                     @SerializedName("store_address")

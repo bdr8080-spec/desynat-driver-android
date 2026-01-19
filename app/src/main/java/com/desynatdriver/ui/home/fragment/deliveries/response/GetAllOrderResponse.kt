@@ -94,6 +94,8 @@ data class GetAllOrderResponse(
             val returnType: String,
             @SerializedName("status")
             val status: String,
+            @SerializedName("returntostore")
+            val returntostore: String,
             @SerializedName("updated_at")
             val updatedAt: String,
             @SerializedName("user_id")
