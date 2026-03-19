@@ -179,5 +179,23 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val getNotificationResult: LiveData<CommonResponse>
+        get() = repository.getNotificationLiveData
+
+    fun getNotification() {
+        viewModelScope.launch {
+            repository.getNotification()
+        }
+    }
+
+    val readNotificationResult: LiveData<CommonResponse>
+        get() = repository.readNotificationLiveData
+
+    fun readNotification(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.readNotification(map)
+        }
+    }
+
 
 }

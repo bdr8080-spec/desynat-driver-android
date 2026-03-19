@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
     alias(libs.plugins.hilt.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -82,4 +83,10 @@ dependencies {
     implementation("com.tbuonomo:dotsindicator:5.1.0")
 
     implementation ("com.mikhaellopez:circularimageview:4.3.1")
+
+    implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
+    implementation("com.google.firebase:firebase-analytics")
+
+    implementation ("com.google.firebase:firebase-messaging:25.0.1")
+    implementation ("org.greenrobot:eventbus:3.3.1")
 }

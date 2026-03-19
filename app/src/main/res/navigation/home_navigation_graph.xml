@@ -19,6 +19,10 @@
             android:id="@+id/action_homeFragment_to_deliveryDetailFragment"
             app:destination="@id/deliveryDetail" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_notificationFragment"
+            app:destination="@id/notification" />
+
     </fragment>
 
     <fragment
@@ -66,5 +70,11 @@
         android:name="com.desynatdriver.ui.home.fragment.EditProfileFragment"
         android:label="Edit Profile Fragment"
         tools:layout="@layout/fragment_edit_profile"/>
+
+    <fragment
+        android:id="@+id/notification"
+        android:name="com.desynatdriver.ui.home.fragment.NotificationFragment"
+        android:label="Notification Fragment"
+        tools:layout="@layout/fragment_notification"/>
 
 </navigation>

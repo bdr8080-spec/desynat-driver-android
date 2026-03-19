@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,9 @@ import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.SharedPreference
 import com.desynatdriver.utils.showToast
 import com.desynatdriver.utils.togglePasswordVisibility
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.text.get
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment() {
@@ -44,6 +47,16 @@ class LoginFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.e("FCM_ERROR", "Token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            val token = task.result
+            Log.d("FCM_TOKEN", token)
+            SharedPreference.get(requireActivity()).deviceToken = token
+        }
         initView()
         initControl()
         observe()
@@ -124,6 +137,8 @@ class LoginFragment : BaseFragment() {
         }
         map["type"] = type
         map["password"] = binding?.etPassword?.text?.trim().toString()
+        map["fcm_token"] = SharedPreference.get(requireActivity()).deviceToken
+
         viewModel.login(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true

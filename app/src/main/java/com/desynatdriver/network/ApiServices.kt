@@ -107,9 +107,13 @@ interface ApiServices {
 
     @POST(Constants.RETURN_ORDER_TO_STORE)
     suspend fun returnOrder(@Body body: HashMap<String, Any>):Response<CommonResponse>
-
     @GET(Constants.GET_REASON)
     suspend fun getReason(@Query("type") type:Int):Response<GetReasonResponse>
 
+    @GET(Constants.NOTIFICATION)
+    suspend fun getNotification():Response<CommonResponse>
+
+    @POST(Constants.READ_NOTIFICATION)
+    suspend fun readNotification(@Body body: HashMap<String, Any>):Response<CommonResponse>
 
 }

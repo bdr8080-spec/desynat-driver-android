@@ -279,6 +279,28 @@ class MainRepository @Inject constructor(
         )
     }
 
+val getNotificationLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun getNotification(
+    ) {
+        handleApiCall(
+            api = {
+                api.getNotification()
+            },
+            responseLiveData = getNotificationLiveData
+        )
+    }
+
+val readNotificationLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun readNotification(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.readNotification(map)
+            },
+            responseLiveData = readNotificationLiveData
+        )
+    }
+
 
 }
 

@@ -186,7 +186,7 @@ class HomeFragment : BaseFragment() {
             }
 
             ivNotification.setOnClickListener {
-
+                findNavController().navigate(R.id.action_homeFragment_to_notificationFragment)
             }
 
             ivSupportBot.setOnClickListener {

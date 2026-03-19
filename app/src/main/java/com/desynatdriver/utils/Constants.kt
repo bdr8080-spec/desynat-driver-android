@@ -38,5 +38,7 @@ object Constants {
     const val GET_COMPLETED_ORDER = "/api/deliveryboy/get_completed_orders"
     const val GET_REASON = "/api/deliveryboy/get_reasons"
     const val RETURN_ORDER_TO_STORE = "/api/deliveryboy/return-order-to-store-in-exchange"
+    const val NOTIFICATION = "/api/deliveryboy/get_notifications_list"
+    const val READ_NOTIFICATION = "/api/deliveryboy/mark_notification_as_read"
 
 }
