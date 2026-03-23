@@ -148,7 +148,7 @@ class HomeFragment : BaseFragment() {
 
     private fun getProfile() {
         viewModel.getProfile()
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+      //  ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isProfileObserver = true
     }
 
@@ -199,7 +199,7 @@ class HomeFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         map["delivery_boy_id"] = user?.id.toString()
         viewModel.dutyOnOff(map)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+    //    ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isObserver = true
     }
 
@@ -321,15 +321,13 @@ class HomeFragment : BaseFragment() {
             }
         }
 
-
-
     }
 
     private fun getNewOrder(search:String?=null) {
         val map = HashMap<String,Any>()
         search?.let { map["search"] = it }
         viewModel.getNewOrder(map)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+     //   ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isNewObserver = true
     }
 
@@ -337,7 +335,7 @@ class HomeFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         search?.let { map["search"] = it }
         viewModel.getCompletedOrder(map)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+   //     ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isCompletedObserver = true
     }
 
@@ -345,7 +343,7 @@ class HomeFragment : BaseFragment() {
         val map = HashMap<String,Any>()
         search?.let { map["search"] = it }
         viewModel.getOngoingOrder(map)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity())
+    //    ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isOngoingObserver = true
     }
 

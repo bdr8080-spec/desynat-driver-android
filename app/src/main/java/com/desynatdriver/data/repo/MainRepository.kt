@@ -302,6 +302,18 @@ val readNotificationLiveData = SingleLiveEvent<CommonResponse>()
     }
 
 
+val readAllNotificationLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun readAllNotification(map:HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.readAllNotification(map)
+            },
+            responseLiveData = readAllNotificationLiveData
+        )
+    }
+
+
 }
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {

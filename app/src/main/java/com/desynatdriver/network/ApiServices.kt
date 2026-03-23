@@ -116,4 +116,7 @@ interface ApiServices {
     @POST(Constants.READ_NOTIFICATION)
     suspend fun readNotification(@Body body: HashMap<String, Any>):Response<CommonResponse>
 
+    @POST(Constants.READ_All_NOTIFICATION)
+    suspend fun readAllNotification(@Body body: HashMap<String, Any>):Response<CommonResponse>
+
 }

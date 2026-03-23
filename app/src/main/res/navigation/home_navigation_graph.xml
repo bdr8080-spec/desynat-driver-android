@@ -77,4 +77,41 @@
         android:label="Notification Fragment"
         tools:layout="@layout/fragment_notification"/>
 
+
+    <fragment
+        android:id="@+id/support"
+        android:name="com.desynatdriver.ui.home.cms.SupportFragment"
+        android:label="Support Fragment"
+        tools:layout="@layout/fragment_support">
+
+        <action
+            android:id="@+id/action_supportFragment_to_ticketDetailFragment"
+            app:destination="@id/ticketDetail"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/setting"
+        android:name="com.desynatdriver.ui.home.cms.SettingFragment"
+        android:label="Setting Fragment"
+        tools:layout="@layout/fragment_setting"/>
+
+    <fragment
+        android:id="@+id/faq"
+        android:name="com.desynatdriver.ui.home.cms.FaqFragment"
+        android:label="Faq Fragment"
+        tools:layout="@layout/fragment_faq"/>
+
+    <fragment
+        android:id="@+id/ticketDetail"
+        android:name="com.desynatdriver.ui.home.cms.TicketDetailFragment"
+        android:label="Ticket Detail Fragment"
+        tools:layout="@layout/fragment_ticket_detail"/>
+
+    <fragment
+        android:id="@+id/changeLanguageFragment"
+        android:name="com.desynatdriver.ui.home.cms.ChangeLanguageFragment"
+        android:label="Change Language Fragment"
+        tools:layout="@layout/fragment_change_language"/>
+
 </navigation>

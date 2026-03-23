@@ -2,7 +2,8 @@ package com.desynatdriver.utils
 
 object Constants {
 
-    const val BASE_URL = "http://157.241.119.72"
+   // const val BASE_URL = "http://157.241.119.72"
+    const val BASE_URL = "https://desynat.com"
 
     var language="en"
     const val ENGLISH = "en"
@@ -12,7 +13,7 @@ object Constants {
     var location=""
     var latitude=0.0
     var longitude=0.0
-    var DEVICE_TYPE=1
+    var DEVICE_TYPE=2
 
     const val UPLOAD = "/api/upload"
     const val LOGIN = "/api/deliveryboy/login"
@@ -40,5 +41,6 @@ object Constants {
     const val RETURN_ORDER_TO_STORE = "/api/deliveryboy/return-order-to-store-in-exchange"
     const val NOTIFICATION = "/api/deliveryboy/get_notifications_list"
     const val READ_NOTIFICATION = "/api/deliveryboy/mark_notification_as_read"
+    const val READ_All_NOTIFICATION = "/api/deliveryboy/driver_mark_all_notification_as_read"
 
 }

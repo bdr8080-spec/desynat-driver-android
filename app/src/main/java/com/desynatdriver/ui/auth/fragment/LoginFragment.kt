@@ -20,6 +20,7 @@ import com.desynatdriver.databinding.FragmentLoginBinding
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.SharedPreference
 import com.desynatdriver.utils.showToast
@@ -137,6 +138,7 @@ class LoginFragment : BaseFragment() {
         }
         map["type"] = type
         map["password"] = binding?.etPassword?.text?.trim().toString()
+        map["device_type"] = Constants.DEVICE_TYPE
         map["fcm_token"] = SharedPreference.get(requireActivity()).deviceToken
 
         viewModel.login(map)

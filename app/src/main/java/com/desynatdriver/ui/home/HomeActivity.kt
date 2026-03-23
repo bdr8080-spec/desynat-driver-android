@@ -35,6 +35,7 @@ import com.google.android.gms.tasks.CancellationTokenSource
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import java.util.Locale
+import kotlin.text.category
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
@@ -153,8 +154,27 @@ class HomeActivity : BaseActivity() {
                 viewModel.logout()
                 isObserver = true
                 ProgressDialogUtils.getInstance().showProgress(this@HomeActivity, false)
-
             }
+
+//            rlSetting.setOnClickListener {
+//                controller.navigate(R.id.setting)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
+//
+//            rlSupport.setOnClickListener {
+//                controller.navigate(R.id.support)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
+//
+//            rlFaq.setOnClickListener {
+//                controller.navigate(R.id.faq)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
+//
+//            rlLanguage.setOnClickListener {
+//                controller.navigate(R.id.changeLanguageFragment)
+//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+//            }
         }
     }
 
@@ -194,7 +214,6 @@ class HomeActivity : BaseActivity() {
                 errorMessage?.let { showToast(it) }
                 isObserver = false
             }
-
         }
 
         viewModel.logoutResult.observe(this) { response ->

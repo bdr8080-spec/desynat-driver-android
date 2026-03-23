@@ -198,4 +198,14 @@ class HomeViewModel @Inject constructor(
     }
 
 
+    val readAllNotificationResult: LiveData<CommonResponse>
+        get() = repository.readAllNotificationLiveData
+
+    fun readAllNotification(map:HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.readAllNotification(map)
+        }
+    }
+
+
 }

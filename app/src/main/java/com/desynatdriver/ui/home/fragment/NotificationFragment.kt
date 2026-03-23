@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatdriver.adapter.NotificationAdapter
@@ -20,6 +21,7 @@ class NotificationFragment : BaseFragment() {
     private var binding: FragmentNotificationBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     private var isObserver = true
+    private var isReadAllObserver = true
     private var isReadObserver = true
     private var notificationList = ArrayList<String>()
     private var notificationAdapter: NotificationAdapter?=null
@@ -42,8 +44,6 @@ class NotificationFragment : BaseFragment() {
     override fun initView() {
         ProgressDialogUtils.getInstance().hideProgress()
         binding?.apply {
-            toolbar.tvToolbar.text = "My Notifications"
-
             notificationAdapter = NotificationAdapter(requireActivity(),notificationList,object :
                 NotificationAdapter.ClickOnItem{
                 override fun onClickItem(position: Int) {
@@ -58,8 +58,12 @@ class NotificationFragment : BaseFragment() {
 
     override fun initControl() {
         binding?.apply {
-            toolbar.tvToolbar.setOnClickListener {
+            ivBack.setOnClickListener {
                 findNavController().popBackStack()
+            }
+
+            tvReadAll.setOnClickListener {
+
             }
         }
     }
@@ -80,6 +84,12 @@ class NotificationFragment : BaseFragment() {
         isReadObserver = true
     }
 
+    private fun readAllNotification(){
+        val map = HashMap<String,Any>()
+        viewModel.readAllNotification(map)
+        isReadAllObserver = true
+    }
+
     override fun observe() {
 
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
@@ -96,6 +106,7 @@ class NotificationFragment : BaseFragment() {
                 response?.let {
                     notificationList.clear()
                     notificationAdapter?.notifyDataSetChanged()
+                    checkData()
                 }
             }
         }
@@ -104,9 +115,23 @@ class NotificationFragment : BaseFragment() {
             if (isReadObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-
+                    isReadObserver = false
                 }
             }
         }
+        viewModel.readAllNotificationResult.observe(viewLifecycleOwner) { response ->
+            if (isReadAllObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                response?.let {
+
+                    isReadAllObserver = false
+                }
+            }
+        }
+    }
+
+    private fun checkData(){
+        binding?.tvNoDataFound?.isVisible = notificationList.isEmpty()
+        binding?.tvReadAll?.isVisible = notificationList.isNotEmpty()
     }
 }
