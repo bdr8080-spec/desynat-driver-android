@@ -6,23 +6,32 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatdriver.R
 import com.desynatdriver.databinding.ItemNotificationBinding
+import com.desynatdriver.ui.home.response.GetNotificationResponse
+import com.desynatdriver.utils.CommonMethod
 
-class NotificationAdapter(var context:Context, var notificationList: ArrayList<String>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
+class NotificationAdapter(var context:Context, var notificationList: ArrayList<GetNotificationResponse.Data.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemNotificationBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val notificationData = notificationList[position]
-            tvTitle.text = ""
-            tvDescription.text = ""
-            tvDate.text = ""
-//            if (notificationData.isRead){
-//                ivBell.setImageResource(R.drawable.icon_read_bell)
-//                clMain.setBackgroundResource(R.drawable.notification_read_background)
-//            }
-//            else{
-//                ivBell.setImageResource(R.drawable.icon_unread_bell)
-//                clMain.setBackgroundResource(R.drawable.notification_unread_background)
-//            }
+            tvTitle.text = notificationData?.titleEnglish
+            tvDescription.text = notificationData?.descriptionEnglish
+            tvDate.text = CommonMethod.customizeChangeDateFormat(notificationData?.createdAt.toString(), outputFormat = "dd/MM/yyyy")
+            if (notificationData.isRead==1){
+                ivBell.setImageResource(R.drawable.icon_read_bell)
+                clMain.setBackgroundResource(R.drawable.notification_read_background)
+            }
+            else{
+                ivBell.setImageResource(R.drawable.icon_unread_bell)
+                clMain.setBackgroundResource(R.drawable.notification_unread_background)
+            }
+
+            root.setOnClickListener {
+                if (notificationData.isRead!=1){
+                    clickOnItem.onClickItem(position)
+                }
+
+            }
         }
         }
 

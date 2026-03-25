@@ -12,6 +12,8 @@ import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderRespons
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetReasonResponse
 import com.desynatdriver.ui.home.response.DutyOnOffResponse
 import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
+import com.desynatdriver.ui.home.response.GetNotificationCountResponse
+import com.desynatdriver.ui.home.response.GetNotificationResponse
 import com.desynatdriver.ui.home.response.UpdateProfileRequest
 import com.desynatdriver.ui.response.CommonResponse
 import com.desynatdriver.ui.response.GetProfileResponse
@@ -179,7 +181,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val getNotificationResult: LiveData<CommonResponse>
+    val getNotificationResult: LiveData<GetNotificationResponse>
         get() = repository.getNotificationLiveData
 
     fun getNotification() {
@@ -207,5 +209,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val notificationCountResult: LiveData<GetNotificationCountResponse>
+        get() = repository.notificationCountLiveData
+
+    fun notificationCount() {
+        viewModelScope.launch {
+            repository.notificationCount()
+        }
+    }
 
 }

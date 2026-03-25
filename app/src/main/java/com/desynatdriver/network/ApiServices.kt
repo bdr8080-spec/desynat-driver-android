@@ -9,6 +9,8 @@ import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderRespons
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetReasonResponse
 import com.desynatdriver.ui.home.response.DutyOnOffResponse
 import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
+import com.desynatdriver.ui.home.response.GetNotificationCountResponse
+import com.desynatdriver.ui.home.response.GetNotificationResponse
 import com.desynatdriver.ui.home.response.UpdateProfileRequest
 import com.desynatdriver.ui.response.CommonResponse
 import com.desynatdriver.ui.response.GetProfileResponse
@@ -111,7 +113,10 @@ interface ApiServices {
     suspend fun getReason(@Query("type") type:Int):Response<GetReasonResponse>
 
     @GET(Constants.NOTIFICATION)
-    suspend fun getNotification():Response<CommonResponse>
+    suspend fun getNotification():Response<GetNotificationResponse>
+
+    @GET(Constants.NOTIFICATION_COUNT)
+    suspend fun notificationCount():Response<GetNotificationCountResponse>
 
     @POST(Constants.READ_NOTIFICATION)
     suspend fun readNotification(@Body body: HashMap<String, Any>):Response<CommonResponse>

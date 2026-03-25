@@ -11,6 +11,7 @@ import com.desynatdriver.adapter.NotificationAdapter
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.data.view_model.HomeViewModel
 import com.desynatdriver.databinding.FragmentNotificationBinding
+import com.desynatdriver.ui.home.response.GetNotificationResponse
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,8 +24,9 @@ class NotificationFragment : BaseFragment() {
     private var isObserver = true
     private var isReadAllObserver = true
     private var isReadObserver = true
-    private var notificationList = ArrayList<String>()
+    private var notificationList = ArrayList<GetNotificationResponse.Data.Data>()
     private var notificationAdapter: NotificationAdapter?=null
+    private var selectedPos = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +49,8 @@ class NotificationFragment : BaseFragment() {
             notificationAdapter = NotificationAdapter(requireActivity(),notificationList,object :
                 NotificationAdapter.ClickOnItem{
                 override fun onClickItem(position: Int) {
-
+                    selectedPos = position
+                    readNotification()
                 }
             })
             rvNotification.adapter = notificationAdapter
@@ -63,7 +66,7 @@ class NotificationFragment : BaseFragment() {
             }
 
             tvReadAll.setOnClickListener {
-
+                readAllNotification()
             }
         }
     }
@@ -77,7 +80,8 @@ class NotificationFragment : BaseFragment() {
     }
 
     private fun readNotification(){
-        val idList = arrayListOf("1", "2")
+        val id = notificationList[selectedPos].id.toString()
+        val idList = arrayListOf(id)
         val map = HashMap<String,Any>()
         map["notification_id"] = idList
         viewModel.readNotification(map)
@@ -105,6 +109,7 @@ class NotificationFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
                     notificationList.clear()
+                    notificationList.addAll(response.data.data)
                     notificationAdapter?.notifyDataSetChanged()
                     checkData()
                 }
@@ -115,6 +120,9 @@ class NotificationFragment : BaseFragment() {
             if (isReadObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
+                    notificationList[selectedPos].isRead = 1
+                    notificationAdapter?.notifyItemChanged(selectedPos)
+                    selectedPos = -1
                     isReadObserver = false
                 }
             }
@@ -123,7 +131,11 @@ class NotificationFragment : BaseFragment() {
             if (isReadAllObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
+                    notificationList.forEach {
+                        it.isRead = 1
+                    }
 
+                    notificationAdapter?.notifyDataSetChanged()
                     isReadAllObserver = false
                 }
             }
@@ -132,6 +144,6 @@ class NotificationFragment : BaseFragment() {
 
     private fun checkData(){
         binding?.tvNoDataFound?.isVisible = notificationList.isEmpty()
-        binding?.tvReadAll?.isVisible = notificationList.isNotEmpty()
+      //  binding?.tvReadAll?.isVisible = notificationList.isNotEmpty()
     }
 }

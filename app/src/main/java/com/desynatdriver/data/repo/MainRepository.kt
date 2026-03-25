@@ -14,6 +14,8 @@ import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderRespons
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetReasonResponse
 import com.desynatdriver.ui.home.response.DutyOnOffResponse
 import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
+import com.desynatdriver.ui.home.response.GetNotificationCountResponse
+import com.desynatdriver.ui.home.response.GetNotificationResponse
 import com.desynatdriver.ui.home.response.UpdateProfileRequest
 import com.desynatdriver.ui.response.CommonResponse
 import com.desynatdriver.ui.response.GetProfileResponse
@@ -279,7 +281,7 @@ class MainRepository @Inject constructor(
         )
     }
 
-val getNotificationLiveData = SingleLiveEvent<CommonResponse>()
+val getNotificationLiveData = SingleLiveEvent<GetNotificationResponse>()
     suspend fun getNotification(
     ) {
         handleApiCall(
@@ -310,6 +312,18 @@ val readAllNotificationLiveData = SingleLiveEvent<CommonResponse>()
                 api.readAllNotification(map)
             },
             responseLiveData = readAllNotificationLiveData
+        )
+    }
+
+
+    val notificationCountLiveData = SingleLiveEvent<GetNotificationCountResponse>()
+    suspend fun notificationCount(
+    ) {
+        handleApiCall(
+            api = {
+                api.notificationCount()
+            },
+            responseLiveData = notificationCountLiveData
         )
     }
 

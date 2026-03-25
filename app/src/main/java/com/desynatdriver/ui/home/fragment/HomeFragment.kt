@@ -31,6 +31,7 @@ class HomeFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     var isObserver = false
     var isNewObserver = false
+    var isNotificationObserver = false
     var isCompletedObserver = false
     var isOngoingObserver = false
     var isProfileObserver = false
@@ -60,6 +61,8 @@ class HomeFragment : BaseFragment() {
     override fun initView() {
        getProfile()
         binding?.apply {
+
+            notificationCount()
 
             newDeliveriesAdapter = NewDeliveriesAdapter(requireActivity(), newDeliveriesList,object :NewDeliveriesAdapter.ClickOnItem{
                 override fun onClickItem(position: Int, type: Int) {
@@ -222,13 +225,26 @@ class HomeFragment : BaseFragment() {
 
     override fun observe() {
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            if (isObserver || isProfileObserver || isOngoingObserver || isNewObserver) {
+            if (isObserver || isProfileObserver || isOngoingObserver || isNewObserver||isNotificationObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 errorMessage?.let { showToast(it) }
                 isObserver = false
                 isProfileObserver = false
                 isNewObserver = false
                 isOngoingObserver = false
+                isNotificationObserver = false
+            }
+        }
+
+        viewModel.notificationCountResult.observe(viewLifecycleOwner) { response ->
+            if (isNotificationObserver) {
+
+                response?.let {
+                    if (response?.data!=null&&response?.data!=0){
+                        setNotificationCount(response.data)
+                    }
+                }
+                isNotificationObserver = false
             }
         }
 
@@ -345,6 +361,17 @@ class HomeFragment : BaseFragment() {
         viewModel.getOngoingOrder(map)
     //    ProgressDialogUtils.getInstance().showProgress(requireActivity())
         isOngoingObserver = true
+    }
+
+    private fun setNotificationCount(data: Int) {
+        binding?.relCount?.isVisible = true
+        binding?.tvCount?.text = data.toString()
+    }
+
+
+    private fun notificationCount(){
+        viewModel.notificationCount()
+        isNotificationObserver = true
     }
 
 }
