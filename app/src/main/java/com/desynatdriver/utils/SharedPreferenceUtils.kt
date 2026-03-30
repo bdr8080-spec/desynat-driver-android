@@ -72,6 +72,9 @@ class SharedPreference(context: Context) {
         get() = preference["deviceToken", ""]!!
         set(value) = preference.set("deviceToken", value)
 
+    var badgeCount: Int
+        get() = preference["badgeCount", 0]!!
+        set(value) = preference.set("badgeCount", value)
 
     fun saveUser(user: GetProfileResponse.Data) {
         val json = Gson().toJson(user)

@@ -113,7 +113,7 @@ interface ApiServices {
     suspend fun getReason(@Query("type") type:Int):Response<GetReasonResponse>
 
     @GET(Constants.NOTIFICATION)
-    suspend fun getNotification():Response<GetNotificationResponse>
+    suspend fun getNotification(@QueryMap map: HashMap<String, Any>):Response<GetNotificationResponse>
 
     @GET(Constants.NOTIFICATION_COUNT)
     suspend fun notificationCount():Response<GetNotificationCountResponse>

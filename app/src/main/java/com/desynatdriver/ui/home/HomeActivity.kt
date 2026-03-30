@@ -27,12 +27,14 @@ import com.desynatdriver.ui.auth.AuthActivity
 import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ProgressDialogUtils
+import com.desynatdriver.utils.SharedPreference
 import com.desynatdriver.utils.showToast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import dagger.hilt.android.AndroidEntryPoint
+import me.leolin.shortcutbadger.ShortcutBadger
 import java.io.IOException
 import java.util.Locale
 import kotlin.text.category
@@ -355,6 +357,14 @@ class HomeActivity : BaseActivity() {
                 controller.navigate(R.id.deliveries)
             }
         }
+
+    override fun onResume() {
+        super.onResume()
+
+        SharedPreference.get(this).badgeCount = 0
+        ShortcutBadger.removeCount(this)
+        //   NotificationManagerCompat.from(this).cancelAll()
+    }
 
 }
 

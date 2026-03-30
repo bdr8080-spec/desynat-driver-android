@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.desynatdriver.adapter.NotificationAdapter
@@ -27,6 +28,13 @@ class NotificationFragment : BaseFragment() {
     private var notificationList = ArrayList<GetNotificationResponse.Data.Data>()
     private var notificationAdapter: NotificationAdapter?=null
     private var selectedPos = -1
+
+    private var currentPage = 1
+    private var lastPage = 1
+    private var totalPage = 0
+    private var totalItem=0
+    private var pageLimit=10
+    private var pagination=false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +62,28 @@ class NotificationFragment : BaseFragment() {
                 }
             })
             rvNotification.adapter = notificationAdapter
+
+
+            nestedScrollView.setOnScrollChangeListener { nestedScrollView: NestedScrollView, _, scrollY, _, oldScrollY ->
+                val lastChild = nestedScrollView.getChildAt(nestedScrollView.childCount - 1)
+
+                if (lastChild != null) {
+                    val diff = lastChild.bottom - (nestedScrollView.height + scrollY)
+                    if (diff == 0 && scrollY > oldScrollY) {
+                        if(totalItem==0)
+                            return@setOnScrollChangeListener
+                        if (!isObserver && !pagination && currentPage < lastPage) {
+                            pagination = true
+                            currentPage += 1
+                            getNotification(false)
+                            binding?.progressBar?.isVisible = true
+                        }
+                    }
+                }
+            }
         }
+
+
 
         getNotification()
     }
@@ -72,7 +101,10 @@ class NotificationFragment : BaseFragment() {
     }
 
     private fun getNotification(isLoading: Boolean=true){
-        viewModel.getNotification()
+        var map = HashMap<String, Any>()
+        map["page"] = currentPage
+        map["limit"] = pageLimit
+        viewModel.getNotification(map)
         isObserver = true
         if (isLoading){
             ProgressDialogUtils.getInstance().showProgress(requireActivity())
@@ -108,10 +140,36 @@ class NotificationFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-                    notificationList.clear()
-                    notificationList.addAll(response.data.data)
-                    notificationAdapter?.notifyDataSetChanged()
+                    ProgressDialogUtils.getInstance().hideProgress()
+                    binding?.progressBar?.isVisible = false
+                    currentPage = response.data.currentPage
+                    totalItem = response.data.total
+
+                    lastPage = response.data.lastPage
+
+                    val oldSize = notificationList.size
+                    if (!pagination){
+                        notificationList.clear()
+                    }
+                    val newItems = response.data.data ?: emptyList()
+
+                    notificationList.addAll(newItems)
                     checkData()
+
+                    if (pagination){
+
+                        response.data.data?.size?.let {
+                            notificationAdapter?.notifyItemRangeInserted(oldSize,
+                                it
+                            )
+                        }
+                    }
+                    else{
+                        notificationAdapter?.notifyDataSetChanged()
+                    }
+
+                    pagination = false
+                    isObserver = false
                 }
             }
         }

@@ -184,9 +184,9 @@ class HomeViewModel @Inject constructor(
     val getNotificationResult: LiveData<GetNotificationResponse>
         get() = repository.getNotificationLiveData
 
-    fun getNotification() {
+    fun getNotification(map :HashMap<String, Any>) {
         viewModelScope.launch {
-            repository.getNotification()
+            repository.getNotification(map)
         }
     }
 

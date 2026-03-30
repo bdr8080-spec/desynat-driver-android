@@ -282,11 +282,11 @@ class MainRepository @Inject constructor(
     }
 
 val getNotificationLiveData = SingleLiveEvent<GetNotificationResponse>()
-    suspend fun getNotification(
+    suspend fun getNotification(map:HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
-                api.getNotification()
+                api.getNotification(map)
             },
             responseLiveData = getNotificationLiveData
         )
