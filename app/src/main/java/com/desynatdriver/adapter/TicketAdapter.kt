@@ -7,32 +7,41 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.desynatdriver.databinding.ItemTicketBinding
+import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
 import com.desynatdriver.utils.CommonMethod
 
-class TicketAdapter(var context:Context, var ticketList: ArrayList<String>, var onClick:OnClick) : RecyclerView.Adapter<TicketAdapter.ViewHolder>() {
+class TicketAdapter(var context:Context, var ticketList: ArrayList<GetAllRaisedTicketResponse.Data.Data>, var onClick:OnClick) : RecyclerView.Adapter<TicketAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemTicketBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val ticketData = ticketList[position]
 
-           /* tvTicketIdValue.text = ticketData?.sellerDetails?.firstName
-            tvTicketType.text = ticketData?.firstName
-            tvResolvedOn.text = CommonMethod.customizeChangeDateFormat(ticketData?.createdAt.toString(), outputFormat = "dd MMM yy, hh:mm a")
+            tvTicketIdValue.text = ticketData?.ticketId
+            tvTicketType.text = ticketData?.ticketTypeDetails?.name
             tvRaisedOn.text = CommonMethod.customizeChangeDateFormat(ticketData?.createdAt.toString(), outputFormat = "dd MMM yy, hh:mm a")
+            tvResolvedOn.text = CommonMethod.customizeChangeDateFormat(ticketData?.updatedAt.toString(), outputFormat = "dd MMM yy, hh:mm a")
 
-                when(ticketData?.adminVerify){
-                    0->{
+            when(ticketData?.status){
+                0->{
+                    tvResolved.isVisible = false
+                    tvResolvedOn.isVisible = false
                     tvStatusValue.text = "In Progress"
                     tvStatusValue.setTextColor(Color.parseColor("#D72E04"))
 
                 }
                 1->{
+                    tvResolved.isVisible = true
+                    tvResolvedOn.isVisible = true
                     tvStatusValue.text = "Resolved"
                     tvStatusValue.setTextColor(Color.parseColor("#17854C"))
                 }
-                }*/
+            }
+
+            root.setOnClickListener {
+                onClick.click(position,1)
             }
         }
+    }
 
     interface OnClick{
         fun click(position: Int,type:Int)
@@ -49,7 +58,7 @@ class TicketAdapter(var context:Context, var ticketList: ArrayList<String>, var 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-     holder.bind(position)
+        holder.bind(position)
     }
 
 }

@@ -9,6 +9,8 @@ import com.desynatdriver.network.ApiServices
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
+import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
+import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetReasonResponse
@@ -39,7 +41,7 @@ class MainRepository @Inject constructor(
     ) {
         handleApiCall(
             api = {
-                api.uploadImage(imageFile?.toMultipartPart("image")
+                api.uploadImage(imageFile?.toMultipartPart("file")
                 )
             },
             responseLiveData = responseUploadImage
@@ -327,6 +329,40 @@ val readAllNotificationLiveData = SingleLiveEvent<CommonResponse>()
         )
     }
 
+    val getTicketTypeLiveData = SingleLiveEvent<GetTicketTypeResponse>()
+    suspend fun getTicketType(
+    ) {
+        handleApiCall(
+            api = {
+                api.getTicketType()
+            },
+            responseLiveData = getTicketTypeLiveData
+        )
+    }
+
+    var getRaisedTicketLiveData = SingleLiveEvent<GetAllRaisedTicketResponse>()
+    suspend fun getRaisedTicket(
+        map: HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.getRaisedTicket(map)
+            },
+            responseLiveData = getRaisedTicketLiveData
+        )
+    }
+
+    var raiseTicketLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun raiseTicket(
+        map: HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.raiseTicket(map)
+            },
+            responseLiveData = raiseTicketLiveData
+        )
+    }
 
 }
 

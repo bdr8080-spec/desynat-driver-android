@@ -7,6 +7,8 @@ import com.desynatdriver.data.repo.MainRepository
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
+import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
+import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetReasonResponse
@@ -215,6 +217,33 @@ class HomeViewModel @Inject constructor(
     fun notificationCount() {
         viewModelScope.launch {
             repository.notificationCount()
+        }
+    }
+
+    val getTicketTypeResult: LiveData<GetTicketTypeResponse>
+        get() = repository.getTicketTypeLiveData
+
+    fun getTicketType() {
+        viewModelScope.launch {
+            repository.getTicketType()
+        }
+    }
+
+    val getRaisedTicketResult: LiveData<GetAllRaisedTicketResponse>
+        get() = repository.getRaisedTicketLiveData
+
+    fun getRaisedTicket(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.getRaisedTicket(map)
+        }
+    }
+
+    val raiseTicketResult: LiveData<CommonResponse>
+        get() = repository.raiseTicketLiveData
+
+    fun raiseTicket(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.raiseTicket(map)
         }
     }
 

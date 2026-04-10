@@ -84,11 +84,15 @@ dependencies {
 
     implementation ("com.mikhaellopez:circularimageview:4.3.1")
 
-    implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
-    implementation("com.google.firebase:firebase-analytics")
-
     implementation ("com.google.firebase:firebase-messaging:25.0.1")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation ("com.google.firebase:firebase-database-ktx")
+    implementation ("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-analytics")
     implementation ("org.greenrobot:eventbus:3.3.1")
     implementation("me.leolin:ShortcutBadger:1.1.22@aar")
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
 
 }

@@ -23,6 +23,10 @@
             android:id="@+id/action_homeFragment_to_notificationFragment"
             app:destination="@id/notification" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_supportChatFragment"
+            app:destination="@id/supportChat" />
+
     </fragment>
 
     <fragment
@@ -113,5 +117,11 @@
         android:name="com.desynatdriver.ui.home.cms.ChangeLanguageFragment"
         android:label="Change Language Fragment"
         tools:layout="@layout/fragment_change_language"/>
+
+    <fragment
+        android:id="@+id/supportChat"
+        android:name="com.desynatdriver.ui.home.cms.SupportChatFragment"
+        android:label="Support Chat Fragment"
+        tools:layout="@layout/fragment_support_chat"/>
 
 </navigation>

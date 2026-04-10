@@ -3,6 +3,8 @@
     <string name="channel">desynat notification</string>
     <string name="channel_description">desynat notification for driver alert</string>
     <string name="map_key">AIzaSyA4L_dBeJDWuqtBT9ZOOUhjigbh6Lxi43s</string>
+    <string name="google_translator_api_key">AIzaSyB4mtISC8aJQl8DkwEd8DAIpBvuHCleO7s</string>
+
     <string name="continue_text">Continue</string>
     <string name="arabic">Arabic</string>
     <string name="english">English</string>

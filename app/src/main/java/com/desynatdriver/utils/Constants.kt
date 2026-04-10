@@ -16,7 +16,7 @@ object Constants {
     var longitude=0.0
     var DEVICE_TYPE=2
 
-    const val UPLOAD = "/api/upload"
+    const val UPLOAD = "/api/uploadFile"
     const val LOGIN = "/api/deliveryboy/login"
     const val OTP_VERIFY = "/api/deliveryboy/verify_otp"
     const val RESEND_OTP = "/api/deliveryboy/resend_otp"
@@ -44,5 +44,10 @@ object Constants {
     const val NOTIFICATION_COUNT = "/api/deliveryboy/get_notifications_count"
     const val READ_NOTIFICATION = "/api/deliveryboy/mark_notification_as_read"
     const val READ_All_NOTIFICATION = "/api/deliveryboy/driver_mark_all_notification_as_read"
+
+
+   const val GET_TICKET_TYPE = "/api/ticket_types"
+   const val GET_RAISED_TICKET = "/api/deliveryboy/get_raised_tickets"
+   const val RAISE_TICKET = "/api/deliveryboy/raise_ticket"
 
 }

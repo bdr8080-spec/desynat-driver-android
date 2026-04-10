@@ -162,12 +162,12 @@ class HomeActivity : BaseActivity() {
 //                controller.navigate(R.id.setting)
 //                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
 //            }
-//
-//            rlSupport.setOnClickListener {
-//                controller.navigate(R.id.support)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
-//
+
+            rlSupport.setOnClickListener {
+                controller.navigate(R.id.support)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
 //            rlFaq.setOnClickListener {
 //                controller.navigate(R.id.faq)
 //                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
@@ -361,8 +361,8 @@ class HomeActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        SharedPreference.get(this).badgeCount = 0
-        ShortcutBadger.removeCount(this)
+//        SharedPreference.get(this).badgeCount = 0
+//        ShortcutBadger.removeCount(this)
         //   NotificationManagerCompat.from(this).cancelAll()
     }
 

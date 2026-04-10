@@ -24,6 +24,8 @@ import com.desynatdriver.utils.SharedPreference
 import com.desynatdriver.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import me.leolin.shortcutbadger.ShortcutBadger
+import kotlin.text.get
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
@@ -193,7 +195,7 @@ class HomeFragment : BaseFragment() {
             }
 
             ivSupportBot.setOnClickListener {
-
+                findNavController().navigate(R.id.action_homeFragment_to_supportChatFragment)
             }
         }
     }
@@ -242,6 +244,11 @@ class HomeFragment : BaseFragment() {
                 response?.let {
                     if (response?.data!=null&&response?.data!=0){
                         setNotificationCount(response.data)
+                    }
+                    else{
+                        SharedPreference.get(requireActivity()).badgeCount = 0
+                        ShortcutBadger.removeCount(requireActivity())
+
                     }
                 }
                 isNotificationObserver = false
@@ -366,6 +373,7 @@ class HomeFragment : BaseFragment() {
     private fun setNotificationCount(data: Int) {
         binding?.relCount?.isVisible = true
         binding?.tvCount?.text = data.toString()
+        ShortcutBadger.applyCount(requireActivity(), data)
     }
 
 

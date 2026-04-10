@@ -5,12 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.data.view_model.HomeViewModel
 import com.desynatdriver.databinding.FragmentTicketDetailBinding
+import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
 import com.desynatdriver.utils.CommonMethod
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 
@@ -19,8 +24,10 @@ class TicketDetailFragment : BaseFragment(){
 private var binding: FragmentTicketDetailBinding? = null
 private val viewModel: HomeViewModel by viewModels()
 var isObserver = false
+    private var ticketData: GetAllRaisedTicketResponse.Data.Data?=null
 
-override fun onCreateView(
+
+    override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
 ): View? {
@@ -36,6 +43,11 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 }
 
     override fun initView() {
+        val itemJson = arguments?.getString("ticketData")
+        if (!itemJson.isNullOrEmpty()) {
+            ticketData = Gson().fromJson(itemJson, GetAllRaisedTicketResponse.Data.Data::class.java)
+            setData()
+        }
         binding?.apply {
 
         }
@@ -52,12 +64,14 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     override fun observe() {
     }
 
-    private fun setData(){
+    private fun setData() {
         binding?.apply {
-            tvDescription.text = ""
-            tvTicketIdValue.text = ""
-            tvRaisedOn.text = CommonMethod.customizeChangeDateFormat("", outputFormat = "dd MMM yy, hh:mm a")
-          /*  when(){
+            tvDescription.text = ticketData?.description
+            tvTicketType.text = ticketData?.ticketTypeDetails?.name
+            tvTicketIdValue.text = ticketData?.ticketId
+            tvRaisedOn.text =
+                CommonMethod.customizeChangeDateFormat(ticketData?.createdAt.toString(), outputFormat = "dd MMM yy, hh:mm a")
+            when(ticketData?.status){
                 0->{
                     tvStatusValue.text = "In Progress"
                     tvStatusValue.setTextColor(Color.parseColor("#D72E04"))
@@ -67,7 +81,14 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                     tvStatusValue.text = "Resolved"
                     tvStatusValue.setTextColor(Color.parseColor("#17854C"))
                 }
-            }*/
+            }
+
+            if (ticketData?.file!=null){
+                ivDoc.isVisible = true
+                tvAttachment.isVisible = true
+                Glide.with(requireActivity()).load(ticketData?.file).placeholder(R.drawable.ic_placeholder).into(ivDoc)
+            }
         }
     }
+
 }

@@ -3,6 +3,10 @@ package com.desynatdriver.network
 import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
+import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
+import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
+import com.desynatdriver.ui.home.cms.translation.TranslateRequest
+import com.desynatdriver.ui.home.cms.translation.TranslateResponse
 import com.desynatdriver.ui.home.fragment.deliveries.DeliveryDetailFragment
 import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
@@ -123,5 +127,20 @@ interface ApiServices {
 
     @POST(Constants.READ_All_NOTIFICATION)
     suspend fun readAllNotification(@Body body: HashMap<String, Any>):Response<CommonResponse>
+
+    @POST("https://translation.googleapis.com/language/translate/v2")
+    suspend fun googleTranslator(
+        @Query("key") apiKey: String,
+        @Body request: TranslateRequest
+    ): Response<TranslateResponse>
+
+    @GET(Constants.GET_TICKET_TYPE)
+    suspend fun getTicketType(): Response<GetTicketTypeResponse>
+
+    @GET(Constants.GET_RAISED_TICKET)
+    suspend fun getRaisedTicket(@QueryMap map: HashMap<String, Any>): Response<GetAllRaisedTicketResponse>
+
+    @POST(Constants.RAISE_TICKET)
+    suspend fun raiseTicket(@Body map: HashMap<String, Any>): Response<CommonResponse>
 
 }
