@@ -195,7 +195,7 @@ class HomeFragment : BaseFragment() {
             }
 
             ivSupportBot.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_supportChatFragment)
+                findNavController().navigate(R.id.action_homeFragment_to_TidioChatFragment)
             }
         }
     }

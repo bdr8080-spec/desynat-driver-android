@@ -24,8 +24,8 @@
             app:destination="@id/notification" />
 
         <action
-            android:id="@+id/action_homeFragment_to_supportChatFragment"
-            app:destination="@id/supportChat" />
+            android:id="@+id/action_homeFragment_to_TidioChatFragment"
+            app:destination="@id/tidioChat" />
 
     </fragment>
 
@@ -91,8 +91,18 @@
         <action
             android:id="@+id/action_supportFragment_to_ticketDetailFragment"
             app:destination="@id/ticketDetail"/>
+        <action
+            android:id="@+id/action_supportFragment_to_tidioChatFragment"
+            app:destination="@id/tidioChat"/>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/tidioChat"
+        android:name="com.desynatdriver.ui.home.cms.TidioChatFragment"
+        android:label="Tidio Chat Fragment"
+        tools:layout="@layout/fragment_tidio_chat"/>
+
 
     <fragment
         android:id="@+id/setting"

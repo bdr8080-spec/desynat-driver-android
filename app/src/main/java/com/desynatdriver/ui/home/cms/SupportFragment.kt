@@ -215,7 +215,7 @@ class SupportFragment : BaseFragment() {
             }
 
             clSupportTeam.setOnClickListener {
-
+                findNavController().navigate(R.id.action_supportFragment_to_tidioChatFragment)
             }
 
             tvContact.setOnClickListener {
