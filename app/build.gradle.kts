@@ -93,6 +93,8 @@ dependencies {
     implementation("me.leolin:ShortcutBadger:1.1.22@aar")
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("io.getstream:photoview:1.0.2")
+
 
 
 }

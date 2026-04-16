@@ -32,11 +32,14 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.desynatdriver.R
 import com.desynatdriver.adapter.CountryPickerAdapter
+import com.desynatdriver.adapter.ImagePreviewAdapter
 import com.desynatdriver.databinding.AlertDialogLayoutBinding
 import com.desynatdriver.databinding.CustomCountryPickerBinding
+import com.desynatdriver.databinding.ImagePreviewDialogBinding
 import com.desynatdriver.databinding.SuccessDialogLayoutBinding
 import com.desynatdriver.ui.auth.AuthActivity
 import com.desynatdriver.ui.auth.response.GetCountryResponse
+import com.google.android.material.tabs.TabLayoutMediator
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -97,6 +100,41 @@ object CommonMethod {
         }
     }
 
+    fun imagePreviewDialog(context: Context,imageList: ArrayList<String>) {
+        val dialog = Dialog(context, R.style.CustomDialog)
+        val dialogBinding = ImagePreviewDialogBinding.inflate(LayoutInflater.from(context))
+        dialogBinding.root.let { dialog?.setContentView(it) }
+
+        val window: Window = dialog?.window!!
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+        window.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog?.setCancelable(false)
+
+        val params: WindowManager.LayoutParams = window.attributes
+        params.gravity = Gravity.CENTER
+        window.attributes = params
+
+        dialogBinding.apply {
+
+            ivCross.setOnClickListener{
+                dialog?.dismiss()
+            }
+
+            val imagePreviewAdapter = ImagePreviewAdapter(context, imageList)
+            viewPager?.adapter = imagePreviewAdapter
+
+            if (imageList.size>1){
+                TabLayoutMediator(dotsIndicator, viewPager) { _, _ -> }.attach()
+
+            }
+
+        }
+
+        dialog?.show()
+    }
 
     fun uriToFile(context:Context,uri: Uri): File {
         val inputStream = context.contentResolver.openInputStream(uri)

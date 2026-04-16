@@ -202,6 +202,6 @@ class NotificationFragment : BaseFragment() {
 
     private fun checkData(){
         binding?.tvNoDataFound?.isVisible = notificationList.isEmpty()
-      //  binding?.tvReadAll?.isVisible = notificationList.isNotEmpty()
+        binding?.tvReadAll?.isVisible = notificationList.isNotEmpty()
     }
 }

@@ -8,6 +8,7 @@ import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
+import com.desynatdriver.ui.home.cms.response.GetContactResponse
 import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
@@ -244,6 +245,15 @@ class HomeViewModel @Inject constructor(
     fun raiseTicket(map: HashMap<String,Any>) {
         viewModelScope.launch {
             repository.raiseTicket(map)
+        }
+    }
+
+    val contactUsResult: LiveData<GetContactResponse>
+        get() = repository.contactUsLiveData
+
+    fun contactUs(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.contactUs(map)
         }
     }
 

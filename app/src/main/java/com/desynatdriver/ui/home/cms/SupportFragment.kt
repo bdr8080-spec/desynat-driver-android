@@ -28,6 +28,7 @@ import com.desynatdriver.databinding.FragmentSupportBinding
 import com.desynatdriver.databinding.RaiseTicketDialogBinding
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
+import com.desynatdriver.ui.home.cms.response.GetContactResponse
 import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
 import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.ImagePicker
@@ -49,6 +50,8 @@ class SupportFragment : BaseFragment() {
     private var isRaiseObserver = false
     private var isRaised = false
     private var isTicketTypeObserver = false
+    private var isContactUs = false
+    private var whatsappNumber = ""
     private var ticketList = ArrayList<GetAllRaisedTicketResponse.Data.Data>()
     private var ticketTypeList = ArrayList<GetTicketTypeResponse.Data>()
     private var ticketAdapter: TicketAdapter?=null
@@ -207,7 +210,7 @@ class SupportFragment : BaseFragment() {
             }
 
             clWhatsapp.setOnClickListener {
-                val number = tvSupportMobileNumber.text.trim()
+                val number = whatsappNumber
                 val intent = Intent(Intent.ACTION_VIEW).apply {
                     data = Uri.parse("https://wa.me/${number}")
                 }
@@ -256,6 +259,14 @@ class SupportFragment : BaseFragment() {
 
                 }
                 isImageObserver = false
+            }
+        }
+
+        viewModel.contactUsResult.observe(viewLifecycleOwner) { response ->
+            if (isContactUs) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                setContactUsData(response.data.contentEnglish)
+                isContactUs = false
             }
         }
 
@@ -345,6 +356,7 @@ class SupportFragment : BaseFragment() {
     private fun contact(){
         binding?.apply {
             type = 0
+            getContactUs()
             llTicket.isVisible = false
             llContact.isVisible = true
             tvContact.setBackgroundResource(R.drawable.selected_left_tab)
@@ -354,6 +366,12 @@ class SupportFragment : BaseFragment() {
         }
     }
 
+    private fun getContactUs(){
+        val map = HashMap<String, Any>()
+        map["type"] = 3
+        viewModel.contactUs(map)
+        isContactUs = true
+    }
 
     private fun openSpeechDialog() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
@@ -403,7 +421,8 @@ class SupportFragment : BaseFragment() {
         window.attributes = params
 
         dialogBinding?.apply {
-
+            CommonMethod.removeSpace(etTitle)
+            CommonMethod.removeSpace(etDescription)
             ivDoc.setOnClickListener {
                 imagePicker.showImageSourceDialog()
             }
@@ -417,21 +436,39 @@ class SupportFragment : BaseFragment() {
             }
 
             btnSubmit.setOnClickListener{
+                if (validation()) {
+                    if (imageFile != null) {
+                        uploadFile(imageFile!!)
+                    } else {
+                        raiseTicket()
+                    }
 
-                if (imageFile!=null){
-                    uploadFile(imageFile!!)
+
+                    dialog?.dismiss()
                 }
-                else{
-                    raiseTicket()
-                }
-
-
-                dialog?.dismiss()
             }
 
         }
 
         dialog?.show()
+    }
+
+    private fun validation():Boolean{
+
+        if (dialogBinding?.etTicketType?.text?.isEmpty() == true) {
+            showToast("Please select ticket type")
+            return false
+        }
+        else if (dialogBinding?.etTitle?.text?.isEmpty() == true) {
+            showToast("Please enter title")
+            return false
+        }
+        else if (dialogBinding?.etDescription?.text?.isEmpty() == true) {
+            showToast("Please enter description")
+            return false
+        }
+
+        return true
     }
 
     private fun getRaisedTicket(isLoading: Boolean=true){
@@ -494,6 +531,14 @@ class SupportFragment : BaseFragment() {
         }
 
         popup.show()
+    }
+
+    private fun setContactUsData(contactData: GetContactResponse.Data.ContentEnglish) {
+        binding?.apply {
+            tvSupportEmailAddress.text = contactData?.email
+            tvSupportMobileNumber.text = contactData?.mobile
+            whatsappNumber = contactData?.whatsapp.toString()
+        }
     }
 
 }

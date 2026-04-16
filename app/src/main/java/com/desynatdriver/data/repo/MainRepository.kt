@@ -10,6 +10,7 @@ import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
+import com.desynatdriver.ui.home.cms.response.GetContactResponse
 import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
@@ -363,6 +364,19 @@ val readAllNotificationLiveData = SingleLiveEvent<CommonResponse>()
             responseLiveData = raiseTicketLiveData
         )
     }
+
+    var contactUsLiveData = SingleLiveEvent<GetContactResponse>()
+    suspend fun contactUs(
+        map: HashMap<String,Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.contactUs(map)
+            },
+            responseLiveData = contactUsLiveData
+        )
+    }
+
 
 }
 

@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -101,6 +102,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
         googleMap = map
         isMapReady = true
         tryDrawRoute()
+        Log.e("drawRoute", "drawRoute initial: ${storeLat}: ${dropLat}")
     }
 
     override fun initView() {
@@ -128,6 +130,8 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
             if (storeLat != 0.0 && dropLat != 0.0) {
                 isLocationReady = true
+                Log.e("drawRoute", "drawRoute 1: ${storeLat}: ${dropLat}")
+
                 tryDrawRoute()
             }
             if (deliveryDetailData?.userRatingReviewProvide!=null) {
@@ -959,11 +963,15 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
 
     private fun drawRoute(origin: LatLng, destination: LatLng) {
+        Log.e("drawRoute", "drawRoute: ${origin}: ${destination}")
 
         val url = "https://maps.googleapis.com/maps/api/directions/json?" +
                 "origin=${origin.latitude},${origin.longitude}" +
                 "&destination=${destination.latitude},${destination.longitude}" +
-                "&key=AIzaSyA4L_dBeJDWuqtBT9ZOOUhjigbh6Lxi43s"
+             //   "&key=AIzaSyA4L_dBeJDWuqtBT9ZOOUhjigbh6Lxi43s"
+                "&key=AIzaSyB5LK7zzKS4q9ov0R4LFLgaRyPZdZsTKz4"
+
+        Log.e("drawRoute", "url: ${url}")
 
         lifecycleScope.launch {
             val result = withContext(Dispatchers.IO) {
@@ -1046,6 +1054,8 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
         if (!isMapReady || !isLocationReady) return
         val origin = LatLng(storeLat, storeLng)
         val destination = LatLng(dropLat, dropLng)
+        Log.e("drawRoute", "drawRoute 2: ${origin}: ${destination}")
+
         drawRoute(origin, destination)
     }
 

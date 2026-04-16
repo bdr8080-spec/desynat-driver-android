@@ -2,7 +2,8 @@
     <string name="app_name">Desynat Driver</string>
     <string name="channel">desynat notification</string>
     <string name="channel_description">desynat notification for driver alert</string>
-    <string name="map_key">AIzaSyA4L_dBeJDWuqtBT9ZOOUhjigbh6Lxi43s</string>
+    <string name="map_key_old">AIzaSyA4L_dBeJDWuqtBT9ZOOUhjigbh6Lxi43s</string>
+    <string name="map_key">AIzaSyB5LK7zzKS4q9ov0R4LFLgaRyPZdZsTKz4</string>
     <string name="google_translator_api_key">AIzaSyB4mtISC8aJQl8DkwEd8DAIpBvuHCleO7s</string>
 
     <string name="continue_text">Continue</string>

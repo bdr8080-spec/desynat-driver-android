@@ -58,6 +58,10 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
+
+            ivDoc.setOnClickListener {
+                CommonMethod.imagePreviewDialog(requireActivity(),arrayListOf(ticketData?.file.toString()))
+            }
         }
     }
 
@@ -66,6 +70,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
     private fun setData() {
         binding?.apply {
+            tvTitle.text = ticketData?.title
             tvDescription.text = ticketData?.description
             tvTicketType.text = ticketData?.ticketTypeDetails?.name
             tvTicketIdValue.text = ticketData?.ticketId

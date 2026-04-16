@@ -49,5 +49,7 @@ object Constants {
    const val GET_TICKET_TYPE = "/api/ticket_types"
    const val GET_RAISED_TICKET = "/api/deliveryboy/get_raised_tickets"
    const val RAISE_TICKET = "/api/deliveryboy/raise_ticket"
+   const val CONTACT_US = "/api/contact_us/"
+
 
 }

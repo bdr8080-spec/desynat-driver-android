@@ -4,6 +4,7 @@ import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
+import com.desynatdriver.ui.home.cms.response.GetContactResponse
 import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
 import com.desynatdriver.ui.home.cms.translation.TranslateRequest
 import com.desynatdriver.ui.home.cms.translation.TranslateResponse
@@ -143,4 +144,6 @@ interface ApiServices {
     @POST(Constants.RAISE_TICKET)
     suspend fun raiseTicket(@Body map: HashMap<String, Any>): Response<CommonResponse>
 
+    @GET(Constants.CONTACT_US)
+    suspend fun contactUs(@QueryMap map: HashMap<String, Any>): Response<GetContactResponse>
 }
