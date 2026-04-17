@@ -49,7 +49,16 @@ object Constants {
    const val GET_TICKET_TYPE = "/api/ticket_types"
    const val GET_RAISED_TICKET = "/api/deliveryboy/get_raised_tickets"
    const val RAISE_TICKET = "/api/deliveryboy/raise_ticket"
+   const val NOTIFICATION_ON_OFF = "/api/deliveryboy/notification_on_off"
+   const val APP_NOTIFICATION_ON_OFF = "/api/deliveryboy/app_notification_on_off"
    const val CONTACT_US = "/api/contact_us/"
+   const val FAQ = "/api/faqs"
+   const val TERMS_CONDITION = "/api/terms_conditions"
+   const val ABOUT_US = "/api/about_us"
+   const val PRIVACY_POLICY = "/api/terms_conditions"
+   const val RETURN_POLICY = "/api/return_policy"
+   const val EXCHANGE_POLICY = "/api/exchange_policy"
+   const val CANCELLATION_POLICY = "/api/cancellation_policy"
 
 
 }

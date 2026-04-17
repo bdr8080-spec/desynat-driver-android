@@ -5,9 +5,11 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
+import android.text.Html
 import android.text.InputFilter
 import android.text.Spannable
 import android.text.SpannableString
@@ -460,5 +462,15 @@ object CommonMethod {
         SharedPreference.get(context).accessToken = ""
     }
 
+    fun setHtmlText(html: String): Spanned {
+        val cleanHtml = html
+            .replace("\\/", "/")
+            .replace("\n", "<br>")
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(cleanHtml, Html.FROM_HTML_MODE_COMPACT)
+        } else {
+            Html.fromHtml(cleanHtml)
+        }
+    }
 
 }

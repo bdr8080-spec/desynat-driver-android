@@ -8,7 +8,9 @@ import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
+import com.desynatdriver.ui.home.cms.response.GetCmsResponse
 import com.desynatdriver.ui.home.cms.response.GetContactResponse
+import com.desynatdriver.ui.home.cms.response.GetFaqResponse
 import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
@@ -247,6 +249,24 @@ class HomeViewModel @Inject constructor(
             repository.raiseTicket(map)
         }
     }
+    val notificationOnOffResult: LiveData<GetProfileResponse>
+        get() = repository.notificationOnOffLiveData
+
+    fun notificationOnOff(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.notificationOnOff(map)
+        }
+    }
+
+
+    val appNotificationOnOffResult: LiveData<GetProfileResponse>
+        get() = repository.appNotificationOnOffLiveData
+
+    fun appNotificationOnOff(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.appNotificationOnOff(map)
+        }
+    }
 
     val contactUsResult: LiveData<GetContactResponse>
         get() = repository.contactUsLiveData
@@ -254,6 +274,69 @@ class HomeViewModel @Inject constructor(
     fun contactUs(map: HashMap<String,Any>) {
         viewModelScope.launch {
             repository.contactUs(map)
+        }
+    }
+
+    val faqResult: LiveData<GetFaqResponse>
+        get() = repository.faqLiveData
+
+    fun faq(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.faq(map)
+        }
+    }
+
+    val termsAndConditionResult: LiveData<GetCmsResponse>
+        get() = repository.termsAndConditionLiveData
+
+    fun termsAndCondition(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.termsAndCondition(map)
+        }
+    }
+
+    val privacyPolicyResult: LiveData<GetCmsResponse>
+        get() = repository.privacyPolicyLiveData
+
+    fun privacyPolicy(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.privacyPolicy(map)
+        }
+    }
+
+    val aboutUsResult: LiveData<GetCmsResponse>
+        get() = repository.aboutUsLiveData
+
+    fun aboutUs(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.aboutUs(map)
+        }
+    }
+
+    val returnPolicyResult: LiveData<GetCmsResponse>
+        get() = repository.returnPolicyLiveData
+
+    fun returnPolicy(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.returnPolicy(map)
+        }
+    }
+
+    val exchangePolicyResult: LiveData<GetCmsResponse>
+        get() = repository.exchangePolicyLiveData
+
+    fun exchangePolicy(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.exchangePolicy(map)
+        }
+    }
+
+    val cancellationPolicyResult: LiveData<GetCmsResponse>
+        get() = repository.cancellationPolicyLiveData
+
+    fun cancellationPolicy(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.cancellationPolicy(map)
         }
     }
 

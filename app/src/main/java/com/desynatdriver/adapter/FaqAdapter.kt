@@ -3,29 +3,34 @@ package com.desynatdriver.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatdriver.R
 import com.desynatdriver.databinding.ItemFaqBinding
+import com.desynatdriver.ui.home.cms.response.GetFaqResponse
+import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 
-class FaqAdapter(var context:Context, var faqList: ArrayList<String>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<FaqAdapter.ViewHolder>() {
+class FaqAdapter(var context:Context, var faqList: ArrayList<GetFaqResponse.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<FaqAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemFaqBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) = with(binding){
             val faqData = faqList[position]
-            tvQuestion.text = ""
-            tvAnswer.text = ""
-//
-//            if (isSelected){
-//                ivDropDown.setImageResource(R.drawable.ic_faq_up_arrow)
-//                tvAnswer.isVisible = true
-//            }
-//            else{
-//                ivDropDown.setImageResource(R.drawable.ic_faq_down_arrow)
-//                tvAnswer.isVisible = false
-//            }
+            tvQuestion.text = if (Constants.language=="ar")  CommonMethod.setHtmlText(faqData?.questionArabic.toString()) else  CommonMethod.setHtmlText(faqData?.questionEnglish.toString())
+            tvAnswer.text =  if (Constants.language=="ar")  CommonMethod.setHtmlText(faqData?.answerArabic.toString()) else  CommonMethod.setHtmlText(faqData?.answerEnglish.toString())
+
+            if (faqData?.isSelected == true){
+                ivDropDown.setImageResource(R.drawable.ic_faq_up_arrow)
+                tvAnswer.isVisible = true
+            }
+            else{
+                ivDropDown.setImageResource(R.drawable.ic_faq_down_arrow)
+                tvAnswer.isVisible = false
+            }
 
             clQuestion.setOnClickListener {
-
-                notifyDataSetChanged()
+                faqList[position].isSelected = !faqList[position].isSelected
+                notifyItemChanged(position)
             }
         }
         }

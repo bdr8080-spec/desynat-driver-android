@@ -93,7 +93,7 @@
             android:src="@drawable/ic_about_us" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSubAdmin"
+            android:id="@+id/tvAboutUs"
             style="@style/drawer_text"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_toStartOf="@+id/ivGoAbout"

@@ -163,20 +163,57 @@ class HomeActivity : BaseActivity() {
                 ProgressDialogUtils.getInstance().showProgress(this@HomeActivity, false)
             }
 
-//            rlSetting.setOnClickListener {
-//                controller.navigate(R.id.setting)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+            rlSetting.setOnClickListener {
+                controller.navigate(R.id.setting)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
 
             rlSupport.setOnClickListener {
                 controller.navigate(R.id.support)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
-//            rlFaq.setOnClickListener {
-//                controller.navigate(R.id.faq)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+            rlTerms.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("type", 1)
+                controller.navigate(R.id.cmsContent,bundle)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            tvAboutUs.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("type", 3)
+                controller.navigate(R.id.cmsContent,bundle)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlReturnPolicy.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("type", 4)
+                controller.navigate(R.id.cmsContent,bundle)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlExchange.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("type", 5)
+                controller.navigate(R.id.cmsContent,bundle)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlCancellationPolicy.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("type", 6)
+                controller.navigate(R.id.cmsContent,bundle)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlFaq.setOnClickListener {
+                controller.navigate(R.id.faq)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+
 //
 //            rlLanguage.setOnClickListener {
 //                controller.navigate(R.id.changeLanguageFragment)

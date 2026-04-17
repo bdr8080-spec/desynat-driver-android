@@ -134,4 +134,10 @@
         android:label="Support Chat Fragment"
         tools:layout="@layout/fragment_support_chat"/>
 
+    <fragment
+        android:id="@+id/cmsContent"
+        android:name="com.desynatdriver.ui.home.cms.CmsContentFragment"
+        android:label="Cms Content Fragment"
+        tools:layout="@layout/fragment_cms_content"/>
+
 </navigation>

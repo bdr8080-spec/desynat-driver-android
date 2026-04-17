@@ -19,6 +19,7 @@ import com.desynatdriver.databinding.FragmentHomeBinding
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.ui.response.GetProfileResponse
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.SharedPreference
 import com.desynatdriver.utils.showToast
@@ -61,6 +62,7 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun initView() {
+        Constants.language = SharedPreference.get(requireActivity()).language
        getProfile()
         binding?.apply {
 
