@@ -49,7 +49,7 @@ class SettingFragment : BaseFragment() {
         userInfo = SharedPreference.get(requireActivity()).getUser()
         setData()
         binding?.apply {
-            toolbar.tvToolbar.text = "Settings"
+            toolbar.tvToolbar.text = getString(R.string.settings)
         }
     }
 

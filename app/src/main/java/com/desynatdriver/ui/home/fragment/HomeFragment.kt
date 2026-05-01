@@ -213,12 +213,12 @@ class HomeFragment : BaseFragment() {
     private fun updateStatus(){
         binding?.apply {
             if(status==1){
-                tvSwitch.text = "On Duty"
+                tvSwitch.text =getString(R.string.on_duty)
                 tvSwitch.setTextColor(Color.parseColor("#000000"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds( 0,0,R.drawable.switch_on,0 )
             }
             else{
-                tvSwitch.text = "Off Duty"
+                tvSwitch.text = getString(R.string.off_duty)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds( 0,0,R.drawable.switch_off,0 )
 
@@ -275,10 +275,10 @@ class HomeFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 user?.onDuty = response.data.onDuty
                 if (response.data.onDuty==1){
-                    showToast("Duty on successfully")
+                    showToast(getString(R.string.duty_on_successfully))
                 }
                 else{
-                    showToast("Duty off successfully")
+                    showToast(getString(R.string.duty_off_successfully))
                 }
 
                 user?.let { SharedPreference.get(requireActivity()).saveUser(it) }

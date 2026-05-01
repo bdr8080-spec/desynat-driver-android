@@ -40,7 +40,7 @@ class ResetPasswordFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-            toolbar.tvToolbar.text = "Reset Password"
+            toolbar.tvToolbar.text = getString(R.string.reset_password)
             CommonMethod.removeAllTextSpaces(etPassword)
             CommonMethod.removeAllTextSpaces(etConfirmPassword)
 
@@ -106,19 +106,21 @@ class ResetPasswordFragment : BaseFragment() {
         val confirmPassword = binding?.etConfirmPassword?.text.toString().trim()
 
         if (password.isEmpty()) {
-            showToast("Please enter password")
+            showToast(getString(R.string.please_enter_password))
+
             return false
         }
         if (password.length<6) {
-            showToast("Password must be 6 digits long")
+            showToast(getString(R.string.password_must_be_6_digits_long))
+
             return false
         }
         else if (confirmPassword.isEmpty() ) {
-            showToast("Please enter confirm password")
+            showToast(getString(R.string.please_enter_confirm_password))
             return false
         }
         else if (password!=confirmPassword) {
-            showToast("Password and confirm password didn't match")
+            showToast(getString(R.string.password_and_confirm_password_didn_t_match))
             return false
         }
         return true

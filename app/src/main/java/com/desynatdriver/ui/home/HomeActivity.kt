@@ -87,9 +87,9 @@ class HomeActivity : BaseActivity() {
         controller.graph = navGraph
 
         bottonNavItemList.clear()
-        bottonNavItemList.add(BottomNavItem("Home",R.drawable.ic_home,R.drawable.ic_selected_home))
-        bottonNavItemList.add(BottomNavItem("Deliveries",R.drawable.ic_deliveries,R.drawable.ic_selected_deliveries))
-        bottonNavItemList.add(BottomNavItem("Profile",R.drawable.ic_profile,R.drawable.ic_selected_profile))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.home),R.drawable.ic_home,R.drawable.ic_selected_home))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.deliveries),R.drawable.ic_deliveries,R.drawable.ic_selected_deliveries))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.profile),R.drawable.ic_profile,R.drawable.ic_selected_profile))
 
         setBottomAdapter()
 
@@ -370,11 +370,11 @@ class HomeActivity : BaseActivity() {
                 locationViewModel.setLocation(this.latitude, this.longitude)
 
             } else {
-                Constants.location  = "No address found"
+                Constants.location  = getString(R.string.no_address_found)
             }
         } catch (e: IOException) {
             Log.e("MapsDebug", "Geocoder failed: ${e.message}")
-            Constants.location = "Error fetching address"
+            Constants.location = getString(R.string.error_fetching_address)
         }
     }
 

@@ -15,7 +15,7 @@
         android:layout_marginTop="@dimen/_25sdp"
         android:fontFamily="@font/poppins_medium"
         android:padding="@dimen/_15sdp"
-        android:text="Change Language"
+        android:text="@string/change_language"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp" />

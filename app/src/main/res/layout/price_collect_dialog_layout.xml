@@ -31,7 +31,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:textAlignment="center"
             android:fontFamily="@font/poppins_medium"
-            android:text="Collect amount"
+            android:text="@string/collect_amount"
             android:textColor="#CC000000"
             android:textSize="@dimen/_12sdp" />
 
@@ -40,7 +40,7 @@
             style="@style/button"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:text="Collected"
+            android:text="@string/collected"
             android:padding="@dimen/_6sdp"/>
 
     </LinearLayout>

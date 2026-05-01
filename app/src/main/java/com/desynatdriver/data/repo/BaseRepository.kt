@@ -8,6 +8,7 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import android.content.Context
+import com.desynatdriver.R
 import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.isNetworkAvailable
 
@@ -21,7 +22,7 @@ abstract class BaseRepository(private val context: Context) {
         responseLiveData: MutableLiveData<T>
     ) {
         if (!isNetworkAvailable(context)) {
-            error.postValue("No internet connection. Please check your network.")
+            error.postValue(context.getString(R.string.no_internet_connection_please_check_your_network))
             return
         }
         progress.postValue(true)
@@ -33,7 +34,7 @@ abstract class BaseRepository(private val context: Context) {
                     responseLiveData.postValue(response.body())
                 }
                 response.isSuccessful && response.body() == null -> {
-                    error.postValue("Empty response from server")
+                    error.postValue(context.getString(R.string.empty_response_from_server))
                 }
                 response.errorBody() != null -> {
                     try {

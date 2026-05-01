@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.desynatdriver.R
 import com.desynatdriver.adapter.FaqAdapter
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.data.view_model.HomeViewModel
@@ -41,7 +42,7 @@ class FaqFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-            toolbar.tvToolbar.text = "FAQ's"
+            toolbar.tvToolbar.text = getString(R.string.faq_s)
 
             faqAdapter = FaqAdapter(requireActivity(),faqList,object : FaqAdapter.ClickOnItem{
                 override fun onClickItem(position: Int) {

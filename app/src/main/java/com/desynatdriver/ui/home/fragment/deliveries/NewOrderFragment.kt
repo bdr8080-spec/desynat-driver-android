@@ -144,7 +144,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun normalFlow(){
         binding?.apply {
-            viewPackageDetail.text = "View Package details"
+            viewPackageDetail.text = getString(R.string.view_package_details)
             tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
             tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
             if (deliveryDetailData?.order?.deliveryDetails?.latitude!=0.0){
@@ -204,7 +204,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun exchangeFlow(){
         binding?.apply {
-            viewPackageDetail.text = "View  Exchange Package details"
+            viewPackageDetail.text = getString(R.string.view_exchange_package_details)
             itemCollected = deliveryDetailData?.returntostore=="0"&&deliveryDetailData?.deliveryStatus=="3"
 
             if (deliveryDetailData?.returntostore=="0"&&deliveryDetailData?.deliveryStatus=="3"){
@@ -324,7 +324,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun returnFlow(){
         binding?.apply {
-            viewPackageDetail.text = "View Return details"
+            viewPackageDetail.text = getString(R.string.view_return_details)
             when(deliveryDetailData?.deliveryStatus){
                 "1" ->{
                     tvDropAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
@@ -684,7 +684,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 error(R.drawable.ic_placeholder)
             }
             tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } KD"
-            tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
+            tvSize.text = "${getString(R.string.size)}: ${deliveryDetailData?.variationDetails?.size?.name}"
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
                 Color.parseColor(it)) }
             tvQuantityValue.text = "${deliveryDetailData?.quantity}"
@@ -776,18 +776,18 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
             if(deliveryDetailData?.returnType=="1"||deliveryDetailData?.returnType=="2"){
                 rbNotDelivered.isVisible = false
-                rbDelivered.text = "Drop at Store"
+                rbDelivered.text = getString(R.string.drop_at_store)
             }
             else if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"){
                 if (deliveryDetailData?.deliveryStatus=="3"){
-                 rbDelivered.text = "Drop at Store"
+                 rbDelivered.text = getString(R.string.drop_at_store)
                     rbPicked.isVisible = false
                 }
 
                 rbNotDelivered.isVisible = false
             }
             else{
-                rbDelivered.text = "Delivered"
+                rbDelivered.text = getString(R.string.delivered)
                 rbNotDelivered.isVisible = true
             }
 
@@ -798,7 +798,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             dialogBinding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
                when (checkedId) {
                     R.id.rbPicked ->{
-                        binding?.tvStatus?.text = "Picked"
+                        binding?.tvStatus?.text = getString(R.string.picked)
                         selectedDeliveryStatus = "7"
                         binding?.tvUpdateStatus?.setBackgroundResource(R.drawable.btn_gradient)
                         binding?.tvUpdateStatus?.setTextColor(requireActivity().getColor(R.color.white))
@@ -806,18 +806,18 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                     }
                     R.id.rbDelivered ->{
                         if(deliveryDetailData?.returnType=="1"||deliveryDetailData?.returnType=="2"){
-                            binding?.tvStatus?.text = "Drop at Store"
+                            binding?.tvStatus?.text = getString(R.string.drop_at_store)
                         }
                         if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"){
                             if (deliveryDetailData?.deliveryStatus=="3"){
-                                binding?.tvStatus?.text = "Drop at Store"
+                                binding?.tvStatus?.text = getString(R.string.drop_at_store)
                             }
                             else{
-                                binding?.tvStatus?.text = "Delivered"
+                                binding?.tvStatus?.text = getString(R.string.delivered)
                             }
                         }
                         else{
-                            binding?.tvStatus?.text = "Delivered"
+                            binding?.tvStatus?.text = getString(R.string.delivered)
                         }
                         selectedDeliveryStatus = "3"
                         binding?.tvUpdateStatus?.setBackgroundResource(R.drawable.btn_gradient)
@@ -825,7 +825,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                         dialog.dismiss()
                     }
                     R.id.rbNotDelivered -> {
-                        binding?.tvStatus?.text = "Not Delivered"
+                        binding?.tvStatus?.text = getString(R.string.not_delivered)
                         selectedDeliveryStatus = "8"
                         binding?.tvUpdateStatus?.setBackgroundResource(R.drawable.btn_gradient)
                         binding?.tvUpdateStatus?.setTextColor(requireActivity().getColor(R.color.white))
@@ -926,7 +926,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             btnSubmit.setOnClickListener {
                 if (etReason.isVisible){
                     if (etReason.text?.trim().toString().isEmpty()){
-                        showToast("Please enter reason")
+                        showToast(getString(R.string.please_enter_reason))
                     }
                     else{
                         reason = etReason.text?.trim().toString()
@@ -934,7 +934,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                     }
                 }
                 else if(reason==""){
-                    showToast("Please select reason")
+                    showToast(getString(R.string.please_select_reason))
                 }
                 else {
                     updateDeliveryStatus(reason)
@@ -1132,7 +1132,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
-            tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
+            tvSize.text = "${getString(R.string.size)}: ${deliveryDetailData?.variationDetails?.size?.name}"
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
                 Color.parseColor(it)) }
             tvQuantityValue.text = "${deliveryDetailData?.quantity}"

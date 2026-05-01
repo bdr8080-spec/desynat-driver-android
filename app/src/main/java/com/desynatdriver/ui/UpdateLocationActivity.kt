@@ -176,7 +176,7 @@ class UpdateLocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnC
                 getLastKnownLocation()
             }
         } else {
-            Toast.makeText(this, "Location permission denied", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.location_permission_denied), Toast.LENGTH_LONG).show()
         }
     }
 

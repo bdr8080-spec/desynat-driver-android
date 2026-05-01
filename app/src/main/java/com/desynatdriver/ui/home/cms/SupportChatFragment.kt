@@ -97,7 +97,7 @@ class SupportChatFragment : BaseFragment() {
 
     override fun initView() {
         binding?.apply {
-            toolbar.tvToolbar.text = "Support Chat"
+            toolbar.tvToolbar.text = getString(R.string.support_chat)
 
             chatMessageAdapter = ChatMessageAdapter(requireActivity(),chatList,object :
                 ChatMessageAdapter.ChatClick{
@@ -180,7 +180,7 @@ class SupportChatFragment : BaseFragment() {
                 val hasImages = uploadImageList.isNotEmpty()
 
                 if (!hasText && !hasImages) {
-                    showToast("Please enter message")
+                    showToast(getString(R.string.please_enter_message))
                     return@setOnClickListener
                 }
 

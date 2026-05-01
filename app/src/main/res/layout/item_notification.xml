@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
-        android:text="Booking Confirmation"
+        android:text="@string/booking_confirmation"
         android:textColor="#1C1C1C"
         android:textSize="@dimen/_12sdp"
         android:layout_marginStart="@dimen/_10sdp"

@@ -78,7 +78,7 @@ class EditProfileFragment : BaseFragment() {
     override fun initView() {
         profileInfo = SharedPreference.get(requireActivity()).getUser()
         binding?.apply {
-            toolbar.tvToolbar.text = "Edit"
+            toolbar.tvToolbar.text = getString(R.string.edit)
             setData()
 
             CommonMethod.removeSpace(etFullNameEnglish)
@@ -339,59 +339,60 @@ class EditProfileFragment : BaseFragment() {
         binding?.apply {
 
             if (imageUrl == null) {
-                showToast("Please Upload Profile Image")
+                showToast(getString(R.string.please_upload_profile_image))
                 return false
             }
             if (etFullNameEnglish.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Full Name in English")
+                showToast(getString(R.string.please_enter_full_name_in_english))
                 return false
             }
 
             if (etFullNameArabic.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Full Name in Arabic")
+                showToast(getString(R.string.please_enter_full_name_in_arabic))
                 return false
             }
 
             val mobile = etMobileNumber.text.toString().trim()
             if (mobile.isEmpty()) {
-                showToast("Please Enter Mobile Number")
+                showToast(getString(R.string.please_enter_mobile_number))
+
                 return false
             }
             if (mobile.length < 7 ) {
-                showToast("Mobile Number in Between 7-15 digits ")
+                showToast(getString(R.string.mobile_number_in_between_7_15_digits))
                 return false
             }
             val email = etEmail.text.toString().trim()
             if (email.isEmpty()) {
-                showToast("Please Enter Email Address")
+                showToast(getString(R.string.please_enter_email_address))
                 return false
             }
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etEmail.error = "Please Enter Valid Email Address"
+                etEmail.error = getString(R.string.please_enter_valid_email_address)
                 return false
             }
             if (etAddressLine1.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Address Line 1")
+                showToast(getString(R.string.please_enter_address_line_1))
                 return false
             }
 
             if (etAddressLine2.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Address Line 2")
+                showToast(getString(R.string.please_enter_address_line_2))
                 return false
             }
 
             if (etCity.text.toString().trim().isEmpty()) {
-                showToast("Please Enter City/District")
+                showToast(getString(R.string.please_enter_city_district))
                 return false
             }
 
             if (etState.text.toString().trim().isEmpty()) {
-                showToast("Please Enter State")
+                showToast(getString(R.string.please_enter_state))
                 return false
             }
 
             if (etZone.text.toString().trim().isEmpty()) {
-                showToast("Please Select Zone")
+                showToast(getString(R.string.please_select_zone))
                 return false
             }
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
+import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.databinding.FragmentChangeLanguageBinding
 import com.desynatdriver.ui.home.HomeActivity
@@ -85,11 +86,13 @@ class ChangeLanguageFragment : BaseFragment() {
 
             btnSave.setOnClickListener {
                 if (Constants.language==""){
-                    showToast("Please select language")
+                    showToast(getString(R.string.please_select_language))
+
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language
-                    CommonMethod.showSuccessDialog(requireActivity(),"Language changed successfully"){
+                    CommonMethod.showSuccessDialog(requireActivity(),
+                        getString(R.string.language_changed_successfully)){
                         findNavController().popBackStack()
                     }
                 }

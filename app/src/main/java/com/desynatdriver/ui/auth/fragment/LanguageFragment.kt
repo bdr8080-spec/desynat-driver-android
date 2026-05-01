@@ -3,7 +3,6 @@ package com.desynatdriver.ui.auth.fragment
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import com.desynatdriver.databinding.FragmentLanguageBinding
 import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.SharedPreference
 import com.desynatdriver.utils.showToast
+import com.desynatdriver.localization_file.LocaleHelper
 
 class LanguageFragment : BaseFragment() {
     private var binding: FragmentLanguageBinding?=null
@@ -40,6 +40,7 @@ class LanguageFragment : BaseFragment() {
             if(Constants.language=="en"){
                 cbEnglish.isChecked = true
                 cbArabic.isChecked = false
+
             }
             else if(Constants.language=="ar"){
                 cbEnglish.isChecked = false
@@ -76,10 +77,14 @@ class LanguageFragment : BaseFragment() {
 
             btnContinue.setOnClickListener {
                 if (Constants.language==""){
-                    showToast("Please select language")
+                    showToast(getString(R.string.please_select_language))
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language
+                    LocaleHelper.setLocale(
+                        requireContext(),
+                        SharedPreference.get(requireActivity()).language
+                    )
                     if (SharedPreference.get(requireActivity()).isTutorial){
                         findNavController().navigate(R.id.action_languageFragment_to_loginFragment)
                     }

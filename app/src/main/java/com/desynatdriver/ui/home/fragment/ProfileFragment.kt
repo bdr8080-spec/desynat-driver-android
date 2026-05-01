@@ -119,7 +119,7 @@ class ProfileFragment : BaseFragment() {
 
                         if(llVehicleInfo.isVisible) {
                                 selectedTab = 0
-                                tvToolbar.text = "My Profile"
+                                tvToolbar.text = getString(R.string.my_profile)
                                 ivBack.isVisible = false
                                 tvProfile.setTextColor(requireContext().getColor(R.color.white))
                                 tvVehicleInfo.setTextColor(requireContext().getColor(R.color.black))
@@ -139,7 +139,7 @@ class ProfileFragment : BaseFragment() {
             )
 
             if (selectedTab==1){
-                tvToolbar.text = "Vehicle Info"
+                tvToolbar.text = getString(R.string.vehicle_info)
                 (requireActivity() as HomeActivity).hideBottomBar()
                 ivBack.isVisible = true
                 tvVehicleInfo.setTextColor(requireActivity().getColor(R.color.white))
@@ -151,7 +151,7 @@ class ProfileFragment : BaseFragment() {
 
             }
             else{
-                tvToolbar.text = "My Profile"
+                tvToolbar.text = getString(R.string.my_profile)
                 (requireActivity() as HomeActivity).showBottomBar()
                 ivBack.isVisible = false
                 tvProfile.setTextColor(requireActivity().getColor(R.color.white))
@@ -175,7 +175,7 @@ class ProfileFragment : BaseFragment() {
 
             ivBack.setOnClickListener {
                 selectedTab = 0
-                tvToolbar.text = "My Profile"
+                tvToolbar.text = getString(R.string.my_profile)
                 (requireActivity() as HomeActivity).showBottomBar()
                 ivBack.isVisible = false
                 tvProfile.setTextColor(requireActivity().getColor(R.color.white))
@@ -188,7 +188,7 @@ class ProfileFragment : BaseFragment() {
 
             tvProfile.setOnClickListener {
                 selectedTab = 0
-                tvToolbar.text = "My Profile"
+                tvToolbar.text = getString(R.string.my_profile)
                 (requireActivity() as HomeActivity).showBottomBar()
                 ivBack.isVisible = false
                 tvProfile.setTextColor(requireActivity().getColor(R.color.white))
@@ -201,7 +201,7 @@ class ProfileFragment : BaseFragment() {
 
             tvVehicleInfo.setOnClickListener {
                 selectedTab = 1
-                tvToolbar.text = "Vehicle Info"
+                tvToolbar.text = getString(R.string.vehicle_info)
                 (requireActivity() as HomeActivity).hideBottomBar()
                 ivBack.isVisible = true
                 tvVehicleInfo.setTextColor(requireActivity().getColor(R.color.white))
