@@ -1,6 +1,7 @@
 package com.desynatdriver.ui.home.cms
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,11 @@ import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.data.view_model.HomeViewModel
 import com.desynatdriver.databinding.DeleteAccountDialogBinding
 import com.desynatdriver.databinding.FragmentSettingBinding
+import com.desynatdriver.ui.auth.AuthActivity
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,6 +101,26 @@ class SettingFragment : BaseFragment() {
             }
         }
 
+        viewModel.deleteAccountResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                response?.let {
+
+                    CommonMethod.showSuccessDialog(requireActivity(),
+                        getString(R.string.account_deleted_successfully)){
+                        Constants.isLogout = true
+                        CommonMethod.clearData(requireActivity())
+                        startActivity(
+                            Intent(requireActivity(),
+                                AuthActivity::class.java)
+                        )
+                        requireActivity().finish()
+                    }
+                }
+                isObserver = false
+            }
+        }
+
         viewModel.appNotificationOnOffResult.observe(viewLifecycleOwner) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
@@ -132,6 +155,7 @@ class SettingFragment : BaseFragment() {
             dialog.dismiss()
         }
         dialogBinding.btnYes.setOnClickListener {
+            deleteAccount()
             dialog.dismiss()
         }
 
@@ -141,6 +165,14 @@ class SettingFragment : BaseFragment() {
     fun notificationOnOff(){
         val map = HashMap<String, Any>()
         viewModel.notificationOnOff(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
+        isObserver = true
+
+    }
+
+    fun deleteAccount(){
+        val map = HashMap<String, Any>()
+        viewModel.deleteAccount(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
         isObserver = true
 

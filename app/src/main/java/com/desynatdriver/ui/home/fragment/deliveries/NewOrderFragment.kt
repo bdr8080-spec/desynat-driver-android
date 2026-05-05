@@ -692,14 +692,14 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
 
             tvPaymentStatus.text = if (deliveryDetailData?.paymentStatus=="1"){
-                "Paid"
+                getString(R.string.paid)
             }
             else{
                 if (deliveryDetailData?.order?.paymentMethod=="3"){
-                    "COD"
+                    getString(R.string.cod)
                 }
                 else {
-                    "Pending"
+                    getString(R.string.pending)
                 }
             }
             tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")

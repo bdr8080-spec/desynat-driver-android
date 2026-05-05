@@ -10,8 +10,10 @@ import androidx.core.view.WindowCompat
 import com.desynatdriver.R
 import com.desynatdriver.base.BaseActivity
 import com.desynatdriver.databinding.ActivitySplashBinding
+import com.desynatdriver.localization_file.LocaleHelper
 import com.desynatdriver.ui.auth.AuthActivity
 import com.desynatdriver.ui.home.HomeActivity
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.SharedPreference
 
 class SplashActivity : BaseActivity() {
@@ -32,6 +34,11 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun initView() {
+        Constants.language = SharedPreference.get(this).language
+        LocaleHelper.setLocale(
+            this,
+            Constants.language
+        )
         Handler(Looper.getMainLooper()).postDelayed({
             if (SharedPreference.get(this).accessToken.isNotEmpty()) {
                 startActivity(Intent(this, HomeActivity::class.java))

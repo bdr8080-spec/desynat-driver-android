@@ -7,7 +7,7 @@
     <string name="google_translator_api_key" translatable="false">AIzaSyB4mtISC8aJQl8DkwEd8DAIpBvuHCleO7s</string>
     <string name="continue_text">متابعة</string>
     <string name="arabic">العربية</string>
-    <string name="english">الإنجليزية</string>
+    <string name="english">English</string>
     <string name="resend_otp">إعادة إرسال رمز التحقق</string>
     <string name="enter_mobile_number">أدخل رقم الهاتف المحمول</string>
     <string name="enter_email_address">أدخل عنوان البريد الإلكتروني</string>
@@ -256,4 +256,12 @@
     <string name="profile">الملف الشخصي</string>
     <string name="terms_conditions">الشروط والأحكام</string>
     <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="cod">الدفع عند الاستلام</string>
+    <string name="pending">قيد الانتظار</string>
+    <string name="address">العنوان</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="select_image_source">اختر مصدر الصورة</string>
+    <string name="camera">الكاميرا</string>
+    <string name="gallery">المعرض</string>
+    <string name="account_deleted_successfully">تم حذف الحساب بنجاح!</string>
 </resources>

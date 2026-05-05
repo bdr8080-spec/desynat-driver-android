@@ -32,6 +32,7 @@
             android:text="@string/ticket_type"
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp"
+            android:textAlignment="viewStart"
             android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -46,7 +47,7 @@
             android:text="Lorem Ipsum"
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
-            android:textAlignment="textEnd"
+            android:textAlignment="viewEnd"
             app:layout_constraintStart_toEndOf="@+id/tvTicket"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvTicket" />
@@ -63,6 +64,7 @@
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clInfo"/>
 
@@ -74,6 +76,7 @@
         android:text="72970KL"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
+        android:textAlignment="viewEnd"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/tvTicketId"
@@ -88,6 +91,7 @@
         android:text="@string/raised_on"
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
+        android:textAlignment="viewStart"
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTicketId" />
@@ -100,6 +104,7 @@
         android:text="06 Mar 26, 6:15 pm"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
+        android:textAlignment="viewEnd"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/tvRaised"
@@ -114,6 +119,7 @@
         android:text="@string/status"
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
+        android:textAlignment="viewStart"
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvRaised" />
@@ -126,6 +132,7 @@
         android:text="@string/in_progress"
         android:textColor="#D72E04"
         android:textSize="@dimen/_11sdp"
+        android:textAlignment="viewEnd"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
@@ -140,6 +147,7 @@
         android:text="@string/resolved_on"
         android:textColor="#80000000"
         android:textSize="@dimen/_10sdp"
+        android:textAlignment="viewStart"
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvStatus" />
@@ -152,6 +160,7 @@
         android:text="08 Mar 26, 5:15 pm"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
+        android:textAlignment="viewEnd"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/tvResolved"

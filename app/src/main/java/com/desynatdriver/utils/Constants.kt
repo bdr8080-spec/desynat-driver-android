@@ -59,6 +59,7 @@ object Constants {
    const val RETURN_POLICY = "/api/return_policy"
    const val EXCHANGE_POLICY = "/api/exchange_policy"
    const val CANCELLATION_POLICY = "/api/cancellation_policy"
+   const val DELETE_ACCOUNT = "/api/deliveryboy/delete_account"
 
 
 }

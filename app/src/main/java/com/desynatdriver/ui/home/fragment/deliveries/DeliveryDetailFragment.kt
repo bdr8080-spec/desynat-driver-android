@@ -67,14 +67,14 @@ class DeliveryDetailFragment : BaseFragment() {
             tvTotalDistanceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.distance?:0.0)} Km"
             tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } KD"
             tvPaymentStatus.text = if (deliveryDetailData?.paymentStatus=="1"){
-                "Paid"
+                getString(R.string.paid)
             }
             else{
                 if (deliveryDetailData?.order?.paymentMethod=="3"){
-                    "COD"
+                    getString(R.string.cod)
                 }
                 else{
-                    "Pending"
+                    getString(R.string.pending)
                 }
 
             }

@@ -39,7 +39,7 @@
         android:text="@string/delivered"
         android:textColor="#17854C"
         android:textSize="@dimen/_12sdp"
-        android:textAlignment="center"
+        android:textAlignment="viewEnd"
         android:layout_marginEnd="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ivBack"
@@ -64,7 +64,7 @@
                 android:text="@string/delivered_id"
                 android:textColor="#CC000000"
                 android:textSize="@dimen/_11sdp"
-                android:textAlignment="center"
+                android:textAlignment="viewStart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -76,7 +76,7 @@
                 android:text="#672828"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
-                android:textAlignment="textEnd"
+                android:textAlignment="viewEnd"
                 app:layout_constraintStart_toEndOf="@+id/tvDeliveryId"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvDeliveryId"
@@ -91,7 +91,7 @@
                 android:text="@string/delivered_on"
                 android:textColor="#CC000000"
                 android:textSize="@dimen/_11sdp"
-                android:textAlignment="center"
+                android:textAlignment="viewStart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDeliveryId"/>
 
@@ -103,7 +103,7 @@
                 android:text="22/02/25 at 08:00PM"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
-                android:textAlignment="textEnd"
+                android:textAlignment="viewEnd"
                 app:layout_constraintStart_toEndOf="@+id/tvDeliveryOn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvDeliveryOn"
@@ -134,7 +134,7 @@
                     android:text="@string/pick_up_from"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
-                    android:textAlignment="center"
+                    android:textAlignment="viewStart"
                     android:layout_marginStart="@dimen/_10sdp"
                     app:layout_constraintTop_toTopOf="@+id/ivPickup"
                     app:layout_constraintStart_toEndOf="@+id/ivPickup"
@@ -148,6 +148,7 @@
                     android:text="4th Floor, A/129, Sun Apartment, Sector 63, Kuwait"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_10sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvPickupFrom"
                     app:layout_constraintStart_toStartOf="@+id/tvPickupFrom"/>
@@ -172,6 +173,7 @@
                     android:text="@string/mathew_kerry"
                     android:textSize="@dimen/_10sdp"
                     android:textColor="#1A1C1E"
+                    android:textAlignment="viewStart"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -186,6 +188,7 @@
                     android:text="0"
                     android:textSize="@dimen/_10sdp"
                     android:textColor="#1A1C1E"
+                    android:textAlignment="viewStart"
                     android:layout_marginTop="@dimen/_4sdp"
                     app:layout_constraintTop_toBottomOf="@+id/tvName"
                     app:layout_constraintStart_toStartOf="@+id/tvName"/>
@@ -230,7 +233,7 @@
                     android:text="@string/drop_location"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
-                    android:textAlignment="center"
+                    android:textAlignment="viewStart"
                     android:layout_marginStart="@dimen/_10sdp"
                     app:layout_constraintTop_toTopOf="@+id/ivDrop"
                     app:layout_constraintStart_toEndOf="@+id/ivDrop"
@@ -244,6 +247,7 @@
                     android:text="4th Floor, A/129, Sun Apartment, Sector 63, Kuwait"
                     android:textColor="#80000000"
                     android:textSize="@dimen/_10sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvDrop"
                     app:layout_constraintStart_toStartOf="@+id/tvDrop"/>
@@ -256,7 +260,7 @@
                     android:text="@string/customer_name"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
-                    android:textAlignment="center"
+                    android:textAlignment="viewStart"
                     android:layout_marginTop="@dimen/_5sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvDropAddress"/>
@@ -269,7 +273,7 @@
                     android:text="@string/atif_aslam"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
-                    android:textAlignment="textEnd"
+                    android:textAlignment="viewEnd"
                     app:layout_constraintStart_toEndOf="@+id/tvCustomer"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvCustomer"
@@ -284,7 +288,7 @@
                     android:text="@string/order_date_amp_time"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
-                    android:textAlignment="center"
+                    android:textAlignment="viewStart"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvCustomer"/>
 
@@ -296,7 +300,7 @@
                     android:text="22/02/25 at 08:00PM"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
-                    android:textAlignment="textEnd"
+                    android:textAlignment="viewEnd"
                     app:layout_constraintStart_toEndOf="@+id/tvOrderDate"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvOrderDate"
@@ -310,7 +314,7 @@
                     android:text="@string/order_id"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
-                    android:textAlignment="center"
+                    android:textAlignment="viewStart"
                     android:layout_marginTop="@dimen/_5sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvOrderDate"/>
@@ -323,7 +327,7 @@
                     android:text="#672828"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
-                    android:textAlignment="textEnd"
+                    android:textAlignment="viewEnd"
                     app:layout_constraintStart_toEndOf="@+id/tvOrderId"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvOrderId"
@@ -338,7 +342,7 @@
                     android:text="@string/price"
                     android:textColor="#CC000000"
                     android:textSize="@dimen/_11sdp"
-                    android:textAlignment="center"
+                    android:textAlignment="viewStart"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvOrderId"/>
 
@@ -350,7 +354,7 @@
                     android:text="79.96 KD"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
-                    android:textAlignment="textEnd"
+                    android:textAlignment="viewEnd"
                     app:layout_constraintStart_toEndOf="@+id/tvPrice"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvPrice"
@@ -364,6 +368,7 @@
                     android:text="@string/paid"
                     android:textColor="#17854C"
                     android:textSize="@dimen/_12sdp"
+                    android:textAlignment="viewEnd"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvPriceValue"/>
 
@@ -377,6 +382,7 @@
                 android:text="@string/order_details"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clDrop"/>
@@ -410,6 +416,7 @@
                     android:text="@string/nike_abaya"
                     android:textSize="@dimen/_11sdp"
                     android:textColor="@color/black"
+                    android:textAlignment="viewStart"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -424,6 +431,7 @@
                     android:text="@string/size_m"
                     android:textSize="@dimen/_10sdp"
                     android:textColor="@color/black"
+                    android:textAlignment="viewStart"
                     android:layout_marginBottom="@dimen/_15sdp"
                     app:layout_constraintStart_toStartOf="@+id/tvStore"
                     app:layout_constraintTop_toBottomOf="@+id/tvStore"/>
@@ -439,6 +447,7 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:drawableStart="@drawable/ic_grey_dot"
                     android:drawablePadding="@dimen/_5sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintStart_toEndOf="@+id/tvSize"
                     app:layout_constraintBottom_toBottomOf="@+id/tvSize"
                     app:layout_constraintTop_toTopOf="@+id/tvSize"/>
@@ -462,6 +471,7 @@
                     android:text="@string/quantity"
                     android:textSize="@dimen/_11sdp"
                     android:textColor="#66635E"
+                    android:textAlignment="viewStart"
                     android:layout_marginBottom="@dimen/_15sdp"
                     app:layout_constraintStart_toStartOf="@+id/tvStore"
                     app:layout_constraintTop_toBottomOf="@+id/tvSize"/>
@@ -475,6 +485,7 @@
                     android:textSize="@dimen/_11sdp"
                     android:textColor="@color/black"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:textAlignment="viewStart"
                     app:layout_constraintStart_toEndOf="@+id/tvQuantity"
                     app:layout_constraintBottom_toBottomOf="@+id/tvQuantity"
                     app:layout_constraintTop_toTopOf="@+id/tvQuantity"/>
@@ -490,6 +501,7 @@
                 android:text="@string/delivery_instruction"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clOrderDetail"/>
@@ -504,6 +516,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:textAlignment="viewStart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDeliveryInstruction"/>
 
@@ -516,6 +529,7 @@
                 android:text="@string/reason_for_not_delivered"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDeliveryInstructionValue"/>
@@ -529,6 +543,7 @@
                 android:text="Lorem ipsum dolor sit amet, consum adipiscing elit, sed do eiusmod tempor incididunt ut dolore magna tempor incididunt ut dolore magnaaliqua."
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvReason"/>
@@ -541,6 +556,7 @@
                 android:text="@string/total_distance"
                 android:textColor="#666666"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvReasonForNotDelivered"/>
@@ -553,13 +569,14 @@
                 android:text="7.5 Km"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
+                android:textAlignment="viewEnd"
                 app:layout_constraintTop_toTopOf="@+id/tvTotalDistance"
                 app:layout_constraintBottom_toBottomOf="@+id/tvTotalDistance"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="@dimen/_40sdp"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalDistance"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

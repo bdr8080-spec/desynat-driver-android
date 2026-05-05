@@ -1,6 +1,7 @@
 package com.desynatdriver.ui.home.cms
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.databinding.FragmentChangeLanguageBinding
+import com.desynatdriver.localization_file.LocaleHelper
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.Constants
@@ -91,10 +93,18 @@ class ChangeLanguageFragment : BaseFragment() {
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language
+                    LocaleHelper.setLocale(
+                        requireContext(),
+                        SharedPreference.get(requireActivity()).language
+                    )
                     CommonMethod.showSuccessDialog(requireActivity(),
                         getString(R.string.language_changed_successfully)){
-                        findNavController().popBackStack()
+                        val intent = Intent(requireActivity(), HomeActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        requireActivity().finish()
                     }
+
                 }
             }
         }

@@ -58,7 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="@string/full_name"/>
+            android:text="@string/full_name"
+            android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etFullNameEnglish"
@@ -66,7 +67,6 @@
             style="@style/edit_text"
             android:textDirection="ltr"
             android:textAlignment="viewStart"
-            android:gravity="start"
             android:hint="@string/enter_full_name"
             android:inputType="textCapSentences"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
@@ -79,7 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="@string/full_name_in_arabic"/>
+            android:text="@string/full_name_in_arabic"
+            android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etFullNameArabic"
@@ -100,7 +101,8 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="@string/mobile_number"/>
+            android:text="@string/mobile_number"
+            android:textAlignment="viewStart"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clMobile"
@@ -163,7 +165,8 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="@string/email_address"/>
+            android:text="@string/email_address"
+            android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etEmail"
@@ -186,9 +189,10 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="@string/address_line_1"/>
+            android:text="@string/address_line_1"
+            android:textAlignment="viewStart"/>
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relAddressLine1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -198,7 +202,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/etAddressLine1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 style="@style/edit_text"
                 android:hint="@string/enter_address_line_1"
                 android:layout_marginEnd="@dimen/_5sdp"
@@ -207,20 +211,23 @@
                 android:focusable="false"
                 android:textDirection="ltr"
                 android:textAlignment="viewStart"
-                android:gravity="start"
                 android:clickable="false"
-                android:layout_toLeftOf="@+id/ivCurrentLoc"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ivCurrentLoc"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivCurrentLoc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:src="@drawable/ic_current_loc"
-                android:layout_alignParentEnd="true"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/edit_text_title"
@@ -256,7 +263,8 @@
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_7sdp"
-                android:text="@string/city_district"/>
+                android:text="@string/city_district"
+                android:textAlignment="viewStart"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/edit_text_title"
@@ -264,7 +272,8 @@
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:text="@string/state"/>
+                android:text="@string/state"
+                android:textAlignment="viewStart"/>
 
         </LinearLayout>
 
@@ -310,7 +319,8 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="@string/zone"/>
+            android:text="@string/zone"
+            android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etZone"

@@ -119,6 +119,7 @@
                         android:textSize="@dimen/_12sdp"
                         android:textColor="@color/black"
                         android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:textAlignment="viewStart"
                         app:layout_constraintEnd_toStartOf="@+id/tvEdit"
                         app:layout_constraintStart_toEndOf="@id/ivProfileImage"
                         app:layout_constraintTop_toTopOf="@id/ivProfileImage"
@@ -132,16 +133,22 @@
                         android:text="@string/farhan713_mail_com"
                         android:textSize="@dimen/_11sdp"
                         android:textColor="@color/black"
+                        android:textAlignment="viewStart"
                         app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
                         app:layout_constraintEnd_toEndOf="@id/tvName"
                         app:layout_constraintStart_toStartOf="@id/tvName"
                         app:layout_constraintTop_toBottomOf="@id/tvName" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvEdit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit_btn"
+                        android:background="@drawable/edit_btn"
+                        android:text="@string/edit"
+                        android:gravity="center"
+                        android:textColor="#9E7853"
+                        android:textSize="@dimen/_11sdp"
+                        android:fontFamily="@font/poppins_medium"
                         android:layout_marginEnd="@dimen/_15sdp"
                         app:layout_constraintTop_toTopOf="@+id/ivProfileImage"
                         app:layout_constraintBottom_toBottomOf="@+id/ivProfileImage"
@@ -160,13 +167,16 @@
                     app:layout_constraintTop_toBottomOf="@+id/clProfile"
                     app:layout_constraintStart_toStartOf="parent"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvPhoneTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/phone_number_txt"
+                    android:text="@string/phone_number"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="#FF6E4527"
                     app:layout_constraintStart_toEndOf="@+id/ivMobile"
                     app:layout_constraintTop_toTopOf="@+id/ivMobile"
                     app:layout_constraintBottom_toBottomOf="@+id/ivMobile"/>
@@ -204,13 +214,16 @@
                     app:layout_constraintStart_toStartOf="@+id/ivMobile"
                     app:layout_constraintTop_toBottomOf="@+id/viewPhone"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAddressTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/address_txt"
+                    android:text="@string/address"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="#FF6E4527"
                     app:layout_constraintStart_toEndOf="@+id/icAddress"
                     app:layout_constraintTop_toTopOf="@+id/icAddress"
                     app:layout_constraintBottom_toBottomOf="@+id/icAddress"/>
@@ -250,13 +263,16 @@
                     app:layout_constraintStart_toStartOf="@+id/ivMobile"
                     app:layout_constraintTop_toBottomOf="@+id/viewAddress"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvZoneTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/zone_txt"
+                    android:text="@string/zone"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="#FF6E4527"
                     app:layout_constraintStart_toEndOf="@+id/ivZone"
                     app:layout_constraintTop_toTopOf="@+id/ivZone"
                     app:layout_constraintBottom_toBottomOf="@+id/ivZone"/>
@@ -581,7 +597,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_15sdp"/>
+                    android:layout_height="@dimen/_30sdp"/>
 
             </LinearLayout>
 

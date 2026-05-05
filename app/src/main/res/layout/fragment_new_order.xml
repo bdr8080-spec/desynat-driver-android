@@ -60,6 +60,7 @@
           android:text="@string/atif_aslam"
           android:textColor="@color/black"
           android:textSize="@dimen/_13sdp"
+          android:textAlignment="viewStart"
           app:layout_constraintEnd_toStartOf="@+id/ivCall"
           app:layout_constraintStart_toEndOf="@+id/ivImage"
           app:layout_constraintTop_toTopOf="@+id/ivImage" />
@@ -73,6 +74,7 @@
           android:text="0"
           android:textColor="#1A1C1E"
           android:textSize="@dimen/_10sdp"
+          android:textAlignment="viewStart"
           app:layout_constraintStart_toStartOf="@+id/tvName"
           app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
@@ -137,9 +139,9 @@
              android:layout_marginStart="@dimen/_10sdp"
              android:fontFamily="@font/poppins_medium"
              android:text="@string/pick_up_from"
-             android:textAlignment="center"
              android:textColor="@color/black"
              android:textSize="@dimen/_11sdp"
+             android:textAlignment="viewStart"
              app:layout_constraintBottom_toBottomOf="@+id/ivPickup"
              app:layout_constraintStart_toEndOf="@+id/ivPickup"
              app:layout_constraintTop_toTopOf="@+id/ivPickup" />
@@ -152,6 +154,7 @@
              android:text="4th Floor, A/129, Sun Apartment, Sector 63, Kuwait"
              android:textColor="#80000000"
              android:textSize="@dimen/_10sdp"
+             android:textAlignment="viewStart"
              app:layout_constraintEnd_toStartOf="@id/ivPickupNavigate"
              app:layout_constraintStart_toStartOf="@+id/tvPickupFrom"
              app:layout_constraintTop_toBottomOf="@+id/tvPickupFrom" />
@@ -192,7 +195,7 @@
              android:layout_marginStart="@dimen/_10sdp"
              android:fontFamily="@font/poppins_medium"
              android:text="@string/drop_location"
-             android:textAlignment="center"
+             android:textAlignment="viewStart"
              android:textColor="@color/black"
              android:textSize="@dimen/_11sdp"
              app:layout_constraintBottom_toBottomOf="@+id/ivDrop"
@@ -207,6 +210,7 @@
              android:text="4th Floor, A/129, Sun Apartment, Sector 63, Kuwait"
              android:textColor="#80000000"
              android:textSize="@dimen/_10sdp"
+             android:textAlignment="viewStart"
              app:layout_constraintEnd_toStartOf="@+id/ivDropNavigate"
              app:layout_constraintStart_toStartOf="@+id/tvDrop"
              app:layout_constraintTop_toBottomOf="@+id/tvDrop" />
@@ -244,6 +248,7 @@
           android:textColor="@color/black"
           android:textSize="@dimen/_11sdp"
           android:visibility="gone"
+          android:textAlignment="viewStart"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/btnPickedOrder" />
 
@@ -276,12 +281,12 @@
           android:layout_marginStart="@dimen/_7sdp"
           android:background="@drawable/ic_update_status_btn"
           android:fontFamily="@font/poppins_medium"
-          android:gravity="center"
           android:paddingVertical="@dimen/_8sdp"
           android:text="@string/update_status"
           android:textColor="#808080"
           android:textSize="@dimen/_12sdp"
           android:visibility="gone"
+          android:textAlignment="center"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.5"
           app:layout_constraintStart_toEndOf="@+id/tvStatus"

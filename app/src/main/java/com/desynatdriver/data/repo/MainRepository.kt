@@ -504,6 +504,19 @@ class MainRepository @Inject constructor(
     }
 
 
+    var deleteAccountLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteAccount(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.deleteAccount(map)
+            },
+            responseLiveData = deleteAccountLiveData
+        )
+    }
+
+
 }
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {

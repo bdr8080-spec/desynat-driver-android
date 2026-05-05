@@ -174,4 +174,7 @@ interface ApiServices {
 
     @GET(Constants.EXCHANGE_POLICY)
     suspend fun exchangePolicy(@QueryMap map: HashMap<String, Any>): Response<GetCmsResponse>
+
+    @POST(Constants.DELETE_ACCOUNT)
+    suspend fun deleteAccount(@Body map: HashMap<String, Any>): Response<CommonResponse>
 }

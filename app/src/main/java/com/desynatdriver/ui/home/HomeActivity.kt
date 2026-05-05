@@ -214,11 +214,11 @@ class HomeActivity : BaseActivity() {
             }
 
 
-//
-//            rlLanguage.setOnClickListener {
-//                controller.navigate(R.id.changeLanguageFragment)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+
+            rlLanguage.setOnClickListener {
+                controller.navigate(R.id.changeLanguageFragment)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
         }
     }
 

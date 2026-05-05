@@ -256,4 +256,12 @@
     <string name="profile">Profile</string>
     <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="cod">COD</string>
+    <string name="pending">Pending</string>
+    <string name="address">Address</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="select_image_source">Select Image Source</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="account_deleted_successfully">Account Deleted Successfully !</string>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/_15sdp"
@@ -40,7 +41,7 @@
         android:text="@string/customer_name"
         android:textColor="#CC000000"
         android:textSize="@dimen/_11sdp"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:layout_marginTop="@dimen/_5sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivBack"/>
@@ -53,7 +54,7 @@
         android:text="@string/atif_aslam"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
-        android:textAlignment="textEnd"
+        android:textAlignment="viewEnd"
         app:layout_constraintStart_toEndOf="@+id/tvCustomer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvCustomer"
@@ -68,7 +69,7 @@
         android:text="@string/order_date_amp_time"
         android:textColor="#CC000000"
         android:textSize="@dimen/_11sdp"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCustomer"/>
 
@@ -80,7 +81,7 @@
         android:text="22/02/25 at 08:00PM"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
-        android:textAlignment="textEnd"
+        android:textAlignment="viewEnd"
         app:layout_constraintStart_toEndOf="@+id/tvOrderDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvOrderDate"
@@ -94,7 +95,7 @@
         android:text="@string/order_id"
         android:textColor="#CC000000"
         android:textSize="@dimen/_11sdp"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:layout_marginTop="@dimen/_5sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvOrderDate"/>
@@ -107,7 +108,7 @@
         android:text="#672828"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
-        android:textAlignment="textEnd"
+        android:textAlignment="viewEnd"
         app:layout_constraintStart_toEndOf="@+id/tvOrderId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvOrderId"
@@ -122,7 +123,7 @@
         android:text="@string/price"
         android:textColor="#CC000000"
         android:textSize="@dimen/_11sdp"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvOrderId"/>
 
@@ -134,7 +135,7 @@
         android:text="79.96 KD"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
-        android:textAlignment="textEnd"
+        android:textAlignment="viewEnd"
         app:layout_constraintStart_toEndOf="@+id/tvPrice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvPrice"
@@ -148,6 +149,7 @@
         android:text="@string/paid"
         android:textColor="#17854C"
         android:textSize="@dimen/_12sdp"
+        android:textAlignment="viewEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPriceValue"/>
 
@@ -167,6 +169,7 @@
         android:text="@string/order_details"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
+        android:textAlignment="viewStart"
         android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewBilling"/>
@@ -175,99 +178,105 @@
         android:id="@+id/clOrderDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@drawable/card_stroke_background"
         android:backgroundTint="#FFF7EA"
         android:padding="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        app:layout_constraintTop_toBottomOf="@+id/tvOrderDetail">
+        app:layout_constraintTop_toBottomOf="@+id/tvOrderDetail"
+        tools:layout_editor_absoluteX="16dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivOrder"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/ic_placeholder"
-            android:scaleType="centerCrop"
             android:clipToOutline="true"
-            app:shapeAppearanceOverlay="@style/rounded_corner_10sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_placeholder"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/rounded_corner_10sdp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvStore"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/nike_abaya"
-            android:textSize="@dimen/_11sdp"
             android:textColor="@color/black"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivOrder"
-            app:layout_constraintTop_toTopOf="@+id/ivOrder"/>
+            app:layout_constraintTop_toTopOf="@+id/ivOrder" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_15sdp"
             android:fontFamily="@font/poppins_regular"
             android:text="@string/size_m"
-            android:textSize="@dimen/_10sdp"
             android:textColor="@color/black"
-            android:layout_marginBottom="@dimen/_15sdp"
+            android:textSize="@dimen/_10sdp"
+            android:textAlignment="viewStart"
             app:layout_constraintStart_toStartOf="@+id/tvStore"
-            app:layout_constraintTop_toBottomOf="@+id/tvStore"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvStore" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_regular"
-            android:text="@string/color"
-            android:textSize="@dimen/_10sdp"
-            android:textColor="@color/black"
             android:layout_marginStart="@dimen/_10sdp"
             android:drawableStart="@drawable/ic_grey_dot"
             android:drawablePadding="@dimen/_5sdp"
-            app:layout_constraintStart_toEndOf="@+id/tvSize"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/color"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@+id/tvSize"
-            app:layout_constraintTop_toTopOf="@+id/tvSize"/>
+            app:layout_constraintStart_toEndOf="@+id/tvSize"
+            app:layout_constraintTop_toTopOf="@+id/tvSize" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivColor"
             android:layout_width="@dimen/_10sdp"
             android:layout_height="@dimen/_10sdp"
-            android:src="#98ADFF"
             android:layout_marginStart="@dimen/_5sdp"
-            app:shapeAppearanceOverlay="@style/rounded_corner_2sdp"
+            android:src="#98ADFF"
+            app:layout_constraintBottom_toBottomOf="@id/tvColor"
             app:layout_constraintStart_toEndOf="@+id/tvColor"
             app:layout_constraintTop_toTopOf="@+id/tvColor"
-            app:layout_constraintBottom_toBottomOf="@id/tvColor"/>
+            app:shapeAppearanceOverlay="@style/rounded_corner_2sdp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_15sdp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/quantity"
-            android:textSize="@dimen/_11sdp"
             android:textColor="#66635E"
-            android:layout_marginBottom="@dimen/_15sdp"
+            android:textSize="@dimen/_11sdp"
+            android:textAlignment="viewStart"
             app:layout_constraintStart_toStartOf="@+id/tvStore"
-            app:layout_constraintTop_toBottomOf="@+id/tvSize"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvSize" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvQuantityValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
             android:fontFamily="@font/poppins_medium"
             android:text="02"
-            android:textSize="@dimen/_11sdp"
             android:textColor="@color/black"
-            android:layout_marginStart="@dimen/_10sdp"
-            app:layout_constraintStart_toEndOf="@+id/tvQuantity"
+            android:textSize="@dimen/_11sdp"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@+id/tvQuantity"
-            app:layout_constraintTop_toTopOf="@+id/tvQuantity"/>
+            app:layout_constraintStart_toEndOf="@+id/tvQuantity"
+            app:layout_constraintTop_toTopOf="@+id/tvQuantity" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -294,6 +303,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_5sdp"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDeliveryInstruction"/>
 
@@ -322,7 +332,7 @@
             android:text="@string/deliver_to"
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
-            android:textAlignment="center"
+            android:textAlignment="viewStart"
             android:layout_marginStart="@dimen/_10sdp"
             app:layout_constraintTop_toTopOf="@+id/ivDrop"
             app:layout_constraintStart_toEndOf="@+id/ivDrop"
@@ -336,6 +346,7 @@
             android:text="4th Floor, A/129, Sun Apartment, Sector 63, Kuwait"
             android:textColor="#80000000"
             android:textSize="@dimen/_10sdp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDrop"
             app:layout_constraintStart_toStartOf="@+id/tvDrop"/>
@@ -351,6 +362,7 @@
         android:text="@string/exchange_size"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
+        android:textAlignment="viewStart"
         android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clDrop"/>
@@ -373,7 +385,7 @@
             android:text="@string/size"
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
-            android:textAlignment="center"
+            android:textAlignment="viewStart"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -386,6 +398,7 @@
             android:text="L"
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp"
+            android:textAlignment="viewEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -401,6 +414,7 @@
         android:text="@string/uploaded_image"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
+        android:textAlignment="viewStart"
         android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clExchangeSize"/>

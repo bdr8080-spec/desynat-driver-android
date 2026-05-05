@@ -340,4 +340,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    val deleteAccountResult: LiveData<CommonResponse>
+        get() = repository.deleteAccountLiveData
+
+    fun deleteAccount(map: HashMap<String,Any>) {
+        viewModelScope.launch {
+            repository.deleteAccount(map)
+        }
+    }
+
 }

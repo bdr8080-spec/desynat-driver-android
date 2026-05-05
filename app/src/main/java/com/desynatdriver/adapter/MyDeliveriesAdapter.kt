@@ -12,6 +12,7 @@ import com.desynatdriver.R
 import com.desynatdriver.databinding.ItemMyDeliveriesBinding
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 
 class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderResponse.Data.Data>, var clickOnItem:ClickOnItem) : RecyclerView.Adapter<MyDeliveriesAdapter.ViewHolder>() {
 
@@ -47,6 +48,7 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderRe
             tvOrderId.text = "#${deliveryData?.id}"
             tvDistance.text = "${CommonMethod.formatPrice(deliveryData?.distance?:0.0)} Km"
             tvAmount.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0) } KD"
+
             when(deliveryData.deliveryStatus){
                 "0"->{
                     if(deliveryData?.returnType=="1"){
