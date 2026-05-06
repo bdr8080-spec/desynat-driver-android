@@ -264,4 +264,10 @@
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="account_deleted_successfully">Account Deleted Successfully !</string>
+    <string name="location_permission_is_required_to_detect_your_current_location">Location permission is required to detect your current location.</string>
+    <string name="permission_required">Permission Required</string>
+    <string name="grant">Grant</string>
+    <string name="cancel">Cancel</string>
+    <string name="enable_gps">Enable GPS</string>
+    <string name="please_enable_gps_to_fetch_your_current_location">Please enable GPS to fetch your current location.</string>
 </resources>

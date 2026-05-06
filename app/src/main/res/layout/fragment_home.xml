@@ -35,7 +35,6 @@
        app:layout_constraintTop_toTopOf="@+id/ivMenu"
         app:layout_constraintBottom_toBottomOf="@+id/ivMenu"/>
 
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivSupportBot"
         android:layout_width="wrap_content"
