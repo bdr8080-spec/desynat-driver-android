@@ -270,4 +270,19 @@
     <string name="cancel">Cancel</string>
     <string name="enable_gps">Enable GPS</string>
     <string name="please_enable_gps_to_fetch_your_current_location">Please enable GPS to fetch your current location.</string>
+    <string name="app_version_1_0">App Version 1.0</string>
+    <string name="document">Document</string>
+    <string name="profile_update_successfully">Profile update successfully</string>
+    <string name="notification_is_set_to_off">Notification is set to Off</string>
+    <string name="notification_is_set_to_on">Notification is set to On</string>
+    <string name="in_app_notification_is_set_to_off">In app Notification is set to Off</string>
+    <string name="in_app_notification_is_set_to_on">In app Notification is set to On</string>
+    <string name="logged_out_successfully">Logged out successfully</string>
+    <string name="order_picked_successfully">Order Picked successfully</string>
+    <string name="order_delivered_successfully">Order Delivered successfully</string>
+    <string name="order_status_updated_as_not_delivered">Order Status Updated as Not Delivered</string>
+    <string name="exchange_complete_successfully">"Exchange Complete Successfully "</string>
+    <string name="other">Other</string>
+
+
 </resources>

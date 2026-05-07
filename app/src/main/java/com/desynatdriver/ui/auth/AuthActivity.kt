@@ -11,7 +11,9 @@ import com.desynatdriver.base.BaseActivity
 import com.desynatdriver.databinding.ActivityAuthBinding
 import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.Constants
+import com.desynatdriver.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.collections.get
 
 @AndroidEntryPoint
 class AuthActivity : BaseActivity() {
@@ -42,11 +44,17 @@ class AuthActivity : BaseActivity() {
         controller = navHostFragment.navController
 
         val navGraph = controller.navInflater.inflate(R.navigation.auth_navigation_graph)
-
+        val savedLanguage = SharedPreference.get(this).language
 
         navGraph.setStartDestination(
-            if (Constants.isLogout) R.id.login
-            else R.id.language
+        if (Constants.isLogout) {
+            R.id.login
+        } else if (savedLanguage.isEmpty()) {
+            R.id.language
+        } else {
+            R.id.login
+        }
+
         )
 
         controller.graph = navGraph

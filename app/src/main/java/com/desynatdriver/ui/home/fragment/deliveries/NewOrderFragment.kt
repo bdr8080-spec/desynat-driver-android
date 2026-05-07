@@ -543,7 +543,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                     reasonList.addAll(response.data)
                     reasonList.add(
                         GetReasonResponse.Data(
-                            reasonEnglish = "Other"
+                            reasonEnglish = getString(R.string.other)
                         )
                     )
 
@@ -558,7 +558,8 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 ProgressDialogUtils.getInstance().hideProgress()
                 deliveryDetailData?.deliveryStatus = response.data.deliveryStatus
                 response?.let {
-                        CommonMethod.showSuccessDialog(requireActivity(),"Order Picked successfully"){
+                        CommonMethod.showSuccessDialog(requireActivity(),
+                            getString(R.string.order_picked_successfully)){
                             setData()
                         }
 
@@ -600,7 +601,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                               } else {
                                   CommonMethod.showSuccessDialog(
                                       requireActivity(),
-                                      "Order Delivered successfully"
+                                      getString(R.string.order_delivered_successfully)
                                   ) {
                                       findNavController().popBackStack()
                                   }
@@ -611,7 +612,8 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
                         "8"->{
                             cancelDialog?.dismiss()
-                            CommonMethod.showSuccessDialog(requireActivity(),"Order Status Updated as Not Delivered"){
+                            CommonMethod.showSuccessDialog(requireActivity(),
+                                getString(R.string.order_status_updated_as_not_delivered)){
                                 findNavController().popBackStack()
                             }
                         }
@@ -628,7 +630,8 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 response?.let {
 
                      if (deliveryDetailData?.pOrderdetailsId!="0"&&deliveryDetailData?.reType!="0"&&deliveryDetailData?.returnType!="1"){
-                         CommonMethod.showSuccessDialog(requireActivity(),"Exchange Complete Successfully "){
+                         CommonMethod.showSuccessDialog(requireActivity(),
+                             getString(R.string.exchange_complete_successfully)){
                              findNavController().popBackStack()
                          }
                      }
@@ -1096,7 +1099,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             tvPrice.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0)} KD"
 
             btnCollected.setOnClickListener {
-                CommonMethod.showSuccessDialog(requireActivity(),"Order Delivered Successfully"){
+                CommonMethod.showSuccessDialog(requireActivity(),getString(R.string.order_delivered_successfully)){
                     findNavController().popBackStack()
                 }
 
@@ -1140,7 +1143,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             btnCollected.setOnClickListener {
                 CommonMethod.showSuccessDialog(
                     requireActivity(),
-                    "Order Delivered successfully"
+                    getString(R.string.order_delivered_successfully)
                 ) {
 
                 }

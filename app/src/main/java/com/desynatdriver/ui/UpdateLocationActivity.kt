@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import com.desynatdriver.R
 import com.desynatdriver.databinding.ActivityUpdateLocationBinding
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.SharedPreference
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -60,6 +61,10 @@ class UpdateLocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnC
     private var longitudeDisplay = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        CommonMethod.setLocale(
+            this,
+            SharedPreference.get(this).language
+        )
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)

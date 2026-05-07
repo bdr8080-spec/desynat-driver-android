@@ -8,11 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.navigation.fragment.findNavController
 import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.databinding.FragmentChangeLanguageBinding
-import com.desynatdriver.localization_file.LocaleHelper
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.Constants
@@ -23,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ChangeLanguageFragment : BaseFragment() {
     private var binding: FragmentChangeLanguageBinding?=null
-    private var from =""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +37,6 @@ class ChangeLanguageFragment : BaseFragment() {
     }
 
     override fun initView() {
-        from = arguments?.getString("from").toString()
         requestPermissions()
         binding?.apply {
             Constants.language = SharedPreference.get(requireActivity()).language
@@ -93,7 +89,7 @@ class ChangeLanguageFragment : BaseFragment() {
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language
-                    LocaleHelper.setLocale(
+                    CommonMethod.setLocale(
                         requireContext(),
                         SharedPreference.get(requireActivity()).language
                     )

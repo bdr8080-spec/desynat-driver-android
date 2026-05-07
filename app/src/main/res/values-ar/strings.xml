@@ -270,4 +270,18 @@
     <string name="cancel">إلغاء</string>
     <string name="enable_gps">تفعيل GPS</string>
     <string name="please_enable_gps_to_fetch_your_current_location">يرجى تفعيل GPS للحصول على موقعك الحالي.</string>
+    <string name="app_version_1_0">إصدار التطبيق 1.0</string>
+    <string name="document">مستند</string>
+    <string name="profile_update_successfully">تم تحديث الملف الشخصي بنجاح</string>
+    <string name="notification_is_set_to_off">تم إيقاف الإشعارات</string>
+    <string name="notification_is_set_to_on">تم تشغيل الإشعارات</string>
+    <string name="in_app_notification_is_set_to_off">تم إيقاف الإشعارات داخل التطبيق</string>
+    <string name="in_app_notification_is_set_to_on">تم تشغيل الإشعارات داخل التطبيق</string>
+    <string name="logged_out_successfully">تم تسجيل الخروج بنجاح</string>
+    <string name="order_picked_successfully">تم استلام الطلب بنجاح</string>
+    <string name="order_delivered_successfully">تم توصيل الطلب بنجاح</string>
+    <string name="order_status_updated_as_not_delivered">تم تحديث حالة الطلب إلى غير مُسلَّم</string>
+    <string name="exchange_complete_successfully">تم إكمال الاستبدال بنجاح</string>
+    <string name="other">أخرى</string>
+
 </resources>

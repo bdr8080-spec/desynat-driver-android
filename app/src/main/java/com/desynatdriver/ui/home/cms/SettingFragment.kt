@@ -96,6 +96,14 @@ class SettingFragment : BaseFragment() {
                     userInfo?.let { SharedPreference.get(requireActivity()).saveUser(it) }
                     setData()
                     CommonMethod.showSuccessDialog(requireActivity(),response?.message.toString())
+                    if (response?.data?.notification==0){
+                        CommonMethod.showSuccessDialog(requireActivity(),
+                            getString(R.string.notification_is_set_to_off))
+                    }
+                    else{
+                        CommonMethod.showSuccessDialog(requireActivity(),
+                            getString(R.string.notification_is_set_to_on))
+                    }
                 }
                 isObserver = false
             }
@@ -129,7 +137,15 @@ class SettingFragment : BaseFragment() {
                     userInfo?.appNotification = response?.data?.appNotification?:0
                     userInfo?.let { SharedPreference.get(requireActivity()).saveUser(it) }
                     setData()
-                    CommonMethod.showSuccessDialog(requireActivity(),response?.message.toString())
+                    if (response?.data?.appNotification==0){
+                        CommonMethod.showSuccessDialog(requireActivity(),
+                            getString(R.string.in_app_notification_is_set_to_off))
+                    }
+                    else{
+                        CommonMethod.showSuccessDialog(requireActivity(),
+                            getString(R.string.in_app_notification_is_set_to_on))
+                    }
+
                 }
                 isObserver = false
             }

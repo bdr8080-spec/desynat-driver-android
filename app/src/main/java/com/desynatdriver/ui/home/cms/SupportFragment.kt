@@ -31,6 +31,7 @@ import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
 import com.desynatdriver.ui.home.cms.response.GetContactResponse
 import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ImagePicker
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.showToast
@@ -177,6 +178,7 @@ class SupportFragment : BaseFragment() {
             ) { uri ->
                 uri?.let {
                     imageFile = CommonMethod.uriToFile(requireActivity(), it)
+                    dialogBinding?.clDocument1Placeholder?.isVisible = false
                     dialogBinding?.ivDoc?.setImageURI(it)
                 }
             }
@@ -519,13 +521,14 @@ class SupportFragment : BaseFragment() {
         val popup = android.widget.PopupMenu(requireContext(), dialogBinding?.etTicketType)
 
         ticketTypeList.forEachIndexed { index, item ->
-            popup.menu.add(0, index, index, item.name) // use correct field name
+            popup.menu.add(0, index, index, if (Constants.language=="ar") item.nameArabic else item.name) // use correct field name
         }
 
         popup.setOnMenuItemClickListener { menuItem ->
             selectedTicketType = ticketTypeList[menuItem.itemId]
 
-            dialogBinding?.etTicketType?.setText(selectedTicketType?.name)
+            dialogBinding?.etTicketType?.setText(
+                if (Constants.language=="ar") selectedTicketType?.nameArabic else selectedTicketType?.name)
 
             true
         }

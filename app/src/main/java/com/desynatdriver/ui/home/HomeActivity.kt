@@ -263,7 +263,7 @@ class HomeActivity : BaseActivity() {
         viewModel.logoutResult.observe(this) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
+                showToast(getString(R.string.logged_out_successfully))
                 response?.let {
                     Constants.isLogout = true
                     CommonMethod.clearData(this)

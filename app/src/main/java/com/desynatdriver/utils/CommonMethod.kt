@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
@@ -473,4 +474,17 @@ object CommonMethod {
         }
     }
 
+    fun setLocale(context: Context, languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val config = Configuration()
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
+
+        context.resources.updateConfiguration(
+            config,
+            context.resources.displayMetrics
+        )
+    }
 }

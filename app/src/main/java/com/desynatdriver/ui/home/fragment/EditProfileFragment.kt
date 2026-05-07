@@ -231,7 +231,8 @@ class EditProfileFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
                     SharedPreference.get(requireActivity()).saveUser(response.data)
-                    CommonMethod.showSuccessDialog(requireContext(),"Profile update successfully"){
+                    CommonMethod.showSuccessDialog(requireContext(),
+                        getString(R.string.profile_update_successfully)){
                         findNavController().popBackStack()
                     }
                 }
