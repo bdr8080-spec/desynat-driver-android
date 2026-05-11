@@ -19,13 +19,16 @@ import com.desynatdriver.databinding.FragmentHomeBinding
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.ui.response.GetProfileResponse
+import com.desynatdriver.utils.CommonMethod
 import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.SharedPreference
+import com.desynatdriver.utils.openCustomPreSelectedDatePickerWithReset
 import com.desynatdriver.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import me.leolin.shortcutbadger.ShortcutBadger
+import java.util.Calendar
 import kotlin.text.get
 
 @AndroidEntryPoint
@@ -45,6 +48,12 @@ class HomeFragment : BaseFragment() {
     private var newDeliveriesList = ArrayList<GetAllOrderResponse.Data.Data>()
     private var user: GetProfileResponse.Data?=null
     private var status = 0
+
+    private var fromTimestamp: Long? = null
+    private var toTimestamp: Long? = null
+    private var fromDateText: String? = null
+    private var toDateText: String? = null
+    var filter = "1"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -162,17 +171,106 @@ class HomeFragment : BaseFragment() {
     override fun initControl() {
 
         binding?.apply {
+
+            radioGroup.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.rbToday -> {
+                        filter = "1"
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    }
+                    R.id.rbWeek -> {
+                        filter = "2"
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    }
+                    R.id.rbMonth -> {
+                        filter = "3"
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    }
+                }
+            }
+
             tvSwitch.setOnClickListener {
                 updateDutyStatus()
             }
 
             etFrom.setOnClickListener {
+                val initialDate = fromTimestamp ?: Calendar.getInstance().timeInMillis
 
+                openCustomPreSelectedDatePickerWithReset(
+                    requireActivity(),
+                    initialDate = initialDate,
+                    onClick = { date, timestamp ->
+
+                        fromTimestamp = timestamp
+                        fromDateText = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
+                        etFrom.setText(date)
+
+                        toTimestamp = null
+                        toDateText = null
+                        etTo.setText("")
+                        radioGroup?.clearCheck()
+                    },
+                    onReset = {
+
+                        etFrom.setText("")
+                        etTo.setText("")
+                        fromTimestamp = null
+                        fromDateText = null
+                        toTimestamp = null
+                        toDateText = null
+                        rbToday?.isChecked = true
+                        filter = "1"
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    }
+                )
             }
 
             etTo.setOnClickListener {
+                if (fromTimestamp == null) {
+                    showToast(getString(R.string.please_select_from_date_first))
+                    return@setOnClickListener
+                }
 
+                val initialDate = toTimestamp ?: fromTimestamp
+
+                openCustomPreSelectedDatePickerWithReset(
+                    requireActivity(),
+                    minDate = fromTimestamp,initialDate,
+                    onClick = { date, timestamp ->
+
+                        toTimestamp = timestamp
+                        toDateText = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
+                        etTo.setText(date)
+                        radioGroup?.clearCheck()
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    },
+                    onReset = {
+
+                        etFrom.setText("")
+                        etTo.setText("")
+                        fromTimestamp = null
+                        fromDateText = null
+                        toTimestamp = null
+                        toDateText = null
+                        rbToday?.isChecked = true
+                        filter = "1"
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    }
+                )
             }
+
 
             viewAllNewDeliveries.setOnClickListener {
                 val bundle = Bundle().apply {

@@ -15,6 +15,7 @@ import com.desynatdriver.data.view_model.HomeViewModel
 import com.desynatdriver.databinding.FragmentTicketDetailBinding
 import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
@@ -72,7 +73,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.apply {
             tvTitle.text = ticketData?.title
             tvDescription.text = ticketData?.description
-            tvTicketType.text = ticketData?.ticketTypeDetails?.name
+            tvTicketType.text = if (Constants.language=="ar") ticketData?.ticketTypeDetails?.nameArabic else ticketData?.ticketTypeDetails?.name
             tvTicketIdValue.text = ticketData?.ticketId
             tvRaisedOn.text =
                 CommonMethod.customizeChangeDateFormat(ticketData?.createdAt.toString(), outputFormat = "dd MMM yy, hh:mm a")

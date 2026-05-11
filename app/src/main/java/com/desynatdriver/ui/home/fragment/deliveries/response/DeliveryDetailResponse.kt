@@ -525,6 +525,8 @@ data class DeliveryDetailResponse(
                 val id: Int,
                 @SerializedName("name")
                 val name: String,
+                @SerializedName("name_ar")
+                val nameAr: String,
                 @SerializedName("updated_at")
                 val updatedAt: String
             )
@@ -536,6 +538,8 @@ data class DeliveryDetailResponse(
                 val id: Int,
                 @SerializedName("name")
                 val name: String,
+                @SerializedName("name_ar")
+                val nameAr: String,
                 @SerializedName("updated_at")
                 val updatedAt: String
             )

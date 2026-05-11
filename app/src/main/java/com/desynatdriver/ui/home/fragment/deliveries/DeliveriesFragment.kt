@@ -61,7 +61,7 @@ class DeliveriesFragment : BaseFragment() {
     }
 
     override fun initView() {
-        type = arguments?.getInt("DELIVERY_TYPE", 1) ?: 1
+        type = arguments?.getInt("DELIVERY_TYPE", 1) ?: type
         binding?.apply {
             deliveryList.clear()
             myDeliveriesAdapter = MyDeliveriesAdapter(requireActivity(),deliveryList,object :MyDeliveriesAdapter.ClickOnItem{

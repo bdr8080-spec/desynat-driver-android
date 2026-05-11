@@ -46,8 +46,12 @@ class MyDeliveriesAdapter(var context:Context, var list: ArrayList<GetAllOrderRe
             }
             tvName.text = deliveryData?.productDetails?.sellerDetails?.storeInfo?.storeName
             tvOrderId.text = "#${deliveryData?.id}"
-            tvDistance.text = "${CommonMethod.formatPrice(deliveryData?.distance?:0.0)} Km"
-            tvAmount.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0) } KD"
+            tvDistance.text = "${CommonMethod.formatPrice(deliveryData?.distance?:0.0)} ${context.getString(R.string.km)}"
+            tvAmount.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0) } ${
+                context.getString(
+                    R.string.kd
+                )
+            }"
 
             when(deliveryData.deliveryStatus){
                 "0"->{

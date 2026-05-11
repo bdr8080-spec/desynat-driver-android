@@ -22,6 +22,7 @@ import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
 import com.desynatdriver.ui.home.response.UpdateProfileRequest
 import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ImagePicker
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.SharedPreference
@@ -147,7 +148,7 @@ class EditProfileFragment : BaseFragment() {
             }
 
             etZone.setOnClickListener {
-              //  showZoneDropdown(etZone)
+                showZoneDropdown(etZone)
             }
 
             btnEdit.setOnClickListener {
@@ -184,8 +185,9 @@ class EditProfileFragment : BaseFragment() {
             state =  binding?.etState?.text?.trim().toString(),
         )
         viewModel.editProfile(request)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
         isObserver = true
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
+
     }
 
     override fun observe() {
@@ -278,13 +280,13 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun showZoneDropdown(view: AppCompatEditText) {
-        val list = kuwaitZoneList.map { it.nameEnglish }
+        val list = kuwaitZoneList.map {if (Constants.language=="ar") it.nameArabic else  it.nameEnglish }
         val popup = androidx.appcompat.widget.ListPopupWindow(requireActivity())
         popup.anchorView = view
         popup.setAdapter(ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, list))
         popup.setOnItemClickListener { _, _, pos, _ ->
             zoneId = kuwaitZoneList[pos].id.toString()
-            view.setText(kuwaitZoneList[pos].nameEnglish)
+            view.setText(if (Constants.language=="ar") kuwaitZoneList[pos].nameArabic  else kuwaitZoneList[pos].nameEnglish)
             popup.dismiss()
         }
         popup.show()
@@ -392,14 +394,19 @@ class EditProfileFragment : BaseFragment() {
                 return false
             }
 
-            if (etZone.text.toString().trim().isEmpty()) {
+          /*  if (etZone.text.toString().trim().isEmpty()) {
                 showToast(getString(R.string.please_select_zone))
                 return false
-            }
+            }*/
 
         }
 
         return true
+    }
+
+    private fun getKuwaitZone(){
+        viewModel.getKuwaitZone()
+        isObserver = true
     }
 
     private fun getProfile() {

@@ -3,6 +3,7 @@ package com.desynatdriver.utils
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -13,21 +14,27 @@ import android.os.Build
 import android.text.InputFilter
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.desynatdriver.R
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 fun AppCompatActivity.statusBarTransparentWithWhite() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -261,6 +268,83 @@ fun EditText.togglePasswordVisibility(passwordToggle: ImageView) {
         passwordVisible = newVisibility
     }
 }
+
+fun openCustomPreSelectedDatePickerWithReset(
+    context: Context,
+    minDate: Long? = null,
+    initialDate: Long? = null,
+    onClick: (date: String, timestamp: Long) -> Unit,
+    onReset: (() -> Unit)? = null
+) {
+
+    val locale: Locale = Locale(if (Constants.language == "ar") "ar-u-nu-latn" else "en")
+    Locale.setDefault(locale)
+    val cal = Calendar.getInstance()
+
+    if (initialDate != null) {
+        cal.timeInMillis = initialDate
+    }
+
+    val datePickerDialog = DatePickerDialog(
+        context,
+        R.style.DialogTheme,
+        { _, year, month, dayOfMonth ->
+
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, month)
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            val selectedDate =
+                SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(cal.time)
+
+            onClick(selectedDate, cal.timeInMillis)
+
+        },
+        cal.get(Calendar.YEAR),
+        cal.get(Calendar.MONTH),
+        cal.get(Calendar.DAY_OF_MONTH)
+    )
+
+    minDate?.let { datePickerDialog.datePicker.minDate = it }
+
+    // ✅ RESET BUTTON
+    datePickerDialog.setButton(
+        DatePickerDialog.BUTTON_NEUTRAL,
+        context.getString(R.string.reset)
+    ) { _, _ ->
+        onReset?.invoke()
+    }
+
+    datePickerDialog.show()
+    forceEnglishNumbers(datePickerDialog.window!!.decorView)}
+
+
+fun forceEnglishNumbers(view: View) {
+
+    if (view is ViewGroup) {
+
+        for (i in 0 until view.childCount) {
+            forceEnglishNumbers(view.getChildAt(i))
+        }
+
+    } else if (view is TextView) {
+
+        val englishNumbers = view.text.toString()
+            .replace("٠", "0")
+            .replace("١", "1")
+            .replace("٢", "2")
+            .replace("٣", "3")
+            .replace("٤", "4")
+            .replace("٥", "5")
+            .replace("٦", "6")
+            .replace("٧", "7")
+            .replace("٨", "8")
+            .replace("٩", "9")
+
+        view.text = englishNumbers
+    }
+}
+
 
 fun String?.orDash(): String = if (this.isNullOrBlank()) "-" else this
 

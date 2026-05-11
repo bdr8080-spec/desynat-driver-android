@@ -10,6 +10,7 @@ import java.net.UnknownHostException
 import android.content.Context
 import com.desynatdriver.R
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.isNetworkAvailable
 
 abstract class BaseRepository(private val context: Context) {
@@ -47,7 +48,9 @@ abstract class BaseRepository(private val context: Context) {
                                 else -> "Unknown server error"
 
                             }
+                            Log.e("error", "handleApiCall: $errorMessage" )
                             error.postValue(errorMessage)
+                            ProgressDialogUtils.getInstance().hideProgress()
                             if (errorJsonObject.optInt("status_code")!=0){
                                 CommonMethod.commonErrorHandling(context,errorJsonObject.optInt("status_code"),errorMessage)
 
@@ -57,6 +60,7 @@ abstract class BaseRepository(private val context: Context) {
                             }
 
                         } else {
+                            ProgressDialogUtils.getInstance().hideProgress()
                             error.postValue("Unknown server error (no message provided)")
                         }
                     } catch (jsonEx: Exception) {

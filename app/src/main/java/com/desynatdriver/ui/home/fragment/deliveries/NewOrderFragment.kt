@@ -33,6 +33,7 @@ import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResp
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetReasonResponse
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.showToast
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -686,12 +687,16 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
-            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } KD"
-            tvSize.text = "${getString(R.string.size)}: ${deliveryDetailData?.variationDetails?.size?.name}"
+            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } ${
+                getString(
+                    R.string.kd
+                )
+            }"
+            tvSize.text = "${getString(R.string.size)}: ${if (Constants.language=="ar") deliveryDetailData?.variationDetails?.size?.nameAr else deliveryDetailData?.variationDetails?.size?.name}"
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
                 Color.parseColor(it)) }
             tvQuantityValue.text = "${deliveryDetailData?.quantity}"
-            tvStore.text = deliveryDetailData?.productDetails?.productNameEn
+            tvStore.text =  if (Constants.language=="ar") deliveryDetailData?.productDetails?.productNameAr else deliveryDetailData?.productDetails?.productNameEn
 
 
             tvPaymentStatus.text = if (deliveryDetailData?.paymentStatus=="1"){
@@ -705,7 +710,9 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
                     getString(R.string.pending)
                 }
             }
-            tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy '${
+               getString(R.string.at)
+            }' hh:mm a")
 
             tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
             tvOrderIdValue.text = "#${deliveryDetailData?.id}"
@@ -1096,7 +1103,11 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
 
         dialogBinding.apply {
 
-            tvPrice.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0)} KD"
+            tvPrice.text = "${CommonMethod.formatPrice(deliveryData?.order?.totalAmount?:0.0)} ${
+                getString(
+                    R.string.kd
+                )
+            }"
 
             btnCollected.setOnClickListener {
                 CommonMethod.showSuccessDialog(requireActivity(),getString(R.string.order_delivered_successfully)){
@@ -1139,7 +1150,7 @@ class NewOrderFragment : BaseFragment(), OnMapReadyCallback {
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(
                 Color.parseColor(it)) }
             tvQuantityValue.text = "${deliveryDetailData?.quantity}"
-            tvStore.text = deliveryDetailData?.productDetails?.productNameEn
+            tvStore.text = if (Constants.language=="ar") deliveryDetailData?.productDetails?.productNameAr else deliveryDetailData?.productDetails?.productNameEn
             btnCollected.setOnClickListener {
                 CommonMethod.showSuccessDialog(
                     requireActivity(),

@@ -19,6 +19,7 @@ import com.desynatdriver.databinding.FragmentDeliveryDetailBinding
 import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.showToast
 import com.google.gson.Gson
@@ -64,8 +65,8 @@ class DeliveryDetailFragment : BaseFragment() {
 
             tvDeliveryIdValue.text = "#${deliveryDetailData?.id}"
             tvOrderIdValue.text = "#${deliveryDetailData?.id}"
-            tvTotalDistanceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.distance?:0.0)} Km"
-            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } KD"
+            tvTotalDistanceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.distance?:0.0)} ${getString(R.string.km)}"
+            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } ${getString(R.string.kd)}"
             tvPaymentStatus.text = if (deliveryDetailData?.paymentStatus=="1"){
                 getString(R.string.paid)
             }
@@ -79,7 +80,7 @@ class DeliveryDetailFragment : BaseFragment() {
 
             }
 
-            tvSize.text = "${getString(R.string.size)}: ${deliveryDetailData?.variationDetails?.size?.name}"
+            tvSize.text = "${getString(R.string.size)}: ${if (Constants.language=="ar") deliveryDetailData?.variationDetails?.size?.nameAr  else deliveryDetailData?.variationDetails?.size?.name}"
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(Color.parseColor(it)) }
             tvQuantityValue.text = "${deliveryDetailData?.quantity}"
             ivOrder.load(deliveryDetailData?.variationDetails?.variantImage?.get(0)){
@@ -87,7 +88,7 @@ class DeliveryDetailFragment : BaseFragment() {
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
-            tvStore.text = deliveryDetailData?.productDetails?.productNameEn
+            tvStore.text = if (Constants.language=="ar") deliveryDetailData?.productDetails?.productNameAr else deliveryDetailData?.productDetails?.productNameEn
             if (deliveryDetailData?.userRatingReviewProvide!=null) {
                 tvRating.text = deliveryDetailData?.userRatingReviewProvide?.storeRating.toString()
 
@@ -102,8 +103,10 @@ class DeliveryDetailFragment : BaseFragment() {
                 rbStore.rating = deliveryDetailData?.userRatingReviewProvide?.storeRating ?: 0f
             }
 
-            tvDeliveryOnValue.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.updatedAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
-            tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            tvDeliveryOnValue.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.updatedAt.toString(), outputFormat = "dd/MM/yyyy '${
+                getString(R.string.at)
+            }' hh:mm a")
+            tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy '${getString(R.string.at)}' hh:mm a")
             when(deliveryDetailData?.deliveryStatus){
                 "0"->{
                     when (deliveryData?.returnType) {

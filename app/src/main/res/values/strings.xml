@@ -283,6 +283,11 @@
     <string name="order_status_updated_as_not_delivered">Order Status Updated as Not Delivered</string>
     <string name="exchange_complete_successfully">"Exchange Complete Successfully "</string>
     <string name="other">Other</string>
+    <string name="reset">Reset</string>
+    <string name="please_select_from_date_first">Please select From date first</string>
+    <string name="at">at</string>
+    <string name="kd">KD</string>
+    <string name="km">Km</string>
 
 
 </resources>

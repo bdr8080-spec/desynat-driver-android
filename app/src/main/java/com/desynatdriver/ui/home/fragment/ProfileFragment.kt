@@ -11,21 +11,26 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
+import com.desynatdriver.data.view_model.HomeViewModel
 import com.desynatdriver.databinding.FragmentProfileBinding
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.getValue
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment() {
     private var binding: FragmentProfileBinding?=null
     var profileInfo : GetProfileResponse.Data?=null
     var selectedTab = 0
+    private val viewModel: HomeViewModel by viewModels()
+    var isProfileObserver = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -258,6 +263,11 @@ class ProfileFragment : BaseFragment() {
     }
 
     override fun observe() {
+    }
+
+    private fun getProfile() {
+        viewModel.getProfile()
+        isProfileObserver = true
     }
 
     fun loadDocument(imageView: ImageView, url: String?, placeHolder:Int = R.drawable.ic_placeholder) {
