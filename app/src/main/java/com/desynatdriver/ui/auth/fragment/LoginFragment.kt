@@ -140,6 +140,7 @@ class LoginFragment : BaseFragment() {
         map["password"] = binding?.etPassword?.text?.trim().toString()
         map["device_type"] = Constants.DEVICE_TYPE
         map["fcm_token"] = SharedPreference.get(requireActivity()).deviceToken
+        map["lang"] = SharedPreference.get(requireActivity()).language
 
         viewModel.login(map)
         ProgressDialogUtils.getInstance().showProgress(requireActivity())
