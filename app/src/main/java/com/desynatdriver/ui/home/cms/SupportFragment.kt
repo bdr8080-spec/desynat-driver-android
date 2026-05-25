@@ -110,6 +110,7 @@ class SupportFragment : BaseFragment() {
         binding?.apply {
             toolbar.tvToolbar.text = getString(R.string.support)
 
+            lastQuery = etSearch.text.toString().trim()
             etSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
