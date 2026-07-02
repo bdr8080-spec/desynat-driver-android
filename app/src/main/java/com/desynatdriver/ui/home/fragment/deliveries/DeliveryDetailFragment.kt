@@ -80,7 +80,7 @@ class DeliveryDetailFragment : BaseFragment() {
 
             }
 
-            tvSize.text = "${getString(R.string.size)}: ${if (Constants.language=="ar") deliveryDetailData?.variationDetails?.size?.nameAr  else deliveryDetailData?.variationDetails?.size?.name}"
+            tvSize.text = "${getString(R.string.size)}: ${if (Constants.language=="ar") deliveryDetailData?.variationDetails?.size?.name  else deliveryDetailData?.variationDetails?.size?.name}"
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(Color.parseColor(it)) }
             tvQuantityValue.text = "${deliveryDetailData?.quantity}"
             ivOrder.load(deliveryDetailData?.variationDetails?.variantImage?.get(0)){

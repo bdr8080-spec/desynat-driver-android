@@ -272,7 +272,8 @@
           app:layout_constraintEnd_toStartOf="@+id/tvUpdateStatus"
           app:layout_constraintHorizontal_bias="0.5"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/tvOngoingDeliveries" />
+          app:layout_constraintTop_toBottomOf="@+id/tvOngoingDeliveries"
+          android:layoutDirection="ltr"/>
 
       <TextView
           android:id="@+id/tvUpdateStatus"
@@ -290,7 +291,8 @@
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.5"
           app:layout_constraintStart_toEndOf="@+id/tvStatus"
-          app:layout_constraintTop_toTopOf="@+id/tvStatus" />
+          app:layout_constraintTop_toTopOf="@+id/tvStatus"
+          android:layoutDirection="ltr"/>
 
 
    </androidx.constraintlayout.widget.ConstraintLayout>
