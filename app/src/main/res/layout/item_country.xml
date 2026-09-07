@@ -18,6 +18,7 @@
     android:layout_height="wrap_content"
     android:fontFamily="@font/poppins_regular"
     android:text=""
+       android:textAlignment="viewStart"
     android:textColor="@color/black"
     android:textSize="@dimen/_12sdp" />
 

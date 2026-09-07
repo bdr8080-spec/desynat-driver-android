@@ -1,23 +1,26 @@
 package com.desynatdriver.ui.auth.fragment
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.navigation.fragment.findNavController
 import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.databinding.FragmentLanguageBinding
 import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.SharedPreference
 import com.desynatdriver.utils.showToast
+import com.desynatdriver.ui.auth.AuthActivity
+import com.desynatdriver.ui.home.HomeActivity
+import com.desynatdriver.utils.CommonMethod
 
 class LanguageFragment : BaseFragment() {
     private var binding: FragmentLanguageBinding?=null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,15 +39,23 @@ class LanguageFragment : BaseFragment() {
     override fun initView() {
         requestPermissions()
         binding?.apply {
-            Constants.language = SharedPreference.get(requireActivity()).language
-            if(Constants.language=="en"){
-                cbEnglish.isChecked = true
-                cbArabic.isChecked = false
+            if (SharedPreference.get(requireActivity()).language!=""){
+                Constants.language = SharedPreference.get(requireActivity()).language
             }
-            else if(Constants.language=="ar"){
+            else{
+                Constants.language = "en"
+            }
+
+            if(Constants.language=="ar"){
                 cbEnglish.isChecked = false
                 cbArabic.isChecked = true
             }
+            else{
+                cbEnglish.isChecked = true
+                cbArabic.isChecked = false
+
+            }
+
         }
     }
 
@@ -76,15 +87,24 @@ class LanguageFragment : BaseFragment() {
 
             btnContinue.setOnClickListener {
                 if (Constants.language==""){
-                    showToast("Please select language")
+                    showToast(getString(R.string.please_select_language))
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language
-                    if (SharedPreference.get(requireActivity()).isTutorial){
-                        findNavController().navigate(R.id.action_languageFragment_to_loginFragment)
+                    CommonMethod.setLocale(
+                        requireContext(),
+                        SharedPreference.get(requireActivity()).language
+                    )
+
+                    if (SharedPreference.get(requireActivity()).accessToken!=""){
+                        val intent = Intent(requireActivity(), HomeActivity::class.java)
+                        requireActivity().finish()
+                        startActivity(intent)
                     }
                     else{
-                        findNavController().navigate(R.id.action_languageFragment_to_onBoardingFragment)
+                        val intent = Intent(requireActivity(), AuthActivity::class.java)
+                        requireActivity().finish()
+                        startActivity(intent)
                     }
                 }
             }

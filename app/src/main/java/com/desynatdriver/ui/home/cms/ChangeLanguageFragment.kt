@@ -1,13 +1,14 @@
 package com.desynatdriver.ui.home.cms
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.navigation.fragment.findNavController
+import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.databinding.FragmentChangeLanguageBinding
 import com.desynatdriver.ui.home.HomeActivity
@@ -20,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ChangeLanguageFragment : BaseFragment() {
     private var binding: FragmentChangeLanguageBinding?=null
-    private var from =""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,7 +37,6 @@ class ChangeLanguageFragment : BaseFragment() {
     }
 
     override fun initView() {
-        from = arguments?.getString("from").toString()
         requestPermissions()
         binding?.apply {
             Constants.language = SharedPreference.get(requireActivity()).language
@@ -85,13 +84,23 @@ class ChangeLanguageFragment : BaseFragment() {
 
             btnSave.setOnClickListener {
                 if (Constants.language==""){
-                    showToast("Please select language")
+                    showToast(getString(R.string.please_select_language))
+
                 }
                 else{
                     SharedPreference.get(requireActivity()).language = Constants.language
-                    CommonMethod.showSuccessDialog(requireActivity(),"Language changed successfully"){
-                        findNavController().popBackStack()
+                    CommonMethod.setLocale(
+                        requireContext(),
+                        SharedPreference.get(requireActivity()).language
+                    )
+                    CommonMethod.showSuccessDialog(requireActivity(),
+                        getString(R.string.language_changed_successfully)){
+                        val intent = Intent(requireActivity(), HomeActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        requireActivity().finish()
                     }
+
                 }
             }
         }

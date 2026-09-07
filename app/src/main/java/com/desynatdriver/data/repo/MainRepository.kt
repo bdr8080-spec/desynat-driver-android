@@ -10,7 +10,9 @@ import com.desynatdriver.ui.auth.response.FileUploadResponse
 import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
+import com.desynatdriver.ui.home.cms.response.GetCmsResponse
 import com.desynatdriver.ui.home.cms.response.GetContactResponse
+import com.desynatdriver.ui.home.cms.response.GetFaqResponse
 import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
@@ -42,7 +44,8 @@ class MainRepository @Inject constructor(
     ) {
         handleApiCall(
             api = {
-                api.uploadImage(imageFile?.toMultipartPart("file")
+                api.uploadImage(
+                    imageFile?.toMultipartPart("file")
                 )
             },
             responseLiveData = responseUploadImage
@@ -51,7 +54,7 @@ class MainRepository @Inject constructor(
 
     val loginLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun login(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -63,7 +66,7 @@ class MainRepository @Inject constructor(
 
     val otpVerifyLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun otpVerification(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -75,7 +78,7 @@ class MainRepository @Inject constructor(
 
     val resendOtpLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun resendOtp(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -87,7 +90,7 @@ class MainRepository @Inject constructor(
 
     val forgotPasswordLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun forgotPassword(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -99,7 +102,7 @@ class MainRepository @Inject constructor(
 
     val createPasswordLiveData = SingleLiveEvent<LoginResponse>()
     suspend fun createPassword(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -165,7 +168,8 @@ class MainRepository @Inject constructor(
     }
 
     val editProfileLiveData = SingleLiveEvent<GetProfileResponse>()
-    suspend fun editProfile(request: UpdateProfileRequest
+    suspend fun editProfile(
+        request: UpdateProfileRequest
     ) {
         handleApiCall(
             api = {
@@ -176,7 +180,8 @@ class MainRepository @Inject constructor(
     }
 
     val dutyOnOffLiveData = SingleLiveEvent<DutyOnOffResponse>()
-    suspend fun dutyOnOff(map:HashMap<String,Any>
+    suspend fun dutyOnOff(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -187,7 +192,8 @@ class MainRepository @Inject constructor(
     }
 
     val allOrderLiveData = SingleLiveEvent<GetAllOrderResponse>()
-    suspend fun getAllOrder(map:HashMap<String,Any>
+    suspend fun getAllOrder(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -198,7 +204,8 @@ class MainRepository @Inject constructor(
     }
 
     val newOrderLiveData = SingleLiveEvent<GetAllOrderResponse>()
-    suspend fun getNewOrder(map:HashMap<String,Any>
+    suspend fun getNewOrder(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -209,7 +216,8 @@ class MainRepository @Inject constructor(
     }
 
     val ongoingOrderLiveData = SingleLiveEvent<GetAllOrderResponse>()
-    suspend fun getOngoingOrder(map:HashMap<String,Any>
+    suspend fun getOngoingOrder(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -220,7 +228,8 @@ class MainRepository @Inject constructor(
     }
 
     val completedOrderLiveData = SingleLiveEvent<GetAllOrderResponse>()
-    suspend fun getCompletedOrder(map:HashMap<String,Any>
+    suspend fun getCompletedOrder(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -229,8 +238,10 @@ class MainRepository @Inject constructor(
             responseLiveData = completedOrderLiveData
         )
     }
+
     val orderDetailLiveData = SingleLiveEvent<DeliveryDetailResponse>()
-    suspend fun orderDetail(map:HashMap<String,Any>
+    suspend fun orderDetail(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -241,7 +252,8 @@ class MainRepository @Inject constructor(
     }
 
     val pickOrderLiveData = SingleLiveEvent<DeliveryDetailResponse>()
-    suspend fun pickOrder(map:HashMap<String,Any>
+    suspend fun pickOrder(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -252,7 +264,8 @@ class MainRepository @Inject constructor(
     }
 
     val updateDeliveryStatusLiveData = SingleLiveEvent<DeliveryDetailResponse>()
-    suspend fun updateDeliveryStatus(map:HashMap<String,Any>
+    suspend fun updateDeliveryStatus(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -263,7 +276,8 @@ class MainRepository @Inject constructor(
     }
 
     val returnOrderLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun returnOrder(map:HashMap<String,Any>
+    suspend fun returnOrder(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -274,7 +288,8 @@ class MainRepository @Inject constructor(
     }
 
     val getReasonLiveData = SingleLiveEvent<GetReasonResponse>()
-    suspend fun getReason(type:Int
+    suspend fun getReason(
+        type: Int
     ) {
         handleApiCall(
             api = {
@@ -284,8 +299,9 @@ class MainRepository @Inject constructor(
         )
     }
 
-val getNotificationLiveData = SingleLiveEvent<GetNotificationResponse>()
-    suspend fun getNotification(map:HashMap<String, Any>
+    val getNotificationLiveData = SingleLiveEvent<GetNotificationResponse>()
+    suspend fun getNotification(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -295,8 +311,9 @@ val getNotificationLiveData = SingleLiveEvent<GetNotificationResponse>()
         )
     }
 
-val readNotificationLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun readNotification(map:HashMap<String,Any>
+    val readNotificationLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun readNotification(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -307,8 +324,9 @@ val readNotificationLiveData = SingleLiveEvent<CommonResponse>()
     }
 
 
-val readAllNotificationLiveData = SingleLiveEvent<CommonResponse>()
-    suspend fun readAllNotification(map:HashMap<String,Any>
+    val readAllNotificationLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun readAllNotification(
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -343,7 +361,7 @@ val readAllNotificationLiveData = SingleLiveEvent<CommonResponse>()
 
     var getRaisedTicketLiveData = SingleLiveEvent<GetAllRaisedTicketResponse>()
     suspend fun getRaisedTicket(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -355,7 +373,7 @@ val readAllNotificationLiveData = SingleLiveEvent<CommonResponse>()
 
     var raiseTicketLiveData = SingleLiveEvent<CommonResponse>()
     suspend fun raiseTicket(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
@@ -365,15 +383,136 @@ val readAllNotificationLiveData = SingleLiveEvent<CommonResponse>()
         )
     }
 
+    var notificationOnOffLiveData = SingleLiveEvent<GetProfileResponse>()
+    suspend fun notificationOnOff(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.notificationOnOff(map)
+            },
+            responseLiveData = notificationOnOffLiveData
+        )
+    }
+
+    var appNotificationOnOffLiveData = SingleLiveEvent<GetProfileResponse>()
+    suspend fun appNotificationOnOff(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.appNotificationOnOff(map)
+            },
+            responseLiveData = appNotificationOnOffLiveData
+        )
+    }
+
     var contactUsLiveData = SingleLiveEvent<GetContactResponse>()
     suspend fun contactUs(
-        map: HashMap<String,Any>
+        map: HashMap<String, Any>
     ) {
         handleApiCall(
             api = {
                 api.contactUs(map)
             },
             responseLiveData = contactUsLiveData
+        )
+    }
+
+    var faqLiveData = SingleLiveEvent<GetFaqResponse>()
+    suspend fun faq(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.faq(map)
+            },
+            responseLiveData = faqLiveData
+        )
+    }
+
+    var termsAndConditionLiveData = SingleLiveEvent<GetCmsResponse>()
+    suspend fun termsAndCondition(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.termsAndCondition(map)
+            },
+            responseLiveData = termsAndConditionLiveData
+        )
+    }
+
+    var privacyPolicyLiveData = SingleLiveEvent<GetCmsResponse>()
+    suspend fun privacyPolicy(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.privacyPolicy(map)
+            },
+            responseLiveData = privacyPolicyLiveData
+        )
+    }
+
+    var aboutUsLiveData = SingleLiveEvent<GetCmsResponse>()
+    suspend fun aboutUs(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.aboutUs(map)
+            },
+            responseLiveData = aboutUsLiveData
+        )
+    }
+
+    var returnPolicyLiveData = SingleLiveEvent<GetCmsResponse>()
+    suspend fun returnPolicy(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.returnPolicy(map)
+            },
+            responseLiveData = returnPolicyLiveData
+        )
+    }
+
+    var exchangePolicyLiveData = SingleLiveEvent<GetCmsResponse>()
+    suspend fun exchangePolicy(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.exchangePolicy(map)
+            },
+            responseLiveData = exchangePolicyLiveData
+        )
+    }
+
+    var cancellationPolicyLiveData = SingleLiveEvent<GetCmsResponse>()
+    suspend fun cancellationPolicy(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.cancellationPolicy(map)
+            },
+            responseLiveData = cancellationPolicyLiveData
+        )
+    }
+
+
+    var deleteAccountLiveData = SingleLiveEvent<CommonResponse>()
+    suspend fun deleteAccount(
+        map: HashMap<String, Any>
+    ) {
+        handleApiCall(
+            api = {
+                api.deleteAccount(map)
+            },
+            responseLiveData = deleteAccountLiveData
         )
     }
 

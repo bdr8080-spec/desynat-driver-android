@@ -4,10 +4,13 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
+import android.text.Html
 import android.text.InputFilter
 import android.text.Spannable
 import android.text.SpannableString
@@ -312,8 +315,75 @@ object CommonMethod {
 
         val date: Date
         try {
-            date = originalFormat.parse(inputDate)
-            return targetFormat.format(date)
+            if (Constants.language == "ar") {
+                val date = originalFormat.parse(inputDate)
+
+                var formattedDate = targetFormat.format(date!!)
+
+                val englishMonthsMMMM = arrayOf(
+                    "January", "February", "March", "April",
+                    "May", "June", "July", "August",
+                    "September", "October", "November", "December"
+                )
+
+                val arabicMonthsMMMM = arrayOf(
+                    "يناير", "فبراير", "مارس", "أبريل",
+                    "مايو", "يونيو", "يوليو", "أغسطس",
+                    "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+                )
+
+                for (i in englishMonthsMMMM.indices) {
+                    formattedDate =
+                        formattedDate.replace(
+                            englishMonthsMMMM[i],
+                            arabicMonthsMMMM[i]
+                        )
+                }
+
+                val englishMonths = arrayOf(
+                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                )
+
+                val arabicMonths = arrayOf(
+                    "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+                    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+                )
+
+                for (i in englishMonths.indices) {
+                    formattedDate =
+                        formattedDate.replace(
+                            englishMonths[i],
+                            arabicMonths[i]
+                        )
+                }
+
+                val englishDays = arrayOf(
+                    "Sun", "Mon", "Tue", "Wed",
+                    "Thu", "Fri", "Sat"
+                )
+
+                val arabicDays = arrayOf(
+                    "الأحد", "الاثنين", "الثلاثاء", "الأربعاء",
+                    "الخميس", "الجمعة", "السبت"
+                )
+
+                for (i in englishDays.indices) {
+                    formattedDate = formattedDate.replace(
+                        englishDays[i],
+                        arabicDays[i]
+                    )
+                }
+
+                formattedDate = formattedDate
+                    .replace("AM", "ص")
+                    .replace("PM", "م")
+                return formattedDate
+            }
+            else {
+                date = originalFormat.parse(inputDate)
+                return targetFormat.format(date)
+            }
         } catch (e: ParseException) {
             e.printStackTrace()
             return ""
@@ -460,5 +530,28 @@ object CommonMethod {
         SharedPreference.get(context).accessToken = ""
     }
 
+    fun setHtmlText(html: String): Spanned {
+        val cleanHtml = html
+            .replace("\\/", "/")
+            .replace("\n", "<br>")
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(cleanHtml, Html.FROM_HTML_MODE_COMPACT)
+        } else {
+            Html.fromHtml(cleanHtml)
+        }
+    }
 
+    fun setLocale(context: Context, languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val config = Configuration()
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
+
+        context.resources.updateConfiguration(
+            config,
+            context.resources.displayMetrics
+        )
+    }
 }

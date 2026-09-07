@@ -49,7 +49,7 @@
                 android:paddingVertical="@dimen/_6sdp"
                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="Change Image"/>
+                android:text="@string/change_image"/>
 
         </RelativeLayout>
 
@@ -58,13 +58,16 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="Full Name"/>
+            android:text="@string/full_name"
+            android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etFullNameEnglish"
             android:layout_width="match_parent"
             style="@style/edit_text"
-            android:hint="Enter Full Name"
+            android:textDirection="ltr"
+            android:textAlignment="viewStart"
+            android:hint="@string/enter_full_name"
             android:inputType="textCapSentences"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
             android:layout_marginTop="@dimen/_5sdp"
@@ -76,13 +79,17 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="Full Name (in Arabic)"/>
+            android:text="@string/full_name_in_arabic"
+            android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etFullNameArabic"
             android:layout_width="match_parent"
             style="@style/edit_text"
-            android:hint="Enter Full Name"
+            android:hint="@string/enter_full_name"
+            android:textDirection="ltr"
+            android:textAlignment="viewStart"
+            android:gravity="start"
             android:inputType="textCapSentences"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
@@ -94,7 +101,8 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="Mobile Number"/>
+            android:text="@string/mobile_number"
+            android:textAlignment="viewStart"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clMobile"
@@ -133,11 +141,14 @@
                 android:id="@+id/etMobileNumber"
                 android:layout_width="0dp"
                 style="@style/edit_text"
-                android:hint="Enter Mobile Number"
+                android:hint="@string/enter_mobile_number"
                 android:inputType="number"
                 android:background="@null"
                 android:maxLength="15"
                 android:editable="false"
+                android:textDirection="ltr"
+                android:textAlignment="viewStart"
+                android:gravity="start"
                 android:focusable="false"
                 android:clickable="false"
                 android:layout_marginStart="@dimen/_8sdp"
@@ -154,17 +165,21 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:text="Email Address"/>
+            android:text="@string/email_address"
+            android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
-            android:hint="Enter Email Address"
+            android:hint="@string/enter_email_address"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="textEmailAddress"
             android:editable="false"
+            android:textDirection="ltr"
+            android:textAlignment="viewStart"
+            android:gravity="start"
             android:focusable="false"
             android:clickable="false"
             android:background="@drawable/edit_back" />
@@ -174,9 +189,10 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Address Line 1"/>
+            android:text="@string/address_line_1"
+            android:textAlignment="viewStart"/>
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relAddressLine1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,33 +202,39 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/etAddressLine1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 style="@style/edit_text"
-                android:hint="Enter Address Line 1"
+                android:hint="@string/enter_address_line_1"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:background="@null"
                 android:editable="false"
                 android:focusable="false"
+                android:textDirection="ltr"
+                android:textAlignment="viewStart"
                 android:clickable="false"
-                android:layout_toLeftOf="@+id/ivCurrentLoc"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ivCurrentLoc"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivCurrentLoc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:src="@drawable/ic_current_loc"
-                android:layout_alignParentEnd="true"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/edit_text_title"
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Address Line 2"/>
+            android:text="@string/address_line_2"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etAddressLine2"
@@ -220,7 +242,10 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
             android:singleLine="true"
-            android:hint="Enter Address Line 2"
+            android:textDirection="ltr"
+            android:textAlignment="viewStart"
+            android:gravity="start"
+            android:hint="@string/enter_address_line_2"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
             android:background="@drawable/edit_back" />
@@ -238,7 +263,8 @@
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_7sdp"
-                android:text="City/District"/>
+                android:text="@string/city_district"
+                android:textAlignment="viewStart"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/edit_text_title"
@@ -246,7 +272,8 @@
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:text="State"/>
+                android:text="@string/state"
+                android:textAlignment="viewStart"/>
 
         </LinearLayout>
 
@@ -262,9 +289,12 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 style="@style/edit_text"
-                android:hint="Enter City/District"
+                android:hint="@string/enter_city_district"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_7sdp"
+                android:textDirection="ltr"
+                android:textAlignment="viewStart"
+                android:gravity="start"
                 android:inputType="text"
                 android:background="@drawable/edit_back" />
 
@@ -273,8 +303,11 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 style="@style/edit_text"
-                android:hint="Enter State"
+                android:hint="@string/enter_state"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:textDirection="ltr"
+                android:textAlignment="viewStart"
+                android:gravity="start"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:inputType="text"
                 android:background="@drawable/edit_back" />
@@ -286,17 +319,21 @@
             android:layout_width="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Zone"/>
+            android:text="@string/zone"
+            android:textAlignment="viewStart"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etZone"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             style="@style/edit_text"
-            android:hint="Select Zone"
+            android:hint="@string/select_zone"
             android:layout_marginTop="@dimen/_5sdp"
             android:inputType="text"
             android:editable="false"
+            android:textDirection="ltr"
+            android:textAlignment="viewStart"
+            android:gravity="start"
             android:focusable="false"
             android:clickable="false"
             android:background="@drawable/edit_back" />
@@ -307,7 +344,7 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_30sdp"
-            android:text="Save Changes"
+            android:text="@string/save_changes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword"/>

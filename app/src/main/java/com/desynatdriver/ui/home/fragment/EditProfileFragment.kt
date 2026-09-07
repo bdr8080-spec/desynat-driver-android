@@ -22,6 +22,7 @@ import com.desynatdriver.ui.home.response.GetKuwaitZoneResponse
 import com.desynatdriver.ui.home.response.UpdateProfileRequest
 import com.desynatdriver.ui.response.GetProfileResponse
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ImagePicker
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.SharedPreference
@@ -78,7 +79,7 @@ class EditProfileFragment : BaseFragment() {
     override fun initView() {
         profileInfo = SharedPreference.get(requireActivity()).getUser()
         binding?.apply {
-            toolbar.tvToolbar.text = "Edit"
+            toolbar.tvToolbar.text = getString(R.string.edit)
             setData()
 
             CommonMethod.removeSpace(etFullNameEnglish)
@@ -147,7 +148,7 @@ class EditProfileFragment : BaseFragment() {
             }
 
             etZone.setOnClickListener {
-              //  showZoneDropdown(etZone)
+                showZoneDropdown(etZone)
             }
 
             btnEdit.setOnClickListener {
@@ -184,8 +185,9 @@ class EditProfileFragment : BaseFragment() {
             state =  binding?.etState?.text?.trim().toString(),
         )
         viewModel.editProfile(request)
-        ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
         isObserver = true
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
+
     }
 
     override fun observe() {
@@ -231,7 +233,8 @@ class EditProfileFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
                     SharedPreference.get(requireActivity()).saveUser(response.data)
-                    CommonMethod.showSuccessDialog(requireContext(),"Profile update successfully"){
+                    CommonMethod.showSuccessDialog(requireContext(),
+                        getString(R.string.profile_update_successfully)){
                         findNavController().popBackStack()
                     }
                 }
@@ -277,13 +280,13 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun showZoneDropdown(view: AppCompatEditText) {
-        val list = kuwaitZoneList.map { it.nameEnglish }
+        val list = kuwaitZoneList.map {if (Constants.language=="ar") it.nameArabic else  it.nameEnglish }
         val popup = androidx.appcompat.widget.ListPopupWindow(requireActivity())
         popup.anchorView = view
         popup.setAdapter(ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, list))
         popup.setOnItemClickListener { _, _, pos, _ ->
             zoneId = kuwaitZoneList[pos].id.toString()
-            view.setText(kuwaitZoneList[pos].nameEnglish)
+            view.setText(if (Constants.language=="ar") kuwaitZoneList[pos].nameArabic  else kuwaitZoneList[pos].nameEnglish)
             popup.dismiss()
         }
         popup.show()
@@ -339,65 +342,71 @@ class EditProfileFragment : BaseFragment() {
         binding?.apply {
 
             if (imageUrl == null) {
-                showToast("Please Upload Profile Image")
+                showToast(getString(R.string.please_upload_profile_image))
                 return false
             }
             if (etFullNameEnglish.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Full Name in English")
+                showToast(getString(R.string.please_enter_full_name_in_english))
                 return false
             }
 
             if (etFullNameArabic.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Full Name in Arabic")
+                showToast(getString(R.string.please_enter_full_name_in_arabic))
                 return false
             }
 
             val mobile = etMobileNumber.text.toString().trim()
             if (mobile.isEmpty()) {
-                showToast("Please Enter Mobile Number")
+                showToast(getString(R.string.please_enter_mobile_number))
+
                 return false
             }
             if (mobile.length < 7 ) {
-                showToast("Mobile Number in Between 7-15 digits ")
+                showToast(getString(R.string.mobile_number_in_between_7_15_digits))
                 return false
             }
             val email = etEmail.text.toString().trim()
             if (email.isEmpty()) {
-                showToast("Please Enter Email Address")
+                showToast(getString(R.string.please_enter_email_address))
                 return false
             }
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etEmail.error = "Please Enter Valid Email Address"
+                etEmail.error = getString(R.string.please_enter_valid_email_address)
                 return false
             }
             if (etAddressLine1.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Address Line 1")
+                showToast(getString(R.string.please_enter_address_line_1))
                 return false
             }
 
             if (etAddressLine2.text.toString().trim().isEmpty()) {
-                showToast("Please Enter Address Line 2")
+                showToast(getString(R.string.please_enter_address_line_2))
                 return false
             }
 
             if (etCity.text.toString().trim().isEmpty()) {
-                showToast("Please Enter City/District")
+                showToast(getString(R.string.please_enter_city_district))
                 return false
             }
 
             if (etState.text.toString().trim().isEmpty()) {
-                showToast("Please Enter State")
+                showToast(getString(R.string.please_enter_state))
                 return false
             }
 
-            if (etZone.text.toString().trim().isEmpty()) {
-                showToast("Please Select Zone")
+          /*  if (etZone.text.toString().trim().isEmpty()) {
+                showToast(getString(R.string.please_select_zone))
                 return false
-            }
+            }*/
 
         }
 
         return true
+    }
+
+    private fun getKuwaitZone(){
+        viewModel.getKuwaitZone()
+        isObserver = true
     }
 
     private fun getProfile() {

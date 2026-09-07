@@ -19,6 +19,7 @@ import com.desynatdriver.databinding.FragmentDeliveryDetailBinding
 import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.showToast
 import com.google.gson.Gson
@@ -64,22 +65,22 @@ class DeliveryDetailFragment : BaseFragment() {
 
             tvDeliveryIdValue.text = "#${deliveryDetailData?.id}"
             tvOrderIdValue.text = "#${deliveryDetailData?.id}"
-            tvTotalDistanceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.distance?:0.0)} Km"
-            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } KD"
+            tvTotalDistanceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.distance?:0.0)} ${getString(R.string.km)}"
+            tvPriceValue.text = "${CommonMethod.formatPrice(deliveryDetailData?.order?.totalAmount?:0.0) } ${getString(R.string.kd)}"
             tvPaymentStatus.text = if (deliveryDetailData?.paymentStatus=="1"){
-                "Paid"
+                getString(R.string.paid)
             }
             else{
                 if (deliveryDetailData?.order?.paymentMethod=="3"){
-                    "COD"
+                    getString(R.string.cod)
                 }
                 else{
-                    "Pending"
+                    getString(R.string.pending)
                 }
 
             }
 
-            tvSize.text = "Size: ${deliveryDetailData?.variationDetails?.size?.name}"
+            tvSize.text = "${getString(R.string.size)}: ${if (Constants.language=="ar") deliveryDetailData?.variationDetails?.size?.nameAr  else deliveryDetailData?.variationDetails?.size?.name}"
             deliveryDetailData?.variationDetails?.color?.hexCode?.let { ivColor.setColorFilter(Color.parseColor(it)) }
             tvQuantityValue.text = "${deliveryDetailData?.quantity}"
             ivOrder.load(deliveryDetailData?.variationDetails?.variantImage?.get(0)){
@@ -87,7 +88,7 @@ class DeliveryDetailFragment : BaseFragment() {
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_placeholder)
             }
-            tvStore.text = deliveryDetailData?.productDetails?.productNameEn
+            tvStore.text = if (Constants.language=="ar") deliveryDetailData?.productDetails?.productNameAr else deliveryDetailData?.productDetails?.productNameEn
             if (deliveryDetailData?.userRatingReviewProvide!=null) {
                 tvRating.text = deliveryDetailData?.userRatingReviewProvide?.storeRating.toString()
 
@@ -102,8 +103,10 @@ class DeliveryDetailFragment : BaseFragment() {
                 rbStore.rating = deliveryDetailData?.userRatingReviewProvide?.storeRating ?: 0f
             }
 
-            tvDeliveryOnValue.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.updatedAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
-            tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy 'at' hh:mm a")
+            tvDeliveryOnValue.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.updatedAt.toString(), outputFormat = "dd/MM/yyyy '${
+                getString(R.string.at)
+            }' hh:mm a")
+            tvOrderDateTime.text = CommonMethod.customizeChangeDateFormat(deliveryDetailData?.createdAt.toString(), outputFormat = "dd/MM/yyyy '${getString(R.string.at)}' hh:mm a")
             when(deliveryDetailData?.deliveryStatus){
                 "0"->{
                     when (deliveryData?.returnType) {
@@ -112,7 +115,7 @@ class DeliveryDetailFragment : BaseFragment() {
                             tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
                             tvName.text = deliveryDetailData?.order?.userDetails?.fullName
                             tvCustomerName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
-                            tvCustomer.text = "Store Name"
+                            tvCustomer.text = getString(R.string.store_name)
                             tvPrice.isVisible = false
                             tvPriceValue.isVisible = false
                             tvPaymentStatus.isVisible = false
@@ -121,7 +124,7 @@ class DeliveryDetailFragment : BaseFragment() {
                                 placeholder(R.drawable.ic_user)
                                 error(R.drawable.ic_user)
                             }
-                            tvStatus.text = "Delivered"
+                            tvStatus.text =getString(R.string.delivered)
                             tvStatus.setTextColor(Color.parseColor("#17854C"))
                         }
 
@@ -130,7 +133,7 @@ class DeliveryDetailFragment : BaseFragment() {
                             tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
                             tvName.text = deliveryDetailData?.order?.userDetails?.fullName
                             tvCustomerName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
-                            tvCustomer.text = "Store Name"
+                            tvCustomer.text = getString(R.string.store_name)
                             tvPrice.isVisible = false
                             tvPriceValue.isVisible = false
                             tvPaymentStatus.isVisible = false
@@ -139,7 +142,7 @@ class DeliveryDetailFragment : BaseFragment() {
                                 placeholder(R.drawable.ic_user)
                                 error(R.drawable.ic_user)
                             }
-                            tvStatus.text = "Delivered"
+                            tvStatus.text = getString(R.string.delivered)
                             tvStatus.setTextColor(Color.parseColor("#17854C"))
                         }
 
@@ -148,7 +151,7 @@ class DeliveryDetailFragment : BaseFragment() {
                             tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
                             tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
 
-                            tvStatus.text = "Delivered"
+                            tvStatus.text = context?.getString(R.string.delivered)
                             tvStatus.setTextColor(Color.parseColor("#17854C"))
                             tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
                             ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
@@ -168,7 +171,7 @@ class DeliveryDetailFragment : BaseFragment() {
                             tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
                             tvName.text = deliveryDetailData?.order?.userDetails?.fullName
                             tvCustomerName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
-                            tvCustomer.text = "Store Name"
+                            tvCustomer.text = getString(R.string.store_name)
                             tvPrice.isVisible = false
                             tvPriceValue.isVisible = false
                             tvPaymentStatus.isVisible = false
@@ -177,7 +180,7 @@ class DeliveryDetailFragment : BaseFragment() {
                                 placeholder(R.drawable.ic_user)
                                 error(R.drawable.ic_user)
                             }
-                            tvStatus.text = "Delivered"
+                            tvStatus.text = context?.getString(R.string.delivered)
                             tvStatus.setTextColor(Color.parseColor("#17854C"))
                         }
 
@@ -186,7 +189,7 @@ class DeliveryDetailFragment : BaseFragment() {
                             tvPickupAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
                             tvName.text = deliveryDetailData?.order?.userDetails?.fullName
                             tvCustomerName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
-                            tvCustomer.text = "Store Name"
+                            tvCustomer.text = getString(R.string.store_name)
                             tvPrice.isVisible = false
                             tvPriceValue.isVisible = false
                             tvPaymentStatus.isVisible = false
@@ -195,7 +198,7 @@ class DeliveryDetailFragment : BaseFragment() {
                                 placeholder(R.drawable.ic_user)
                                 error(R.drawable.ic_user)
                             }
-                            tvStatus.text = "Delivered"
+                            tvStatus.text = context?.getString(R.string.delivered)
                             tvStatus.setTextColor(Color.parseColor("#17854C"))
                         }
 
@@ -203,7 +206,7 @@ class DeliveryDetailFragment : BaseFragment() {
                             tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
                             tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address
                             tvCustomerName.text = deliveryDetailData?.order?.deliveryDetails?.name
-                            tvStatus.text = "Delivered"
+                            tvStatus.text = context?.getString(R.string.delivered)
                             tvStatus.setTextColor(Color.parseColor("#17854C"))
                             tvName.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeName
                             ivImage.load(deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeImage){
@@ -226,7 +229,7 @@ class DeliveryDetailFragment : BaseFragment() {
                         placeholder(R.drawable.ic_user)
                         error(R.drawable.ic_user)
                     }
-                    tvStatus.text = "Not Delivered"
+                    tvStatus.text = getString(R.string.not_delivered)
                     tvStatus.setTextColor(Color.parseColor("#EB2525"))
                     tvReason.isVisible = true
                     tvReasonForNotDelivered.isVisible = true
@@ -234,7 +237,7 @@ class DeliveryDetailFragment : BaseFragment() {
 
                 }
                 else->{
-                    tvStatus.text = "Confirmed"
+                    tvStatus.text = getString(R.string.confirmed)
                     tvStatus.setTextColor(Color.parseColor("#17854C"))
                     tvPickupAddress.text = deliveryDetailData?.productDetails?.sellerDetails?.storeInfo?.storeAddress
                     tvDropAddress.text = deliveryDetailData?.order?.deliveryDetails?.address

@@ -19,12 +19,16 @@ import com.desynatdriver.databinding.FragmentHomeBinding
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.ui.response.GetProfileResponse
+import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 import com.desynatdriver.utils.ProgressDialogUtils
 import com.desynatdriver.utils.SharedPreference
+import com.desynatdriver.utils.openCustomPreSelectedDatePickerWithReset
 import com.desynatdriver.utils.showToast
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import me.leolin.shortcutbadger.ShortcutBadger
+import java.util.Calendar
 import kotlin.text.get
 
 @AndroidEntryPoint
@@ -45,6 +49,12 @@ class HomeFragment : BaseFragment() {
     private var user: GetProfileResponse.Data?=null
     private var status = 0
 
+    private var fromTimestamp: Long? = null
+    private var toTimestamp: Long? = null
+    private var fromDateText: String? = null
+    private var toDateText: String? = null
+    var filter = "1"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,6 +71,7 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun initView() {
+        Constants.language = SharedPreference.get(requireActivity()).language
        getProfile()
         binding?.apply {
 
@@ -160,17 +171,106 @@ class HomeFragment : BaseFragment() {
     override fun initControl() {
 
         binding?.apply {
+
+            radioGroup.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.rbToday -> {
+                        filter = "1"
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    }
+                    R.id.rbWeek -> {
+                        filter = "2"
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    }
+                    R.id.rbMonth -> {
+                        filter = "3"
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    }
+                }
+            }
+
             tvSwitch.setOnClickListener {
                 updateDutyStatus()
             }
 
             etFrom.setOnClickListener {
+                val initialDate = fromTimestamp ?: Calendar.getInstance().timeInMillis
 
+                openCustomPreSelectedDatePickerWithReset(
+                    requireActivity(),
+                    initialDate = initialDate,
+                    onClick = { date, timestamp ->
+
+                        fromTimestamp = timestamp
+                        fromDateText = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
+                        etFrom.setText(date)
+
+                        toTimestamp = null
+                        toDateText = null
+                        etTo.setText("")
+                        radioGroup?.clearCheck()
+                    },
+                    onReset = {
+
+                        etFrom.setText("")
+                        etTo.setText("")
+                        fromTimestamp = null
+                        fromDateText = null
+                        toTimestamp = null
+                        toDateText = null
+                        rbToday?.isChecked = true
+                        filter = "1"
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    }
+                )
             }
 
             etTo.setOnClickListener {
+                if (fromTimestamp == null) {
+                    showToast(getString(R.string.please_select_from_date_first))
+                    return@setOnClickListener
+                }
 
+                val initialDate = toTimestamp ?: fromTimestamp
+
+                openCustomPreSelectedDatePickerWithReset(
+                    requireActivity(),
+                    minDate = fromTimestamp,initialDate,
+                    onClick = { date, timestamp ->
+
+                        toTimestamp = timestamp
+                        toDateText = CommonMethod.formatDate(date,"dd/MM/yyyy","yyyy-MM-dd")
+                        etTo.setText(date)
+                        radioGroup?.clearCheck()
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    },
+                    onReset = {
+
+                        etFrom.setText("")
+                        etTo.setText("")
+                        fromTimestamp = null
+                        fromDateText = null
+                        toTimestamp = null
+                        toDateText = null
+                        rbToday?.isChecked = true
+                        filter = "1"
+                        getNewOrder()
+                        getCompletedOrder()
+                        getOngoingOrder()
+                    }
+                )
             }
+
 
             viewAllNewDeliveries.setOnClickListener {
                 val bundle = Bundle().apply {
@@ -211,12 +311,12 @@ class HomeFragment : BaseFragment() {
     private fun updateStatus(){
         binding?.apply {
             if(status==1){
-                tvSwitch.text = "On Duty"
+                tvSwitch.text =getString(R.string.on_duty)
                 tvSwitch.setTextColor(Color.parseColor("#000000"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds( 0,0,R.drawable.switch_on,0 )
             }
             else{
-                tvSwitch.text = "Off Duty"
+                tvSwitch.text = getString(R.string.off_duty)
                 tvSwitch.setTextColor(Color.parseColor("#666666"))
                 tvSwitch.setCompoundDrawablesWithIntrinsicBounds( 0,0,R.drawable.switch_off,0 )
 
@@ -273,10 +373,10 @@ class HomeFragment : BaseFragment() {
                 ProgressDialogUtils.getInstance().hideProgress()
                 user?.onDuty = response.data.onDuty
                 if (response.data.onDuty==1){
-                    showToast("Duty on successfully")
+                    showToast(getString(R.string.duty_on_successfully))
                 }
                 else{
-                    showToast("Duty off successfully")
+                    showToast(getString(R.string.duty_off_successfully))
                 }
 
                 user?.let { SharedPreference.get(requireActivity()).saveUser(it) }

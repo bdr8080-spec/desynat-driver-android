@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
-            android:text="Sign In"
+            android:text="@string/sign_in"
             android:layout_marginTop="@dimen/_10sdp"
             android:textColor="@color/black"
             android:layout_gravity="center_horizontal"
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
-            android:text="Welcome back ! "
+            android:text="@string/welcome_back"
             android:textColor="@color/brown"
             android:layout_gravity="center_horizontal"
             android:textSize="@dimen/_18sdp"
@@ -42,7 +42,7 @@
             android:id="@+id/tvEmailMobile"
             style="@style/edit_text_title"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Mobile Number or Email Address"
+            android:text="@string/mobile_number_or_email_address"
             app:layout_constraintTop_toBottomOf="@+id/tvWelcome"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -52,6 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:paddingHorizontal="@dimen/_10sdp"
             android:background="@drawable/edit_back"
             app:layout_constraintTop_toBottomOf="@+id/tvEmailMobile">
@@ -86,10 +88,11 @@
                 android:id="@+id/etEmailMobile"
                 android:layout_width="0dp"
                 style="@style/edit_text"
-                android:hint="Enter Mobile Number or Email Address"
+                android:hint="@string/enter_mobile_number_or_email_address"
                 android:inputType="textEmailAddress"
                 android:background="@null"
                 android:layout_marginStart="@dimen/_5sdp"
+                android:textAlignment="viewStart"
                 android:paddingHorizontal="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -102,30 +105,39 @@
             android:id="@+id/tvPassword"
             style="@style/edit_text_title"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Password"
+            android:text="@string/password"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clMobile"/>
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/edit_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPassword">
 
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPassword">
+
+            <!-- Password Input -->
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etPassword"
-                android:layout_width="match_parent"
                 style="@style/edit_text"
-                android:drawableStart="@drawable/ic_lock"
-                android:drawablePadding="@dimen/_8sdp"
-                android:hint="Enter password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_password"
                 android:inputType="textPassword"
                 android:background="@null"
-                android:layout_toLeftOf="@+id/ivPasswordVisible"/>
+                android:drawableStart="@drawable/ic_lock"
+                android:drawablePadding="@dimen/_8sdp"
+                android:textAlignment="viewStart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ivPasswordVisible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
+            <!-- Eye Icon -->
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivPasswordVisible"
                 android:layout_width="wrap_content"
@@ -134,10 +146,12 @@
                 android:paddingVertical="@dimen/_10sdp"
                 android:src="@drawable/ic_eye"
                 app:tint="@color/hint_color"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
 
-        </RelativeLayout>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvForgotPassword"
@@ -146,7 +160,7 @@
             android:paddingVertical="@dimen/_20sdp"
             android:paddingHorizontal="@dimen/_20sdp"
             android:fontFamily="@font/poppins_regular"
-            android:text="Forget Password?"
+            android:text="@string/forget_password"
             android:textColor="@color/brown"
             android:layout_gravity="center_horizontal"
             android:textSize="@dimen/_11sdp"
@@ -158,7 +172,7 @@
             android:id="@+id/btnLogin"
             style="@style/button"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="Login"
+            android:text="@string/login"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword"/>

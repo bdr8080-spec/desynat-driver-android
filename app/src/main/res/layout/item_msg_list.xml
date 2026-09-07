@@ -36,7 +36,7 @@
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11sdp"
-                android:text="Hello John Deo! consectetur adipiscing elit ames."/>
+                android:text="@string/hello_john_deo_consectetur_adipiscing_elit_ames"/>
 
         </RelativeLayout>
 
@@ -87,7 +87,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp"
-                android:text="Hello John Deo!"
+                android:text="@string/hello_john_deo"
                 android:layout_alignParentEnd="true"/>
 
         </RelativeLayout>

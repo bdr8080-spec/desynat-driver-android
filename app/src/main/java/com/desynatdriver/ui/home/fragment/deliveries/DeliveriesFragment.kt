@@ -61,7 +61,7 @@ class DeliveriesFragment : BaseFragment() {
     }
 
     override fun initView() {
-        type = arguments?.getInt("DELIVERY_TYPE", 1) ?: 1
+        type = arguments?.getInt("DELIVERY_TYPE", 1) ?: type
         binding?.apply {
             deliveryList.clear()
             myDeliveriesAdapter = MyDeliveriesAdapter(requireActivity(),deliveryList,object :MyDeliveriesAdapter.ClickOnItem{
@@ -332,7 +332,7 @@ class DeliveriesFragment : BaseFragment() {
     }
 
     private fun setAllDeliveriesValue() {
-        binding?.tvAll?.text = "All(${deliveryList.size})"
+        binding?.tvAll?.text = getString(R.string.all, deliveryList.size)
     }
 
     private fun getAllOrder(search:String?=null) {
@@ -412,7 +412,7 @@ class DeliveriesFragment : BaseFragment() {
                     dialog?.dismiss()
                 }
                 else{
-                    showToast("Please select delivery status")
+                    showToast(getString(R.string.please_select_delivery_status))
                 }
 
             }

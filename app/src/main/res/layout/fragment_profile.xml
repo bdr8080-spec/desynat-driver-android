@@ -25,7 +25,7 @@
         android:layout_marginTop="@dimen/_30sdp"
         android:paddingHorizontal="@dimen/_20sdp"
         android:fontFamily="@font/poppins_medium"
-        android:text="My Profile"
+        android:text="@string/my_profile"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp"
         android:textAlignment="center"
@@ -51,7 +51,7 @@
             android:paddingVertical="@dimen/_8sdp"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_medium"
-            android:text="My Profile"
+            android:text="@string/my_profile"
             android:textSize="@dimen/_12sdp"
             android:gravity="center"
             android:textColor="@color/white"
@@ -64,7 +64,7 @@
             android:paddingVertical="@dimen/_8sdp"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_medium"
-            android:text="Vehicle Info"
+            android:text="@string/vehicle_info"
             android:textSize="@dimen/_12sdp"
             android:gravity="center"
             android:textColor="@color/black" />
@@ -115,10 +115,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semi_bold"
-                        android:text="Ahmad Farhan"
+                        android:text="@string/ahmad_farhan"
                         android:textSize="@dimen/_12sdp"
                         android:textColor="@color/black"
                         android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:textAlignment="viewStart"
                         app:layout_constraintEnd_toStartOf="@+id/tvEdit"
                         app:layout_constraintStart_toEndOf="@id/ivProfileImage"
                         app:layout_constraintTop_toTopOf="@id/ivProfileImage"
@@ -129,19 +130,25 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="farhan713@mail.com"
+                        android:text="@string/farhan713_mail_com"
                         android:textSize="@dimen/_11sdp"
                         android:textColor="@color/black"
+                        android:textAlignment="viewStart"
                         app:layout_constraintBottom_toBottomOf="@id/ivProfileImage"
                         app:layout_constraintEnd_toEndOf="@id/tvName"
                         app:layout_constraintStart_toStartOf="@id/tvName"
                         app:layout_constraintTop_toBottomOf="@id/tvName" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvEdit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                       android:src="@drawable/edit_btn"
+                        android:background="@drawable/edit_btn"
+                        android:text="@string/edit"
+                        android:gravity="center"
+                        android:textColor="#9E7853"
+                        android:textSize="@dimen/_11sdp"
+                        android:fontFamily="@font/poppins_medium"
                         android:layout_marginEnd="@dimen/_15sdp"
                         app:layout_constraintTop_toTopOf="@+id/ivProfileImage"
                         app:layout_constraintBottom_toBottomOf="@+id/ivProfileImage"
@@ -160,13 +167,16 @@
                     app:layout_constraintTop_toBottomOf="@+id/clProfile"
                     app:layout_constraintStart_toStartOf="parent"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvPhoneTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/phone_number_txt"
+                    android:text="@string/phone_number"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="#FF6E4527"
                     app:layout_constraintStart_toEndOf="@+id/ivMobile"
                     app:layout_constraintTop_toTopOf="@+id/ivMobile"
                     app:layout_constraintBottom_toBottomOf="@+id/ivMobile"/>
@@ -178,7 +188,10 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
-                    android:text="AnwerSheikh@gmail.com"
+                    android:textDirection="ltr"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
+                    android:text="@string/anwersheikh_gmail_com"
                     app:layout_constraintStart_toStartOf="@+id/tvPhoneTitle"
                     app:layout_constraintTop_toBottomOf="@+id/ivMobile"/>
 
@@ -201,13 +214,16 @@
                     app:layout_constraintStart_toStartOf="@+id/ivMobile"
                     app:layout_constraintTop_toBottomOf="@+id/viewPhone"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAddressTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/address_txt"
+                    android:text="@string/address"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="#FF6E4527"
                     app:layout_constraintStart_toEndOf="@+id/icAddress"
                     app:layout_constraintTop_toTopOf="@+id/icAddress"
                     app:layout_constraintBottom_toBottomOf="@+id/icAddress"/>
@@ -219,8 +235,11 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
+                    android:textDirection="ltr"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:text="C-94, Sector 63, Kuwait"
+                    android:text="@string/c_94_sector_63_kuwait"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tvAddressTitle"
                     app:layout_constraintTop_toBottomOf="@+id/icAddress"/>
@@ -244,13 +263,16 @@
                     app:layout_constraintStart_toStartOf="@+id/ivMobile"
                     app:layout_constraintTop_toBottomOf="@+id/viewAddress"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvZoneTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/zone_txt"
+                    android:text="@string/zone"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="#FF6E4527"
                     app:layout_constraintStart_toEndOf="@+id/ivZone"
                     app:layout_constraintTop_toTopOf="@+id/ivZone"
                     app:layout_constraintBottom_toBottomOf="@+id/ivZone"/>
@@ -264,7 +286,10 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:text="Zone - 02"
+                    android:text="@string/zone_02"
+                    android:textDirection="ltr"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tvZoneTitle"
                     app:layout_constraintTop_toBottomOf="@+id/ivZone"/>
@@ -282,7 +307,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/llVehicleInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -293,17 +318,20 @@
                     android:layout_width="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:text="Vehicle Name"/>
+                    android:text="@string/vehicle_name"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etVehicleName"
                     android:layout_width="match_parent"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     style="@style/edit_text"
-                    android:hint="Enter Vehicle Name"
+                    android:hint="@string/enter_vehicle_name"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:inputType="text"
                     android:editable="false"
+                    android:textDirection="ltr"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
                     android:clickable="false"
                     android:focusable="false"
                     android:background="@drawable/button_stroke" />
@@ -313,17 +341,20 @@
                     android:layout_width="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Vehicle Registration Number"/>
+                    android:text="@string/vehicle_registration_number"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etVehichleRegistrationNumber"
                     android:layout_width="match_parent"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     style="@style/edit_text"
-                    android:hint="Enter Vehicle Registration Number"
+                    android:hint="@string/enter_vehicle_registration_number"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:inputType="text"
                     android:editable="false"
+                    android:textDirection="ltr"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
                     android:clickable="false"
                     android:focusable="false"
                     android:background="@drawable/button_stroke" />
@@ -333,7 +364,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Vehicle Images" />
+                    android:text="@string/vehicle_images" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -376,7 +407,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Identity proof"/>
+                    android:text="@string/identity_proof"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -419,7 +450,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Driving license"/>
+                    android:text="@string/driving_license"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -462,7 +493,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Vehicle insurance"/>
+                    android:text="@string/vehicle_insurance"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -493,7 +524,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Pollution paper"/>
+                    android:text="@string/pollution_paper"/>
 
                 <LinearLayout
                     android:id="@+id/llPollutionPaper"
@@ -525,7 +556,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Registration certificate"/>
+                    android:text="@string/registration_certificate"/>
 
                 <LinearLayout
                     android:id="@+id/llRegistration"
@@ -566,7 +597,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_15sdp"/>
+                    android:layout_height="@dimen/_30sdp"/>
 
             </LinearLayout>
 

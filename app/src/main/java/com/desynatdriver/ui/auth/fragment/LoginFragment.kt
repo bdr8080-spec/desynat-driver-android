@@ -171,7 +171,7 @@ class LoginFragment : BaseFragment() {
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
                 response?.let {
-                    showToast("Login Successfully")
+                    showToast(getString(R.string.login_successfully))
                     SharedPreference.get(requireActivity()).accessToken = response.data.accessToken
                     requireActivity().startActivity(
                         Intent(requireActivity(),
@@ -188,23 +188,24 @@ class LoginFragment : BaseFragment() {
     private fun validation():Boolean{
 
         if (binding?.etEmailMobile?.text?.isEmpty() == true) {
-            showToast("Please enter mobile number or email address")
+            showToast(getString(R.string.please_enter_mobile_number_or_email_address))
             return false
         }
         else if (binding?.etEmailMobile?.text?.length!! < 7&&type==0) {
-            showToast("Number must be at least 7 digits long")
+            showToast(getString(R.string.number_must_be_at_least_7_digits_long))
             return false
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(binding?.etEmailMobile?.text.toString()).matches() && type==1) {
-            showToast("Please enter valid email")
+            showToast(getString(R.string.please_enter_valid_email))
+
             return false
         }
         else if (binding?.etPassword?.text?.isEmpty() == true) {
-            showToast("Please enter password")
+            showToast(getString(R.string.please_enter_password))
             return false
         }
         if (binding?.etPassword?.text?.trim().toString().length<6) {
-            showToast("Password must be 6 digits long")
+            showToast(getString(R.string.password_must_be_6_digits_long))
             return false
         }
         return true

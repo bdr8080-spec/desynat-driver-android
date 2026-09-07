@@ -5,10 +5,11 @@ import com.desynatdriver.ui.auth.response.GetCountryResponse
 import com.desynatdriver.ui.auth.response.LoginResponse
 import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
 import com.desynatdriver.ui.home.cms.response.GetContactResponse
+import com.desynatdriver.ui.home.cms.response.GetCmsResponse
+import com.desynatdriver.ui.home.cms.response.GetFaqResponse
 import com.desynatdriver.ui.home.cms.response.GetTicketTypeResponse
 import com.desynatdriver.ui.home.cms.translation.TranslateRequest
 import com.desynatdriver.ui.home.cms.translation.TranslateResponse
-import com.desynatdriver.ui.home.fragment.deliveries.DeliveryDetailFragment
 import com.desynatdriver.ui.home.fragment.deliveries.response.DeliveryDetailResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetAllOrderResponse
 import com.desynatdriver.ui.home.fragment.deliveries.response.GetReasonResponse
@@ -144,6 +145,36 @@ interface ApiServices {
     @POST(Constants.RAISE_TICKET)
     suspend fun raiseTicket(@Body map: HashMap<String, Any>): Response<CommonResponse>
 
+    @POST(Constants.NOTIFICATION_ON_OFF)
+    suspend fun notificationOnOff(@Body map: HashMap<String, Any>): Response<GetProfileResponse>
+
+    @POST(Constants.APP_NOTIFICATION_ON_OFF)
+    suspend fun appNotificationOnOff(@Body map: HashMap<String, Any>): Response<GetProfileResponse>
+
     @GET(Constants.CONTACT_US)
     suspend fun contactUs(@QueryMap map: HashMap<String, Any>): Response<GetContactResponse>
+
+    @GET(Constants.FAQ)
+    suspend fun faq(@QueryMap map: HashMap<String, Any>): Response<GetFaqResponse>
+
+    @GET(Constants.ABOUT_US)
+    suspend fun aboutUs(@QueryMap map: HashMap<String, Any>): Response<GetCmsResponse>
+
+    @GET(Constants.TERMS_CONDITION)
+    suspend fun termsAndCondition(@QueryMap map: HashMap<String, Any>): Response<GetCmsResponse>
+
+    @GET(Constants.PRIVACY_POLICY)
+    suspend fun privacyPolicy(@QueryMap map: HashMap<String, Any>): Response<GetCmsResponse>
+
+    @GET(Constants.RETURN_POLICY)
+    suspend fun returnPolicy(@QueryMap map: HashMap<String, Any>): Response<GetCmsResponse>
+
+    @GET(Constants.CANCELLATION_POLICY)
+    suspend fun cancellationPolicy(@QueryMap map: HashMap<String, Any>): Response<GetCmsResponse>
+
+    @GET(Constants.EXCHANGE_POLICY)
+    suspend fun exchangePolicy(@QueryMap map: HashMap<String, Any>): Response<GetCmsResponse>
+
+    @POST(Constants.DELETE_ACCOUNT)
+    suspend fun deleteAccount(@Body map: HashMap<String, Any>): Response<CommonResponse>
 }

@@ -17,7 +17,7 @@
         android:id="@+id/tvReason"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reason"
+        android:text="@string/reason"
         android:layout_marginStart="@dimen/_8sdp"
         android:fontFamily="@font/poppins_regular"
         android:textColor="@color/black"

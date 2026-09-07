@@ -87,9 +87,9 @@ class HomeActivity : BaseActivity() {
         controller.graph = navGraph
 
         bottonNavItemList.clear()
-        bottonNavItemList.add(BottomNavItem("Home",R.drawable.ic_home,R.drawable.ic_selected_home))
-        bottonNavItemList.add(BottomNavItem("Deliveries",R.drawable.ic_deliveries,R.drawable.ic_selected_deliveries))
-        bottonNavItemList.add(BottomNavItem("Profile",R.drawable.ic_profile,R.drawable.ic_selected_profile))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.home),R.drawable.ic_home,R.drawable.ic_selected_home))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.deliveries),R.drawable.ic_deliveries,R.drawable.ic_selected_deliveries))
+        bottonNavItemList.add(BottomNavItem(getString(R.string.profile),R.drawable.ic_profile,R.drawable.ic_selected_profile))
 
         setBottomAdapter()
 
@@ -163,25 +163,62 @@ class HomeActivity : BaseActivity() {
                 ProgressDialogUtils.getInstance().showProgress(this@HomeActivity, false)
             }
 
-//            rlSetting.setOnClickListener {
-//                controller.navigate(R.id.setting)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+            rlSetting.setOnClickListener {
+                controller.navigate(R.id.setting)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
 
             rlSupport.setOnClickListener {
                 controller.navigate(R.id.support)
                 binding?.drawerLayout?.closeDrawer(GravityCompat.START)
             }
 
-//            rlFaq.setOnClickListener {
-//                controller.navigate(R.id.faq)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
-//
-//            rlLanguage.setOnClickListener {
-//                controller.navigate(R.id.changeLanguageFragment)
-//                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
-//            }
+            rlTerms.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("type", 1)
+                controller.navigate(R.id.cmsContent,bundle)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            tvAboutUs.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("type", 3)
+                controller.navigate(R.id.cmsContent,bundle)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlReturnPolicy.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("type", 4)
+                controller.navigate(R.id.cmsContent,bundle)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlExchange.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("type", 5)
+                controller.navigate(R.id.cmsContent,bundle)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlCancellationPolicy.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("type", 6)
+                controller.navigate(R.id.cmsContent,bundle)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+            rlFaq.setOnClickListener {
+                controller.navigate(R.id.faq)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
+
+
+
+            rlLanguage.setOnClickListener {
+                controller.navigate(R.id.changeLanguageFragment)
+                binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            }
         }
     }
 
@@ -226,7 +263,7 @@ class HomeActivity : BaseActivity() {
         viewModel.logoutResult.observe(this) { response ->
             if (isObserver) {
                 ProgressDialogUtils.getInstance().hideProgress()
-                showToast(response.message)
+                showToast(getString(R.string.logged_out_successfully))
                 response?.let {
                     Constants.isLogout = true
                     CommonMethod.clearData(this)
@@ -333,11 +370,11 @@ class HomeActivity : BaseActivity() {
                 locationViewModel.setLocation(this.latitude, this.longitude)
 
             } else {
-                Constants.location  = "No address found"
+                Constants.location  = getString(R.string.no_address_found)
             }
         } catch (e: IOException) {
             Log.e("MapsDebug", "Geocoder failed: ${e.message}")
-            Constants.location = "Error fetching address"
+            Constants.location = getString(R.string.error_fetching_address)
         }
     }
 

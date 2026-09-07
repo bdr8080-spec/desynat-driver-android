@@ -81,7 +81,11 @@ data class GetProfileResponse(
         @SerializedName("zone_id")
         val zoneId: Int,
         @SerializedName("zone_info")
-        val zoneInfo: ZoneInfo
+        val zoneInfo: ZoneInfo,
+        @SerializedName("app_notification")
+        var appNotification: Int,
+        @SerializedName("notification")
+        var notification: Int
     ) {
         data class CountryInfo(
             @SerializedName("created_at")

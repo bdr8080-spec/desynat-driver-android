@@ -15,7 +15,7 @@
         android:layout_marginTop="@dimen/_25sdp"
         android:fontFamily="@font/poppins_medium"
         android:padding="@dimen/_15sdp"
-        android:text="Change Language"
+        android:text="@string/change_language"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp" />
@@ -24,25 +24,26 @@
         android:id="@+id/relEnglish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
         android:background="@drawable/edit_back">
 
         <CheckBox
             android:id="@+id/cbEnglish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:button="@drawable/selector_radio_icon"
-            android:checked="false"
-            android:drawableTint="@null"
-            android:fontFamily="@font/poppins_medium"
-            android:paddingVertical="@dimen/_12sdp"
-            android:paddingStart="@dimen/_8sdp"
             android:text="@string/english"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            app:buttonTint="@null" />
+            android:paddingVertical="@dimen/_12sdp"
+            android:button="@drawable/selector_radio_icon"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:paddingStart="@dimen/_8sdp"
+            android:checked="false"
+            app:buttonTint="@null"
+            android:drawableTint="@null"
+            android:textAlignment="viewStart"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="@dimen/_12sdp"/>
 
     </RelativeLayout>
 
@@ -50,25 +51,26 @@
         android:id="@+id/relArabic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
         android:background="@drawable/edit_back">
 
         <CheckBox
             android:id="@+id/cbArabic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:button="@drawable/selector_radio_icon"
-            android:checked="false"
-            android:drawableTint="@null"
-            android:fontFamily="@font/poppins_medium"
-            android:paddingVertical="@dimen/_12sdp"
-            android:paddingStart="@dimen/_8sdp"
             android:text="@string/arabic"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            app:buttonTint="@null" />
+            android:paddingVertical="@dimen/_12sdp"
+            android:button="@drawable/selector_radio_icon"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:paddingStart="@dimen/_8sdp"
+            android:checked="false"
+            app:buttonTint="@null"
+            android:drawableTint="@null"
+            android:textAlignment="viewStart"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="@dimen/_12sdp"/>
 
     </RelativeLayout>
 

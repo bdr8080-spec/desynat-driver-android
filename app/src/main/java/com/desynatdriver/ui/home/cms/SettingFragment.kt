@@ -1,6 +1,7 @@
 package com.desynatdriver.ui.home.cms
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,15 +15,23 @@ import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.data.view_model.HomeViewModel
 import com.desynatdriver.databinding.DeleteAccountDialogBinding
 import com.desynatdriver.databinding.FragmentSettingBinding
+import com.desynatdriver.ui.auth.AuthActivity
 import com.desynatdriver.ui.home.HomeActivity
+import com.desynatdriver.ui.response.GetProfileResponse
+import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
+import com.desynatdriver.utils.ProgressDialogUtils
+import com.desynatdriver.utils.SharedPreference
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
+import kotlin.text.get
 
 @AndroidEntryPoint
 class SettingFragment : BaseFragment() {
     private var binding: FragmentSettingBinding? = null
     private val viewModel: HomeViewModel by viewModels()
     var isObserver = false
+    var userInfo: GetProfileResponse.Data?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +49,10 @@ class SettingFragment : BaseFragment() {
     }
 
     override fun initView() {
+        userInfo = SharedPreference.get(requireActivity()).getUser()
+        setData()
         binding?.apply {
-            toolbar.tvToolbar.text = "Settings"
+            toolbar.tvToolbar.text = getString(R.string.settings)
         }
     }
 
@@ -55,13 +66,90 @@ class SettingFragment : BaseFragment() {
                 deleteAlertDialog()
             }
 
-           // tvSwitch.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.switch_on,0, 0 )
+            tvInAppNotification.setOnClickListener {
+                appNotificationOnOff()
+            }
+
+            tvPushNotification.setOnClickListener {
+                notificationOnOff()
+            }
 
         }
 
     }
 
     override fun observe() {
+
+        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                isObserver = false
+            }
+        }
+
+        viewModel.notificationOnOffResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                response?.let {
+
+                    userInfo?.notification = response?.data?.notification?:0
+                    userInfo?.let { SharedPreference.get(requireActivity()).saveUser(it) }
+                    setData()
+                    CommonMethod.showSuccessDialog(requireActivity(),response?.message.toString())
+                    if (response?.data?.notification==0){
+                        CommonMethod.showSuccessDialog(requireActivity(),
+                            getString(R.string.notification_is_set_to_off))
+                    }
+                    else{
+                        CommonMethod.showSuccessDialog(requireActivity(),
+                            getString(R.string.notification_is_set_to_on))
+                    }
+                }
+                isObserver = false
+            }
+        }
+
+        viewModel.deleteAccountResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                response?.let {
+
+                    CommonMethod.showSuccessDialog(requireActivity(),
+                        getString(R.string.account_deleted_successfully)){
+                        Constants.isLogout = true
+                        CommonMethod.clearData(requireActivity())
+                        startActivity(
+                            Intent(requireActivity(),
+                                AuthActivity::class.java)
+                        )
+                        requireActivity().finish()
+                    }
+                }
+                isObserver = false
+            }
+        }
+
+        viewModel.appNotificationOnOffResult.observe(viewLifecycleOwner) { response ->
+            if (isObserver) {
+                ProgressDialogUtils.getInstance().hideProgress()
+                response?.let {
+
+                    userInfo?.appNotification = response?.data?.appNotification?:0
+                    userInfo?.let { SharedPreference.get(requireActivity()).saveUser(it) }
+                    setData()
+                    if (response?.data?.appNotification==0){
+                        CommonMethod.showSuccessDialog(requireActivity(),
+                            getString(R.string.in_app_notification_is_set_to_off))
+                    }
+                    else{
+                        CommonMethod.showSuccessDialog(requireActivity(),
+                            getString(R.string.in_app_notification_is_set_to_on))
+                    }
+
+                }
+                isObserver = false
+            }
+        }
     }
 
     fun deleteAlertDialog(
@@ -83,10 +171,53 @@ class SettingFragment : BaseFragment() {
             dialog.dismiss()
         }
         dialogBinding.btnYes.setOnClickListener {
+            deleteAccount()
             dialog.dismiss()
         }
 
         dialog.show()
+    }
+
+    fun notificationOnOff(){
+        val map = HashMap<String, Any>()
+        viewModel.notificationOnOff(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
+        isObserver = true
+
+    }
+
+    fun deleteAccount(){
+        val map = HashMap<String, Any>()
+        viewModel.deleteAccount(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
+        isObserver = true
+
+    }
+
+    fun appNotificationOnOff(){
+        val map = HashMap<String, Any>()
+        viewModel.appNotificationOnOff(map)
+        ProgressDialogUtils.getInstance().showProgress(requireActivity(), false)
+        isObserver = true
+
+    }
+
+    private fun setData(){
+        binding?.apply {
+            if(userInfo?.appNotification==1){
+                tvInAppNotification.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_in_app_notification, 0,R.drawable.switch_on, 0 )
+            }
+            else{
+                tvInAppNotification.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_in_app_notification, 0,R.drawable.switch_off,0 )
+            }
+
+            if(userInfo?.notification==1){
+                tvPushNotification.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_push_notification, 0,R.drawable.switch_on,0 )
+            }
+            else{
+                tvPushNotification.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_push_notification, 0,R.drawable.switch_off,0 )
+            }
+        }
     }
 
 }

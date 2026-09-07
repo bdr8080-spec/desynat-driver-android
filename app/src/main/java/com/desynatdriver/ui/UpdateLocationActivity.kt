@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import com.desynatdriver.R
 import com.desynatdriver.databinding.ActivityUpdateLocationBinding
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.SharedPreference
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -60,6 +61,10 @@ class UpdateLocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnC
     private var longitudeDisplay = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        CommonMethod.setLocale(
+            this,
+            SharedPreference.get(this).language
+        )
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -148,10 +153,10 @@ class UpdateLocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnC
 
     private fun showPermissionDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Permission Required")
-            .setMessage("Location permission is required to detect your current location.")
-            .setPositiveButton("Grant") { _, _ -> requestLocationPermission() }
-            .setNegativeButton("Cancel", null)
+            .setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.location_permission_is_required_to_detect_your_current_location))
+            .setPositiveButton(getString(R.string.grant)) { _, _ -> requestLocationPermission() }
+            .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
 
@@ -176,7 +181,7 @@ class UpdateLocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnC
                 getLastKnownLocation()
             }
         } else {
-            Toast.makeText(this, "Location permission denied", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.location_permission_denied), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -207,11 +212,11 @@ class UpdateLocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnC
 
     private fun showGPSEnableDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Enable GPS")
-            .setMessage("Please enable GPS to fetch your current location.")
-            .setPositiveButton("Settings") { _, _ ->
+            .setTitle(getString(R.string.enable_gps))
+            .setMessage(getString(R.string.please_enable_gps_to_fetch_your_current_location))
+            .setPositiveButton(getString(R.string.settings)) { _, _ ->
                 startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-            }.setNegativeButton("Cancel", null)
+            }.setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
 

@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.desynatdriver.R
 import com.desynatdriver.databinding.ItemTicketBinding
 import com.desynatdriver.ui.home.cms.response.GetAllRaisedTicketResponse
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
 
 class TicketAdapter(var context:Context, var ticketList: ArrayList<GetAllRaisedTicketResponse.Data.Data>, var onClick:OnClick) : RecyclerView.Adapter<TicketAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemTicketBinding) :
@@ -17,7 +19,7 @@ class TicketAdapter(var context:Context, var ticketList: ArrayList<GetAllRaisedT
             val ticketData = ticketList[position]
 
             tvTicketIdValue.text = ticketData?.ticketId
-            tvTicketType.text = ticketData?.ticketTypeDetails?.name
+            tvTicketType.text =if (Constants.language=="ar")  ticketData?.ticketTypeDetails?.nameArabic else ticketData?.ticketTypeDetails?.name
             tvRaisedOn.text = CommonMethod.customizeChangeDateFormat(ticketData?.createdAt.toString(), outputFormat = "dd MMM yy, hh:mm a")
             tvResolvedOn.text = CommonMethod.customizeChangeDateFormat(ticketData?.updatedAt.toString(), outputFormat = "dd MMM yy, hh:mm a")
 
@@ -25,14 +27,14 @@ class TicketAdapter(var context:Context, var ticketList: ArrayList<GetAllRaisedT
                 0->{
                     tvResolved.isVisible = false
                     tvResolvedOn.isVisible = false
-                    tvStatusValue.text = "In Progress"
+                    tvStatusValue.text = context.getString(R.string.in_progress)
                     tvStatusValue.setTextColor(Color.parseColor("#D72E04"))
 
                 }
                 1->{
                     tvResolved.isVisible = true
                     tvResolvedOn.isVisible = true
-                    tvStatusValue.text = "Resolved"
+                    tvStatusValue.text = context.getString(R.string.resolved)
                     tvStatusValue.setTextColor(Color.parseColor("#17854C"))
                 }
             }
