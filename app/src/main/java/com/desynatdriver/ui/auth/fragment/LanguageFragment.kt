@@ -11,21 +11,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.desynatdriver.R
 import com.desynatdriver.base.BaseFragment
 import com.desynatdriver.databinding.FragmentLanguageBinding
-import com.desynatdriver.utils.Constants
-import com.desynatdriver.utils.SharedPreference
-import com.desynatdriver.utils.showToast
 import com.desynatdriver.ui.auth.AuthActivity
 import com.desynatdriver.ui.home.HomeActivity
 import com.desynatdriver.utils.CommonMethod
+import com.desynatdriver.utils.Constants
+import com.desynatdriver.utils.SharedPreference
+import com.desynatdriver.utils.showToast
 
 class LanguageFragment : BaseFragment() {
-    private var binding: FragmentLanguageBinding?=null
+    private var binding: FragmentLanguageBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLanguageBinding.inflate(layoutInflater,container,false)
+        binding = FragmentLanguageBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -39,20 +39,34 @@ class LanguageFragment : BaseFragment() {
     override fun initView() {
         requestPermissions()
         binding?.apply {
-            if (SharedPreference.get(requireActivity()).language!=""){
+            if (SharedPreference.get(requireActivity()).language != "") {
                 Constants.language = SharedPreference.get(requireActivity()).language
-            }
-            else{
-                Constants.language = "en"
+            } else {
+                Constants.language = "ar"
             }
 
-            if(Constants.language=="ar"){
+            if (Constants.language == "ar") {
                 cbEnglish.isChecked = false
                 cbArabic.isChecked = true
-            }
-            else{
+
+                cbArabic.text = "العربية"
+                cbEnglish.text = "الإنجليزية"
+                tvInfo.text = "اختر اللغة واستمر للحصول على تجربة التطبيق بلغتك المفضلة."
+                tvSelectLanguage.text = "اختر اللغة"
+                btnContinue.text = "متابعة"
+                root.layoutDirection = View.LAYOUT_DIRECTION_RTL
+            } else {
                 cbEnglish.isChecked = true
                 cbArabic.isChecked = false
+
+
+                cbArabic.text = "Arabic"
+                cbEnglish.text = "English"
+                tvInfo.text =
+                    "Choose the language and continue to get the experience the app in your preferred language."
+                tvSelectLanguage.text = "Select language"
+                btnContinue.text = "Continue"
+                root.layoutDirection = View.LAYOUT_DIRECTION_LTR
 
             }
 
@@ -65,8 +79,15 @@ class LanguageFragment : BaseFragment() {
                 if (isChecked) {
                     cbEnglish.isChecked = false
                     Constants.language = Constants.ARABIC
-                }
-                else {
+
+                    cbArabic.text = "العربية"
+                    cbEnglish.text = "الإنجليزية"
+                    tvInfo.text = "اختر اللغة واستمر للحصول على تجربة التطبيق بلغتك المفضلة."
+                    tvSelectLanguage.text = "اختر اللغة"
+                    btnContinue.text = "متابعة"
+                    root.layoutDirection = View.LAYOUT_DIRECTION_RTL
+
+                } else {
                     if (!cbEnglish.isChecked) {
                         cbArabic.isChecked = true
                     }
@@ -77,8 +98,16 @@ class LanguageFragment : BaseFragment() {
                 if (isChecked) {
                     cbArabic.isChecked = false
                     Constants.language = Constants.ENGLISH
-                }
-                else {
+
+                    cbArabic.text = "Arabic"
+                    cbEnglish.text = "English"
+                    tvInfo.text =
+                        "Choose the language and continue to get the experience the app in your preferred language."
+                    tvSelectLanguage.text = "Select language"
+                    btnContinue.text = "Continue"
+                    root.layoutDirection = View.LAYOUT_DIRECTION_LTR
+
+                } else {
                     if (!cbArabic.isChecked) {
                         cbEnglish.isChecked = true
                     }
@@ -86,22 +115,20 @@ class LanguageFragment : BaseFragment() {
             }
 
             btnContinue.setOnClickListener {
-                if (Constants.language==""){
+                if (Constants.language == "") {
                     showToast(getString(R.string.please_select_language))
-                }
-                else{
+                } else {
                     SharedPreference.get(requireActivity()).language = Constants.language
                     CommonMethod.setLocale(
                         requireContext(),
                         SharedPreference.get(requireActivity()).language
                     )
 
-                    if (SharedPreference.get(requireActivity()).accessToken!=""){
+                    if (SharedPreference.get(requireActivity()).accessToken != "") {
                         val intent = Intent(requireActivity(), HomeActivity::class.java)
                         requireActivity().finish()
                         startActivity(intent)
-                    }
-                    else{
+                    } else {
                         val intent = Intent(requireActivity(), AuthActivity::class.java)
                         requireActivity().finish()
                         startActivity(intent)
@@ -122,7 +149,8 @@ class LanguageFragment : BaseFragment() {
                 true
             }
             val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
-            val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
+            val coarseLocationGranted =
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
 
             if (notificationGranted && (fineLocationGranted || coarseLocationGranted)) {
 

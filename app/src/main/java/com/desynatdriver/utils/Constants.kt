@@ -7,7 +7,7 @@ object Constants {
 //    const val BASE_URL = "https://desynat.com"
     const val BASE_URL = "https://desynat.com.kw/"
 
-    var language="en"
+    var language="ar"
     const val ENGLISH = "en"
     const val ARABIC = "ar"
 
